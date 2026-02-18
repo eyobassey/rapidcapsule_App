@@ -1,0 +1,22 @@
+/**
+ * Prettier Configuration
+ *
+ * Code formatting configuration
+ *
+ * Created: February 13, 2026
+ * Author: Aarav Mishra
+ */
+
+module.exports = {
+  semi: true,
+  trailingComma: 'es5',
+  singleQuote: true,
+  printWidth: 100,
+  tabWidth: 2,
+  useTabs: false,
+  arrowParens: 'always',
+  endOfLine: 'lf',
+  bracketSpacing: true,
+  jsxSingleQuote: false,
+  quoteProps: 'as-needed',
+};

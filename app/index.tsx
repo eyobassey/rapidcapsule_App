@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet, useUnistyles } from 'react-native-unistyles';
 import { Link } from 'expo-router';
+import { Text, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
 export default function HomeScreen() {
-  const { theme } = useUnistyles();
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to RapidCapusle</Text>
@@ -17,31 +16,31 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create((theme) => ({
   container: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
     alignItems: 'center',
+    backgroundColor: theme.colors.background,
+    flex: 1,
     justifyContent: 'center',
     padding: theme.spacing.lg,
   },
-  title: {
-    fontSize: theme.typography.fontSize.xxl,
-    fontWeight: theme.typography.fontWeight.bold,
-    marginBottom: theme.spacing.sm,
-    color: theme.colors.text,
-  },
-  subtitle: {
-    fontSize: theme.typography.fontSize.lg,
-    color: theme.colors.textSecondary,
-    marginBottom: theme.spacing.xl,
-  },
   link: {
-    padding: theme.spacing.md,
     backgroundColor: theme.colors.primary,
     borderRadius: theme.borderRadius.md,
+    padding: theme.spacing.md,
   },
   linkText: {
     color: theme.colors.background,
     fontSize: theme.typography.fontSize.md,
     fontWeight: theme.typography.fontWeight.semibold,
+  },
+  subtitle: {
+    color: theme.colors.textSecondary,
+    fontSize: theme.typography.fontSize.lg,
+    marginBottom: theme.spacing.xl,
+  },
+  title: {
+    color: theme.colors.text,
+    fontSize: theme.typography.fontSize.xxl,
+    fontWeight: theme.typography.fontWeight.bold,
+    marginBottom: theme.spacing.sm,
   },
 }));

@@ -1,0 +1,165 @@
+# Rapid Capsule Mobile App - Documentation
+
+**Last Updated**: February 13, 2026  
+**Author**: Aarav Mishra  
+**Version**: 1.0.0
+
+---
+
+## 📚 Documentation Index
+
+This directory contains comprehensive documentation for the Rapid Capsule mobile application. All documentation follows industry best practices and is organized by topic.
+
+### 📁 Documentation Structure
+
+```
+docs/
+├── README.md                          # This file - Documentation index
+├── architecture/
+│   ├── service-layer.md              # Service layer architecture & implementation
+│   └── state-management.md           # State management architecture (React Query + Zustand)
+├── security/
+│   └── storage-security.md           # Security & storage guide
+└── guides/
+    ├── api-service-layer.md          # API service layer usage guide
+    ├── utilities.md                  # Utilities reference guide
+    ├── components.md                 # Base components guide
+    └── linting-and-commits.md        # ESLint, Prettier, and Conventional Commits guide
+```
+
+---
+
+## 📖 Documentation Overview
+
+### Architecture Documentation
+
+#### [Service Layer Architecture](./architecture/service-layer.md)
+
+- **Created**: February 13, 2026
+- **Purpose**: Complete documentation of the production-grade service layer implementation
+- **Contents**:
+  - Service layer structure and architecture
+  - SOLID principles implementation
+  - Design patterns used
+  - Complete Patient module implementation
+  - Usage examples and best practices
+
+#### [State Management Architecture](./architecture/state-management.md)
+
+- **Created**: February 13, 2026
+- **Purpose**: Explains the hybrid state management approach using React Query and Zustand
+- **Contents**:
+  - React Query for server state
+  - Zustand for client state
+  - When to use which
+  - Store structure and examples
+  - Performance considerations
+
+### Security Documentation
+
+#### [Storage Security Guide](./security/storage-security.md)
+
+- **Created**: February 13, 2026
+- **Purpose**: Comprehensive guide on secure storage for health tech applications
+- **Contents**:
+  - SecureStorageService vs StorageService
+  - MMKV security analysis
+  - HIPAA compliance considerations
+  - Best practices for tokens and health data
+  - Migration guide
+
+### Guides
+
+#### [API Service Layer Guide](./guides/api-service-layer.md)
+
+- **Created**: February 13, 2026
+- **Purpose**: Quick reference guide for using the API service layer
+- **Contents**:
+  - Quick start examples
+  - Error handling patterns
+  - React Query integration
+  - Testing strategies
+
+#### [Utilities Guide](./guides/utilities.md)
+
+- **Created**: February 13, 2026
+- **Purpose**: Comprehensive reference for all utility functions
+- **Contents**:
+  - Date/time utilities
+  - Validation utilities
+  - String/number formatting
+  - Array/object manipulation
+  - Error handling helpers
+  - Device/platform detection
+  - Async operation helpers
+
+#### [Components Guide](./guides/components.md)
+
+- **Created**: February 13, 2026
+- **Purpose**: Complete reference for all base UI components
+- **Contents**:
+  - Button, Text, Input components
+  - Card, Modal, Loading components
+  - Badge, Avatar, Separator components
+  - Accessibility guidelines
+  - Usage examples and best practices
+
+#### [Linting and Commits Guide](./guides/linting-and-commits.md)
+
+- **Created**: February 13, 2026
+- **Purpose**: Guide for ESLint, Prettier, and Conventional Commits
+- **Contents**:
+  - ESLint configuration and rules
+  - Prettier formatting
+  - Conventional Commits format
+  - lint-staged and Husky setup
+  - Git hooks workflow
+
+---
+
+## 🎯 Quick Links
+
+- **Getting Started**: See [README.md](../README.md) in project root
+- **Service Layer**: [Service Layer Architecture](./architecture/service-layer.md)
+- **State Management**: [State Management Architecture](./architecture/state-management.md)
+- **Security**: [Storage Security Guide](./security/storage-security.md)
+- **Utilities**: [Utilities Guide](./guides/utilities.md)
+- **Components**: [Components Guide](./guides/components.md)
+- **Linting**: [Linting and Commits Guide](./guides/linting-and-commits.md)
+
+---
+
+## 📝 Documentation Standards
+
+All documentation follows these standards:
+
+- ✅ Clear structure with headers and sections
+- ✅ Code examples with syntax highlighting
+- ✅ Date and author information
+- ✅ Purpose and overview sections
+- ✅ Best practices and recommendations
+- ✅ Cross-references to related docs
+
+---
+
+## 🔄 Keeping Documentation Updated
+
+When making significant changes:
+
+1. Update the relevant documentation file
+2. Update the "Last Updated" date
+3. Add a changelog entry if needed
+4. Update this index if new docs are added
+
+---
+
+## 📧 Questions?
+
+For questions about the documentation or architecture:
+
+- **Email**: aarav@rapidcapsule.com
+- **GitHub**: [@aarav-rapidcapsule](https://github.com/aarav-rapidcapsule)
+
+---
+
+**Note**: This is a health tech application. All security and architecture decisions prioritize patient data protection and HIPAA compliance.
