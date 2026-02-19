@@ -20,6 +20,9 @@ docs/
 │   └── state-management.md           # State management architecture (React Query + Zustand)
 ├── security/
 │   └── storage-security.md           # Security & storage guide
+├── roadmap/
+│   ├── README.md                     # Roadmap documentation index
+│   └── foundation-roadmap.md         # Strategic foundation roadmap
 └── guides/
     ├── api-service-layer.md          # API service layer usage guide
     ├── utilities.md                  # Utilities reference guide
@@ -67,6 +70,19 @@ docs/
   - HIPAA compliance considerations
   - Best practices for tokens and health data
   - Migration guide
+
+### Roadmap
+
+#### [Foundation Roadmap](./roadmap/foundation-roadmap.md)
+
+- **Created**: February 18, 2026
+- **Purpose**: Strategic roadmap for establishing production-grade foundations
+- **Contents**:
+  - Current foundation status assessment
+  - Critical foundation gaps (testing, error handling, monitoring)
+  - 4-week implementation timeline
+  - Success criteria and risk assessment
+  - Dependencies and prerequisites
 
 ### Guides
 
