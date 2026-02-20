@@ -13,7 +13,7 @@ import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { AppText } from '@/components/base/Text/Text';
 import { BaseComponentProps } from '@/components/base/types';
-import { combineStyles } from '@/components/base/utils/style-helpers';
+import { combineStyles } from '@/utils';
 
 export interface AppInputProps
   extends

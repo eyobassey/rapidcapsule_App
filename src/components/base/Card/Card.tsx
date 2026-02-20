@@ -12,7 +12,7 @@ import { Pressable, View, ViewStyle } from 'react-native';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { BaseComponentProps } from '@/components/base/types';
-import { combineStyles, getExtendedThemeColors } from '@/components/base/utils/style-helpers';
+import { combineStyles, getExtendedThemeColors } from '@/utils';
 
 export interface AppCardProps extends BaseComponentProps {
   /**

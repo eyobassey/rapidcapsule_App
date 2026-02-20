@@ -12,7 +12,7 @@ import { Text as RNText, TextStyle } from 'react-native';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { BaseComponentProps } from '@/components/base/types';
-import { combineStyles } from '@/components/base/utils/style-helpers';
+import { combineStyles } from '@/utils';
 
 export type TextVariant =
   | 'h1'

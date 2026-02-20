@@ -23,7 +23,7 @@ import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 import { Button } from '@/shared/ui/atoms/button';
 import { AppText } from '@/components/base/Text/Text';
 import { BaseComponentProps } from '@/components/base/types';
-import { combineStyles, getExtendedThemeColors } from '@/components/base/utils/style-helpers';
+import { combineStyles, getExtendedThemeColors } from '@/utils';
 
 export interface AppModalProps extends BaseComponentProps {
   /**

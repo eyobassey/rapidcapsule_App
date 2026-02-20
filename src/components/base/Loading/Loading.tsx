@@ -13,7 +13,7 @@ import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { AppText } from '@/components/base/Text/Text';
 import { BaseComponentProps, ComponentSize } from '@/components/base/types';
-import { combineStyles, getExtendedThemeColors } from '@/components/base/utils/style-helpers';
+import { combineStyles, getExtendedThemeColors } from '@/utils';
 
 export interface AppLoadingProps extends BaseComponentProps {
   /**
