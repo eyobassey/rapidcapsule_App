@@ -24,10 +24,10 @@ This project uses components from two sources:
    - Follow our design system and architecture
    - See sections below for documentation
 
-2. **Reactix Components** (`src/components/atoms/`, `molecules/`, `micro-interactions/`)
+2. **Reactix Components** (`src/shared/ui/`)
    - Components synced from [Reactix](https://www.reacticx.com/) using CLI
    - Copy-paste component library with 50+ components
-   - Organized using atomic design pattern
+   - Organized using atomic design pattern (`base/`, `molecules/`, `micro-interactions/`)
    - Synced via `npx reacticx add <component>` commands
    - See [Reactix Integration Guide](./reactix-integration.md) for details
 

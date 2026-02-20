@@ -48,24 +48,21 @@ micro-interactions/ # Animated interactive components (gooey-switch, spin-button
 
 ### Component Categories
 
-#### Atoms (`atoms/`)
-Basic, indivisible UI elements (synced via `npx reacticx add <component>`):
+#### Base (`base/`)
+Basic UI elements (synced via `npx reacticx add <component>`):
 - `button` - Customizable button with press animation
-- `input` - Form input component
-- `text` - Typography component
 
 #### Molecules (`molecules/`)
 Simple combinations of atoms (synced via CLI):
 - `accordion` - Collapsible content sections
 - `card` - Container component
-- `modal` - Overlay dialog component
 
 #### Micro-interactions (`micro-interactions/`)
 Animated interactive components (synced via CLI):
 - `gooey-switch` - Animated toggle switch
 - `spin-button` - Button with spin animation
 
-**Syncing**: All components are synced directly into `src/components/` using Reactix CLI commands.
+**Syncing**: All components are synced into `src/shared/ui/` using Reactix CLI commands, maintaining atomic design structure.
 
 ---
 
@@ -81,15 +78,15 @@ Reactix provides a CLI tool for easy component integration:
 npx reacticx init
 ```
 
-This creates `component.config.json` in project root. Configure it for our project:
+This creates `component.config.json` in project root. For our project, it's configured as:
 
 ```json
 {
-  "outDir": "src/components"
+  "outDir": "src/shared/ui"
 }
 ```
 
-This will sync components directly into `src/components/` maintaining the atomic design structure.
+This will sync components into `src/shared/ui/` maintaining the atomic design structure.
 
 #### Step 2: List Available Components
 
@@ -405,21 +402,32 @@ npx reacticx add gooey-switch  # Adds to micro-interactions/gooey-switch/
 After syncing, create barrel files for each category:
 
 ```typescript
-// src/components/atoms/index.ts
+// src/shared/ui/base/index.ts
 export { Button } from './button';
 export type { IButton } from './button/types';
 ```
 
 ```typescript
-// src/components/molecules/index.ts
+// src/shared/ui/molecules/index.ts
 export { Card } from './card';
 export type { ICard } from './card/types';
+export { Accordion } from './accordion';
+export type { IAccordion } from './accordion/types';
 ```
 
 ```typescript
-// src/components/micro-interactions/index.ts
+// src/shared/ui/micro-interactions/index.ts
 export { GooeySwitch } from './gooey-switch';
 export type { IGooeySwitch } from './gooey-switch/types';
+export { SpinButton } from './spin-button';
+export type { ISpinButton } from './spin-button/types';
+```
+
+```typescript
+// src/shared/ui/index.ts (main barrel)
+export * from './base';
+export * from './molecules';
+export * from './micro-interactions';
 ```
 
 ---
@@ -636,28 +644,25 @@ After integrating a Reactix component:
 
 Track which Reactix components have been integrated:
 
-### Atoms
+### Base
 
 | Component | Status | Sync Command | Location | Notes |
 |-----------|--------|--------------|----------|-------|
-| button | ⏳ Pending | `npx reacticx add button` | `src/components/atoms/button/` | - |
-| input | ⏳ Pending | `npx reacticx add input` | `src/components/atoms/input/` | - |
-| text | ⏳ Pending | `npx reacticx add text` | `src/components/atoms/text/` | - |
+| button | ✅ Synced | `npx reacticx add button` | `src/shared/ui/base/button/` | - |
 
 ### Molecules
 
 | Component | Status | Sync Command | Location | Notes |
 |-----------|--------|--------------|----------|-------|
-| accordion | ⏳ Pending | `npx reacticx add accordion` | `src/components/molecules/accordion/` | - |
-| card | ⏳ Pending | `npx reacticx add card` | `src/components/molecules/card/` | - |
-| modal | ⏳ Pending | `npx reacticx add modal` | `src/components/molecules/modal/` | - |
+| accordion | ✅ Synced | `npx reacticx add accordion` | `src/shared/ui/molecules/accordion/` | - |
+| card | ✅ Synced | `npx reacticx add card` | `src/shared/ui/molecules/card/` | - |
 
 ### Micro-interactions
 
 | Component | Status | Sync Command | Location | Notes |
 |-----------|--------|--------------|----------|-------|
-| gooey-switch | ⏳ Pending | `npx reacticx add gooey-switch` | `src/components/micro-interactions/gooey-switch/` | - |
-| spin-button | ⏳ Pending | `npx reacticx add spin-button` | `src/components/micro-interactions/spin-button/` | - |
+| gooey-switch | ✅ Synced | `npx reacticx add gooey-switch` | `src/shared/ui/micro-interactions/gooey-switch/` | - |
+| spin-button | ✅ Synced | `npx reacticx add spin-button` | `src/shared/ui/micro-interactions/spin-button/` | - |
 
 **Legend:**
 - ✅ Integrated
