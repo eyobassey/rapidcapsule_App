@@ -64,3 +64,6 @@ export * from './responsive';
 
 // Style utilities
 export * from './style/style-helpers';
+
+// Font utilities
+export * from './font';

@@ -1,3 +1,7 @@
+import { Platform } from 'react-native';
+
+import { FONT_FAMILIES } from './fonts';
+
 // Light theme
 export const lightTheme = {
   colors: {
@@ -61,6 +65,7 @@ export const lightTheme = {
       semibold: '600' as const,
       bold: '700' as const,
     },
+    fontFamily: Platform.OS === 'ios' ? FONT_FAMILIES.ios : FONT_FAMILIES.android,
   },
 } as const;
 
@@ -127,5 +132,6 @@ export const darkTheme = {
       semibold: '600' as const,
       bold: '700' as const,
     },
+    fontFamily: Platform.OS === 'ios' ? FONT_FAMILIES.ios : FONT_FAMILIES.android,
   },
 } as const;
