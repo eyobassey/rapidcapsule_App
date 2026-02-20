@@ -58,3 +58,6 @@ export * from './device/device.utils';
 
 // Async utilities
 export * from './async/async.utils';
+
+// Responsive utilities
+export * from './responsive';

@@ -4,11 +4,28 @@
  * Device and platform detection utilities
  *
  * Created: February 13, 2026
+ * Updated: February 18, 2026
  * Author: Aarav Mishra
  */
 
 import Constants from 'expo-constants';
-import { Platform } from 'react-native';
+import { Dimensions, Platform, ScaledSize } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+/**
+ * Device orientation type
+ */
+export type DeviceOrientation = 'portrait' | 'landscape';
+
+/**
+ * Screen dimensions type
+ */
+export interface ScreenDimensions {
+  width: number;
+  height: number;
+  scale: number;
+  fontScale: number;
+}
 
 /**
  * Check if running on iOS
@@ -69,24 +86,98 @@ export const getBuildNumber = (): string => {
 };
 
 /**
- * Check if device is a tablet
+ * Get current screen dimensions
  */
-export const isTablet = (): boolean => {
-  // This is a simple check - you might want to use a library like react-native-device-info
-  // for more accurate detection
-  return false; // TODO: Implement proper tablet detection
+export const getScreenDimensions = (): ScreenDimensions => {
+  const { width, height, scale, fontScale } = Dimensions.get('window');
+  return { width, height, scale, fontScale };
 };
 
 /**
- * Get safe area insets (requires react-native-safe-area-context)
+ * Get current device orientation
+ * @returns 'portrait' | 'landscape'
  */
-export const getSafeAreaInsets = () => {
-  // This would typically use useSafeAreaInsets hook
-  // Returning default values here
-  return {
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  };
+export const getDeviceOrientation = (): DeviceOrientation => {
+  const { width, height } = Dimensions.get('window');
+  return width > height ? 'landscape' : 'portrait';
+};
+
+/**
+ * Check if device is in landscape orientation
+ */
+export const isLandscape = (): boolean => {
+  return getDeviceOrientation() === 'landscape';
+};
+
+/**
+ * Check if device is in portrait orientation
+ */
+export const isPortrait = (): boolean => {
+  return getDeviceOrientation() === 'portrait';
+};
+
+/**
+ * Check if device is a tablet based on screen dimensions
+ * Uses breakpoint-based detection (md breakpoint = 768px)
+ */
+export const isTablet = (): boolean => {
+  const { width, height } = Dimensions.get('window');
+  const minDimension = Math.min(width, height);
+  // Consider device a tablet if smallest dimension is >= 768px (md breakpoint)
+  return minDimension >= 768;
+};
+
+/**
+ * Check if device is a phone based on screen dimensions
+ */
+export const isPhone = (): boolean => {
+  return !isTablet();
+};
+
+/**
+ * Hook to get safe area insets
+ * Uses react-native-safe-area-context
+ *
+ * @example
+ * ```tsx
+ * function MyComponent() {
+ *   const insets = useSafeAreaInsets();
+ *   return <View style={{ paddingTop: insets.top }} />;
+ * }
+ * ```
+ */
+export { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+/**
+ * Get device type category
+ * @returns 'phone' | 'tablet'
+ */
+export const getDeviceType = (): 'phone' | 'tablet' => {
+  return isTablet() ? 'tablet' : 'phone';
+};
+
+/**
+ * Get pixel ratio
+ */
+export const getPixelRatio = (): number => {
+  return Dimensions.get('window').scale;
+};
+
+/**
+ * Get font scale
+ */
+export const getFontScale = (): number => {
+  return Dimensions.get('window').fontScale;
+};
+
+/**
+ * Check if device has notch (iOS only, approximate)
+ */
+export const hasNotch = (): boolean => {
+  if (!isIOS()) {
+    return false;
+  }
+  const { height } = Dimensions.get('window');
+  // iPhone X and later have notch (height >= 812)
+  return height >= 812;
 };

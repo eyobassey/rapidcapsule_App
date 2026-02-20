@@ -27,6 +27,7 @@ docs/
     ├── api-service-layer.md          # API service layer usage guide
     ├── utilities.md                  # Utilities reference guide
     ├── components.md                 # Base components guide
+    ├── responsive-design.md         # Responsive design guide
     └── linting-and-commits.md        # ESLint, Prettier, and Conventional Commits guide
 ```
 
@@ -120,6 +121,18 @@ docs/
   - Accessibility guidelines
   - Usage examples and best practices
 
+#### [Responsive Design Guide](./guides/responsive-design.md)
+
+- **Created**: February 18, 2026
+- **Purpose**: Production-grade responsive design implementation guide
+- **Contents**:
+  - Why not use dimension-based scaling libraries
+  - react-native-unistyles breakpoint system
+  - Responsive design patterns and best practices
+  - Component examples
+  - Testing responsive designs
+  - Performance considerations
+
 #### [Linting and Commits Guide](./guides/linting-and-commits.md)
 
 - **Created**: February 13, 2026
@@ -141,6 +154,7 @@ docs/
 - **Security**: [Storage Security Guide](./security/storage-security.md)
 - **Utilities**: [Utilities Guide](./guides/utilities.md)
 - **Components**: [Components Guide](./guides/components.md)
+- **Responsive Design**: [Responsive Design Guide](./guides/responsive-design.md)
 - **Linting**: [Linting and Commits Guide](./guides/linting-and-commits.md)
 
 ---
