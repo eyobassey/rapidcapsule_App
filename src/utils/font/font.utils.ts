@@ -24,7 +24,7 @@ const FONT_ASSETS = {
   // Android: Open Runde fonts (OTF format)
   'OpenRunde-Regular': require('../../../assets/fonts/OpenRunde-Regular.otf'),
   'OpenRunde-Medium': require('../../../assets/fonts/OpenRunde-Medium.otf'),
-  'OpenRunde-SemiBold': require('../../../assets/fonts/OpenRunde-SemiBold.otf'),
+  'OpenRunde-SemiBold': require('../../../assets/fonts/OpenRunde-Semibold.otf'),
   'OpenRunde-Bold': require('../../../assets/fonts/OpenRunde-Bold.otf'),
 } as const;
 
