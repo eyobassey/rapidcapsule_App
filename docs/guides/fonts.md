@@ -34,21 +34,24 @@ Open Runde is a rounded variant of Inter, designed to be similar to SF Pro Round
 #### Download Instructions
 
 1. Visit: https://github.com/lauridskern/open-runde/releases/latest
-2. Download `OpenRunde-1.0.1.zip`
+2. Download the latest release ZIP file
 3. Extract the ZIP file
-4. Copy the following font files to `assets/fonts/`:
-   - `OpenRunde-Regular.ttf`
-   - `OpenRunde-Medium.ttf`
-   - `OpenRunde-SemiBold.ttf`
-   - `OpenRunde-Bold.ttf`
+4. Navigate to the `otf` folder in the extracted files
+5. Copy the following font files to `assets/fonts/`:
+   - `OpenRunde-Regular.otf`
+   - `OpenRunde-Medium.otf`
+   - `OpenRunde-SemiBold.otf`
+   - `OpenRunde-Bold.otf`
+
+**Note**: The release contains both OTF and WOFF formats. Use the OTF files from the `otf` folder (React Native/Expo supports OTF format).
 
 **Required Font Files:**
 ```
 assets/fonts/
-├── OpenRunde-Regular.ttf
-├── OpenRunde-Medium.ttf
-├── OpenRunde-SemiBold.ttf
-├── OpenRunde-Bold.ttf
+├── OpenRunde-Regular.otf
+├── OpenRunde-Medium.otf
+├── OpenRunde-SemiBold.otf
+├── OpenRunde-Bold.otf
 └── README.md
 ```
 
@@ -170,10 +173,11 @@ Font weights are standardized across platforms:
 
 ### Fonts Not Loading on Android
 
-1. **Check font files exist**: Ensure all 4 Open Runde font files are in `assets/fonts/`
-2. **Check file names**: Font file names must match exactly (case-sensitive)
-3. **Rebuild app**: After adding fonts, rebuild the app (`pnpm run android`)
-4. **Check font loading**: Check console for font loading errors
+1. **Check font files exist**: Ensure all 4 Open Runde OTF font files are in `assets/fonts/`
+2. **Check file format**: Use OTF files (not WOFF) - React Native supports OTF format
+3. **Check file names**: Font file names must match exactly (case-sensitive, including `.otf` extension)
+4. **Rebuild app**: After adding fonts, rebuild the app (`pnpm run android`)
+5. **Check font loading**: Check console for font loading errors
 
 ### Fonts Not Displaying Correctly
 

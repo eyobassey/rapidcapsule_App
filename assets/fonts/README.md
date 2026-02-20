@@ -17,11 +17,14 @@ Open Runde fonts need to be downloaded and placed in this directory.
 
 1. Download the latest release from: https://github.com/lauridskern/open-runde/releases/latest
 2. Extract the ZIP file
-3. Copy the following font files to this directory:
-   - `OpenRunde-Regular.ttf`
-   - `OpenRunde-Medium.ttf`
-   - `OpenRunde-SemiBold.ttf`
-   - `OpenRunde-Bold.ttf`
+3. Navigate to the `otf` folder in the extracted files
+4. Copy the following font files to this directory:
+   - `OpenRunde-Regular.otf`
+   - `OpenRunde-Medium.otf`
+   - `OpenRunde-SemiBold.otf`
+   - `OpenRunde-Bold.otf`
+
+**Note**: The release contains both OTF and WOFF formats. Use the OTF files from the `otf` folder.
 
 #### Required Font Files
 
@@ -29,10 +32,10 @@ After downloading, this directory should contain:
 
 ```
 assets/fonts/
-├── OpenRunde-Regular.ttf
-├── OpenRunde-Medium.ttf
-├── OpenRunde-SemiBold.ttf
-├── OpenRunde-Bold.ttf
+├── OpenRunde-Regular.otf
+├── OpenRunde-Medium.otf
+├── OpenRunde-SemiBold.otf
+├── OpenRunde-Bold.otf
 └── README.md
 ```
 

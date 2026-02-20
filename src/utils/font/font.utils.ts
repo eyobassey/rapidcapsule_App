@@ -21,11 +21,11 @@ import { FONT_FAMILIES } from '@/config/fonts';
  */
 const FONT_ASSETS = {
   // iOS: SF Pro (system font, no loading needed)
-  // Android: Open Runde fonts
-  'OpenRunde-Regular': require('../../../assets/fonts/OpenRunde-Regular.ttf'),
-  'OpenRunde-Medium': require('../../../assets/fonts/OpenRunde-Medium.ttf'),
-  'OpenRunde-SemiBold': require('../../../assets/fonts/OpenRunde-SemiBold.ttf'),
-  'OpenRunde-Bold': require('../../../assets/fonts/OpenRunde-Bold.ttf'),
+  // Android: Open Runde fonts (OTF format)
+  'OpenRunde-Regular': require('../../../assets/fonts/OpenRunde-Regular.otf'),
+  'OpenRunde-Medium': require('../../../assets/fonts/OpenRunde-Medium.otf'),
+  'OpenRunde-SemiBold': require('../../../assets/fonts/OpenRunde-SemiBold.otf'),
+  'OpenRunde-Bold': require('../../../assets/fonts/OpenRunde-Bold.otf'),
 } as const;
 
 /**
