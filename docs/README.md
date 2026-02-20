@@ -28,6 +28,7 @@ docs/
     ├── utilities.md                  # Utilities reference guide
     ├── components.md                 # Base components guide
     ├── responsive-design.md         # Responsive design guide
+    ├── reactix-integration.md        # Reactix component integration guide
     └── linting-and-commits.md        # ESLint, Prettier, and Conventional Commits guide
 ```
 
@@ -133,6 +134,17 @@ docs/
   - Testing responsive designs
   - Performance considerations
 
+#### [Reactix Integration Guide](./guides/reactix-integration.md)
+
+- **Created**: February 18, 2026
+- **Purpose**: Guide for integrating Reactix components into the project
+- **Contents**:
+  - Reactix component library overview
+  - Integration workflow and best practices
+  - Adapting Reactix components to our design system
+  - Component categories and organization
+  - Testing and troubleshooting
+
 #### [Linting and Commits Guide](./guides/linting-and-commits.md)
 
 - **Created**: February 13, 2026
@@ -155,6 +167,7 @@ docs/
 - **Utilities**: [Utilities Guide](./guides/utilities.md)
 - **Components**: [Components Guide](./guides/components.md)
 - **Responsive Design**: [Responsive Design Guide](./guides/responsive-design.md)
+- **Reactix Integration**: [Reactix Integration Guide](./guides/reactix-integration.md)
 - **Linting**: [Linting and Commits Guide](./guides/linting-and-commits.md)
 
 ---

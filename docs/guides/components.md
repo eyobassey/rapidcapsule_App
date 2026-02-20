@@ -1,7 +1,7 @@
 # Base Components Guide
 
 **Created**: February 13, 2026  
-**Last Updated**: February 13, 2026  
+**Last Updated**: February 18, 2026  
 **Author**: Aarav Mishra  
 **Version**: 1.0.0
 
@@ -12,6 +12,25 @@
 This guide provides comprehensive documentation for all base components in the Rapid Capsule mobile app. All components follow accessibility standards (WCAG 2.1), industry best practices, and clean code principles.
 
 **Purpose**: Provides developers with production-ready, accessible, and consistent UI components that can be used throughout the application.
+
+---
+
+## Component Sources
+
+This project uses components from two sources:
+
+1. **Custom Base Components** (`src/components/base/`)
+   - Foundation components built specifically for this project
+   - Follow our design system and architecture
+   - See sections below for documentation
+
+2. **Reactix Components** (`src/components/reactix/`)
+   - Components adapted from [Reactix](https://www.reacticx.com/)
+   - Copy-paste component library with 60+ components
+   - Adapted to match our design system
+   - See [Reactix Integration Guide](./reactix-integration.md) for details
+
+**Note**: When choosing between custom and Reactix components, prefer Reactix components when available, as they provide more features and animations out of the box.
 
 ---
 
