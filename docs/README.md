@@ -17,7 +17,8 @@ docs/
 ├── README.md                          # This file - Documentation index
 ├── architecture/
 │   ├── service-layer.md              # Service layer architecture & implementation
-│   └── state-management.md           # State management architecture (React Query + Zustand)
+│   ├── state-management.md           # State management architecture (React Query + Zustand)
+│   └── component-strategy.md         # Component strategy: Custom base vs Reactix
 ├── security/
 │   └── storage-security.md           # Security & storage guide
 ├── roadmap/
@@ -59,6 +60,18 @@ docs/
   - When to use which
   - Store structure and examples
   - Performance considerations
+
+#### [Component Strategy](./architecture/component-strategy.md)
+
+- **Created**: February 18, 2026
+- **Purpose**: Strategic decision on custom base components vs Reactix components
+- **Contents**:
+  - Analysis of keeping custom base components
+  - When to use Reactix components
+  - Hybrid approach recommendation
+  - Component selection guidelines
+  - Migration strategy (if needed)
+  - Risk assessment
 
 ### Security Documentation
 
@@ -163,6 +176,7 @@ docs/
 - **Getting Started**: See [README.md](../README.md) in project root
 - **Service Layer**: [Service Layer Architecture](./architecture/service-layer.md)
 - **State Management**: [State Management Architecture](./architecture/state-management.md)
+- **Component Strategy**: [Component Strategy](./architecture/component-strategy.md)
 - **Security**: [Storage Security Guide](./security/storage-security.md)
 - **Utilities**: [Utilities Guide](./guides/utilities.md)
 - **Components**: [Components Guide](./guides/components.md)
