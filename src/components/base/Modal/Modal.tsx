@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
-import { AppButton } from '@/components/base/Button/Button';
+import { Button } from '@/shared/ui/atoms/button';
 import { AppText } from '@/components/base/Text/Text';
 import { BaseComponentProps } from '@/components/base/types';
 import { combineStyles, getExtendedThemeColors } from '@/components/base/utils/style-helpers';
@@ -193,22 +193,24 @@ export const AppModal: React.FC<AppModalProps> = ({
             {(primaryActionLabel || secondaryActionLabel) && (
               <View style={modalStyles.footer}>
                 {secondaryActionLabel && (
-                  <AppButton
-                    variant="outline"
-                    title={secondaryActionLabel}
+                  <Button
                     onPress={onSecondaryAction || onClose}
-                    style={modalStyles.footerButton}
-                    testID={testID ? `${testID}-secondary` : undefined}
-                  />
+                    width={100}
+                    height={44}
+                    backgroundColor={theme.colors.backgroundSecondary}
+                  >
+                    <AppText>{secondaryActionLabel}</AppText>
+                  </Button>
                 )}
                 {primaryActionLabel && (
-                  <AppButton
-                    variant="primary"
-                    title={primaryActionLabel}
+                  <Button
                     onPress={onPrimaryAction}
-                    style={modalStyles.footerButton}
-                    testID={testID ? `${testID}-primary` : undefined}
-                  />
+                    width={100}
+                    height={44}
+                    backgroundColor={theme.colors.primary}
+                  >
+                    <AppText style={{ color: '#FFFFFF' }}>{primaryActionLabel}</AppText>
+                  </Button>
                 )}
               </View>
             )}

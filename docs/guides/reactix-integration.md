@@ -42,9 +42,14 @@ molecules/          # Simple component combinations (accordion, card, modal)
 micro-interactions/ # Animated interactive components (gooey-switch, spin-button)
 ```
 
-**Total: 50 components** across these categories.
+**Total: 50+ components** across these categories.
 
-**Note**: Components are synced into `src/shared/ui/` using Reactix CLI, maintaining the atomic design structure. Note: Reactix CLI may create `base/` directory for some components, but we rename it to `atoms/` to match standard Reactix convention.
+**Current Structure:**
+- Components synced to `src/shared/ui/` via Reactix CLI
+- Organized as: `atoms/`, `molecules/`, `micro-interactions/`
+- Custom base components remain in `src/components/base/`
+
+**Note**: Components are synced into `src/shared/ui/` using Reactix CLI, maintaining the atomic design structure. Reactix CLI creates `base/` directory for button component, which we rename to `atoms/` to match standard Reactix convention.
 
 ### Component Categories
 
@@ -118,23 +123,28 @@ npx reacticx add button --overwrite
 
 **Output Structure:**
 ```
-src/components/
+src/shared/ui/
 ├── atoms/
 │   └── button/
 │       ├── index.tsx
 │       └── types.ts
 ├── molecules/
+│   ├── accordion/
+│   │   ├── index.tsx
+│   │   ├── types.ts
+│   │   └── presets.ts
 │   └── card/
 │       ├── index.tsx
 │       └── types.ts
-├── micro-interactions/
-│   └── gooey-switch/
-│       ├── index.tsx
-│       └── types.ts
-└── base/              # Our custom base components
-    ├── Button/
-    ├── Card/
-    └── ...
+└── micro-interactions/
+    ├── gooey-switch/
+    │   ├── index.tsx
+    │   ├── types.ts
+    │   └── const.ts
+    └── spin-button/
+        ├── index.tsx
+        ├── types.ts
+        └── conf.ts
 ```
 
 ### Option 2: Manual Copy-Paste
@@ -149,29 +159,36 @@ Copy the component code from Reactix website. Components are provided as complet
 
 #### Step 3: Create Component File
 
-Components will be synced directly into `src/components/` using the CLI, maintaining atomic design structure:
+Components are synced into `src/shared/ui/` using the CLI, maintaining atomic design structure:
 
 ```
-src/components/
+src/shared/ui/
 ├── atoms/
-│   ├── button/
-│   │   ├── index.tsx
-│   │   └── types.ts
-│   ├── input/
-│   │   ├── index.tsx
-│   │   └── types.ts
-│   └── text/
+│   └── button/
 │       ├── index.tsx
 │       └── types.ts
 ├── molecules/
 │   ├── accordion/
-│   ├── card/
-│   └── modal/
-├── micro-interactions/
-│   ├── gooey-switch/
-│   └── spin-button/
-└── base/              # Our custom base components
-    ├── Button/
+│   │   ├── index.tsx
+│   │   ├── types.ts
+│   │   └── presets.ts
+│   └── card/
+│       ├── index.tsx
+│       └── types.ts
+└── micro-interactions/
+    ├── gooey-switch/
+    │   ├── index.tsx
+    │   ├── types.ts
+    │   └── const.ts
+    └── spin-button/
+        ├── index.tsx
+        ├── types.ts
+        └── conf.ts
+
+src/components/
+└── base/              # Our custom base components (separate)
+    ├── Text/
+    ├── Input/
     ├── Card/
     └── ...
 ```
@@ -399,7 +416,7 @@ npx reacticx add gooey-switch  # Adds to micro-interactions/gooey-switch/
 
 ### Barrel Exports
 
-After syncing, create barrel files for each category:
+After syncing, create barrel files for each category (optional but recommended):
 
 ```typescript
 // src/shared/ui/atoms/index.ts
@@ -428,6 +445,13 @@ export type { ISpinButton } from './spin-button/types';
 export * from './atoms';
 export * from './molecules';
 export * from './micro-interactions';
+```
+
+**Current Usage**: Components can be imported directly from their paths:
+```typescript
+// Direct import (current approach)
+import { Button } from '@/shared/ui/atoms/button';
+import { Accordion } from '@/shared/ui/molecules/accordion';
 ```
 
 ---

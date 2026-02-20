@@ -16,7 +16,7 @@ This document outlines the strategic decision on whether to maintain custom base
 ## Current State
 
 ### Custom Base Components (`src/components/base/`)
-- ✅ **10 components** already built and integrated
+- ✅ **9 components** already built and integrated
 - ✅ Fully integrated with our design system (Unistyles, theme tokens)
 - ✅ Accessibility features (WCAG 2.1 Level AA)
 - ✅ Follow our naming convention (App prefix)
@@ -24,7 +24,6 @@ This document outlines the strategic decision on whether to maintain custom base
 - ✅ Responsive design built-in
 
 **Components:**
-- AppButton
 - AppText
 - AppInput
 - AppCard
@@ -35,19 +34,27 @@ This document outlines the strategic decision on whether to maintain custom base
 - AppSeparator
 - AppPressable
 
+**Note**: We use Reactix `Button` component from `src/shared/ui/atoms/button/` instead of a custom AppButton.
+
 ### Reactix Components (`src/shared/ui/`)
 - ✅ **5 components** synced so far
 - ✅ Rich animations and interactions
 - ✅ Industry-standard implementations
-- ⚠️ Need adaptation to our design system
+- ⚠️ May need adaptation to our design system
 - ⚠️ Different naming convention (no App prefix)
 
 **Components Synced:**
-- Button (atoms)
-- Accordion (molecules)
-- Card (molecules)
-- GooeySwitch (micro-interactions)
-- SpinButton (micro-interactions)
+
+**Atoms (`src/shared/ui/atoms/`):**
+- `button` - Customizable button with press animation
+
+**Molecules (`src/shared/ui/molecules/`):**
+- `accordion` - Collapsible content sections
+- `card` - Container component
+
+**Micro-interactions (`src/shared/ui/micro-interactions/`):**
+- `gooey-switch` - Animated toggle switch
+- `spin-button` - Button with spin animation
 
 ---
 
@@ -135,7 +142,6 @@ All our components use "App" prefix:
 #### 1. **Core UI Elements** (High Usage, Deep Integration)
 These are used everywhere and benefit from our design system integration:
 
-- ✅ **AppButton** - Used extensively, fully integrated
 - ✅ **AppText** - Typography foundation, theme-integrated
 - ✅ **AppInput** - Form foundation, validation integrated
 - ✅ **AppCard** - Layout foundation, responsive
@@ -146,6 +152,8 @@ These are used everywhere and benefit from our design system integration:
 - Deep integration with our design system
 - Already production-ready
 - Migration would be high-risk, low-reward
+
+**Note**: We use Reactix `Button` component instead of custom AppButton for its rich animations.
 
 #### 2. **Components Requiring Deep Customization**
 - **AppLoading** - Custom loading states for our app
@@ -205,7 +213,7 @@ Components used in specific contexts:
 
 | Component | Keep Custom? | Use Reactix? | Rationale |
 |-----------|--------------|--------------|-----------|
-| **Button** | ✅ Yes | ❌ No | Core component, fully integrated, used everywhere |
+| **Button** | ❌ No | ✅ Yes | Using Reactix Button from atoms/, rich animations |
 | **Text** | ✅ Yes | ❌ No | Typography foundation, theme-integrated |
 | **Input** | ✅ Yes | ❌ No | Form foundation, validation integrated |
 | **Card** | ✅ Yes | ⚠️ Maybe | Keep ours for standard cards, use Reactix for animated variants |
@@ -340,14 +348,17 @@ Components used in specific contexts:
 
 ```typescript
 // Custom base components (core UI)
-import { AppButton, AppText, AppInput } from '@/components/base';
+import { AppText, AppInput, AppCard, AppModal } from '@/components/base';
 
 // Reactix components (animated/specialized)
+import { Button } from '@/shared/ui/atoms/button';
 import { Accordion } from '@/shared/ui/molecules/accordion';
+import { Card } from '@/shared/ui/molecules/card';
 import { GooeySwitch } from '@/shared/ui/micro-interactions/gooey-switch';
+import { SpinButton } from '@/shared/ui/micro-interactions/spin-button';
 
-// Wrapped Reactix components (if adapted)
-import { AppAnimatedCard } from '@/components/reactix-wrappers';
+// Wrapped Reactix components (if adapted - create as needed)
+// import { AppAnimatedCard } from '@/components/reactix-wrappers';
 ```
 
 ### When to Create Wrapper
@@ -360,7 +371,7 @@ Create a wrapper component when:
 
 **Example:**
 ```typescript
-// src/components/reactix-wrappers/AppAccordion.tsx
+// src/components/reactix-wrappers/AppAccordion.tsx (if needed)
 import { Accordion } from '@/shared/ui/molecules/accordion';
 import { useUnistyles } from 'react-native-unistyles';
 
@@ -370,6 +381,8 @@ export const AppAccordion = ({ ...props }) => {
   return <Accordion {...adaptedProps} />;
 };
 ```
+
+**Current Approach**: Use Reactix components directly. Create wrappers only when design system integration is needed.
 
 ---
 
@@ -432,18 +445,26 @@ export const AppAccordion = ({ ...props }) => {
 
 ```
 src/components/
-├── base/              # Custom core components (KEEP)
-│   ├── Button/
-│   ├── Text/
-│   ├── Input/
-│   └── ...
-└── reactix-wrappers/  # Wrapped Reactix components (CREATE)
-    └── AppAccordion.tsx
+└── base/              # Custom core components (KEEP)
+    ├── Text/          ✅ Custom - typography foundation
+    ├── Input/         ✅ Custom - form foundation
+    ├── Card/          ✅ Custom - layout foundation
+    ├── Modal/         ✅ Custom - overlay foundation
+    ├── Loading/       ✅ Custom - loading states
+    ├── Badge/         ✅ Custom - health tech variants
+    ├── Avatar/        ✅ Custom - patient/doctor logic
+    ├── Separator/     ✅ Custom - spacing component
+    └── Pressable/     ✅ Custom - base pressable
 
-src/shared/ui/         # Raw Reactix components (USE DIRECTLY)
+src/shared/ui/         # Reactix components (USE DIRECTLY)
 ├── atoms/
+│   └── button/       ✅ Reactix - rich animations
 ├── molecules/
+│   ├── accordion/    ✅ Reactix - animated collapsible
+│   └── card/         ✅ Reactix - animated card variant
 └── micro-interactions/
+    ├── gooey-switch/ ✅ Reactix - animated toggle
+    └── spin-button/  ✅ Reactix - animated button
 ```
 
 ---

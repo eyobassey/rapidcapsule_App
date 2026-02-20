@@ -27,97 +27,54 @@ This project uses components from two sources:
 2. **Reactix Components** (`src/shared/ui/`)
    - Components synced from [Reactix](https://www.reacticx.com/) using CLI
    - Copy-paste component library with 50+ components
-   - Organized using atomic design pattern (`base/`, `molecules/`, `micro-interactions/`)
+   - Organized using atomic design pattern (`atoms/`, `molecules/`, `micro-interactions/`)
    - Synced via `npx reacticx add <component>` commands
    - See [Reactix Integration Guide](./reactix-integration.md) for details
+   - See [Component Strategy](../architecture/component-strategy.md) for when to use which
 
-**Note**: When choosing between custom and Reactix components, prefer Reactix components when available, as they provide more features and animations out of the box.
+**Component Selection**: 
+- **Custom base components** (`src/components/base/`) - Use for core UI elements that are deeply integrated with our design system
+- **Reactix components** (`src/shared/ui/`) - Use for complex animated components and components we don't have custom versions of
 
 ---
 
 ## Table of Contents
 
-1. [AppButton](#button)
-2. [AppText](#text)
-3. [AppInput](#input)
-4. [AppCard](#card)
-5. [AppLoading](#loading)
-6. [AppModal](#modal)
-7. [AppBadge](#badge)
-8. [AppAvatar](#avatar)
-9. [AppSeparator](#separator)
-10. [AppPressable](#pressable)
-11. [Accessibility Guidelines](#accessibility-guidelines)
-12. [Best Practices](#best-practices)
+1. [AppText](#text)
+2. [AppInput](#input)
+3. [AppCard](#card)
+4. [AppLoading](#loading)
+5. [AppModal](#modal)
+6. [AppBadge](#badge)
+7. [AppAvatar](#avatar)
+8. [AppSeparator](#separator)
+9. [AppPressable](#pressable)
+10. [Accessibility Guidelines](#accessibility-guidelines)
+11. [Best Practices](#best-practices)
 
 ---
 
-## AppButton
+## Component Usage
 
-### Import
+### Custom Base Components
 
-```typescript
-import { AppButton } from '@/components/base';
-```
-
-### Props
-
-- `title: string` - AppButton text (required)
-- `variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success'` - AppButton style
-- `size?: 'small' | 'medium' | 'large'` - AppButton size
-- `fullWidth?: boolean` - Full width button
-- `leftIcon?: ReactNode` - Left icon component
-- `rightIcon?: ReactNode` - Right icon component
-- `loading?: boolean` - AppLoading state
-- `disabled?: boolean` - Disabled state
-- `onPress?: () => void` - Press handler
-- `accessibilityLabel?: string` - Screen reader label
-- `accessibilityHint?: string` - Screen reader hint
-- `testID?: string` - Test identifier
-
-### Examples
+These are our custom components in `src/components/base/`:
 
 ```typescript
-// Basic button
-<AppAppButton title="Submit" onPress={handleSubmit} />
-
-// AppButton with variant
-<AppButton
-  title="Delete"
-  variant="danger"
-  onPress={handleDelete}
-/>
-
-// AppLoading button
-<AppButton
-  title="Save"
-  loading={isSaving}
-  onPress={handleSave}
-/>
-
-// AppButton with icons
-<AppButton
-  title="Share"
-  leftIcon={<ShareIcon />}
-  rightIcon={<ArrowIcon />}
-  onPress={handleShare}
-/>
-
-// Full width button
-<AppButton
-  title="Continue"
-  fullWidth
-  variant="primary"
-  onPress={handleContinue}
-/>
+import { AppText, AppInput, AppCard, AppModal } from '@/components/base';
 ```
 
-### Accessibility
+### Reactix Components
 
-- ✅ Minimum touch target size: 44x44pt (WCAG 2.5.5)
-- ✅ Proper accessibility labels and hints
-- ✅ Disabled and loading states announced
-- ✅ Keyboard navigation support
+For Button and other animated components, use Reactix components from `src/shared/ui/`:
+
+```typescript
+import { Button } from '@/shared/ui/atoms/button';
+import { Accordion } from '@/shared/ui/molecules/accordion';
+import { GooeySwitch } from '@/shared/ui/micro-interactions/gooey-switch';
+```
+
+**Note**: See [Component Strategy](../architecture/component-strategy.md) for guidelines on when to use custom vs Reactix components.
 
 ---
 
@@ -348,7 +305,7 @@ import { AppModal } from '@/components/base';
 - `onPrimaryAction?: () => void` - Primary action handler
 - `secondaryActionLabel?: string` - Secondary button text
 - `onSecondaryAction?: () => void` - Secondary action handler
-- `showCloseAppButton?: boolean` - Show close button
+- `showCloseButton?: boolean` - Show close button
 - `dismissible?: boolean` - Dismissible by backdrop
 - `size?: 'small' | 'medium' | 'large' | 'fullscreen'` - AppModal size
 
@@ -614,7 +571,7 @@ All components follow WCAG 2.1 Level AA standards:
 Components are designed to be composable:
 
 ```typescript
-// Example: Form with AppInput and AppButton
+// Example: Form with AppInput and Button
 <AppCard variant="elevated" padding="large">
   <AppText variant="h2">Login</AppText>
 
@@ -637,7 +594,7 @@ Components are designed to be composable:
     error={passwordError}
   />
 
-  <AppButton
+  <Button
     title="Sign In"
     fullWidth
     loading={isAppLoading}
