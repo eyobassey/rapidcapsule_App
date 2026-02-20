@@ -44,11 +44,11 @@ micro-interactions/ # Animated interactive components (gooey-switch, spin-button
 
 **Total: 50 components** across these categories.
 
-**Note**: Components are synced directly into `src/components/` using Reactix CLI, maintaining the atomic design structure.
+**Note**: Components are synced into `src/shared/ui/` using Reactix CLI, maintaining the atomic design structure. Note: Reactix CLI may create `base/` directory for some components, but we rename it to `atoms/` to match standard Reactix convention.
 
 ### Component Categories
 
-#### Base (`base/`)
+#### Atoms (`atoms/`)
 Basic UI elements (synced via `npx reacticx add <component>`):
 - `button` - Customizable button with press animation
 
@@ -402,7 +402,7 @@ npx reacticx add gooey-switch  # Adds to micro-interactions/gooey-switch/
 After syncing, create barrel files for each category:
 
 ```typescript
-// src/shared/ui/base/index.ts
+// src/shared/ui/atoms/index.ts
 export { Button } from './button';
 export type { IButton } from './button/types';
 ```
@@ -425,7 +425,7 @@ export type { ISpinButton } from './spin-button/types';
 
 ```typescript
 // src/shared/ui/index.ts (main barrel)
-export * from './base';
+export * from './atoms';
 export * from './molecules';
 export * from './micro-interactions';
 ```
@@ -644,11 +644,11 @@ After integrating a Reactix component:
 
 Track which Reactix components have been integrated:
 
-### Base
+### Atoms
 
 | Component | Status | Sync Command | Location | Notes |
 |-----------|--------|--------------|----------|-------|
-| button | ✅ Synced | `npx reacticx add button` | `src/shared/ui/base/button/` | - |
+| button | ✅ Synced | `npx reacticx add button` | `src/shared/ui/atoms/button/` | - |
 
 ### Molecules
 
