@@ -24,10 +24,11 @@ This project uses components from two sources:
    - Follow our design system and architecture
    - See sections below for documentation
 
-2. **Reactix Components** (`src/components/reactix/`)
-   - Components adapted from [Reactix](https://www.reacticx.com/)
-   - Copy-paste component library with 60+ components
-   - Adapted to match our design system
+2. **Reactix Components** (`src/components/atoms/`, `molecules/`, `micro-interactions/`)
+   - Components synced from [Reactix](https://www.reacticx.com/) using CLI
+   - Copy-paste component library with 50+ components
+   - Organized using atomic design pattern
+   - Synced via `npx reacticx add <component>` commands
    - See [Reactix Integration Guide](./reactix-integration.md) for details
 
 **Note**: When choosing between custom and Reactix components, prefer Reactix components when available, as they provide more features and animations out of the box.

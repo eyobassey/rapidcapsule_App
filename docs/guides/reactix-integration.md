@@ -44,24 +44,28 @@ micro-interactions/ # Animated interactive components (gooey-switch, spin-button
 
 **Total: 50 components** across these categories.
 
+**Note**: Components are synced directly into `src/components/` using Reactix CLI, maintaining the atomic design structure.
+
 ### Component Categories
 
 #### Atoms (`atoms/`)
-Basic, indivisible UI elements:
+Basic, indivisible UI elements (synced via `npx reacticx add <component>`):
 - `button` - Customizable button with press animation
 - `input` - Form input component
 - `text` - Typography component
 
 #### Molecules (`molecules/`)
-Simple combinations of atoms:
+Simple combinations of atoms (synced via CLI):
 - `accordion` - Collapsible content sections
 - `card` - Container component
 - `modal` - Overlay dialog component
 
 #### Micro-interactions (`micro-interactions/`)
-Animated interactive components:
+Animated interactive components (synced via CLI):
 - `gooey-switch` - Animated toggle switch
 - `spin-button` - Button with spin animation
+
+**Syncing**: All components are synced directly into `src/components/` using Reactix CLI commands.
 
 ---
 
@@ -71,19 +75,21 @@ Animated interactive components:
 
 Reactix provides a CLI tool for easy component integration:
 
-#### Step 1: Initialize Reactix Config (Optional)
+#### Step 1: Initialize Reactix Config
 
 ```bash
 npx reacticx init
 ```
 
-This creates `component.config.json` in project root. For our project, we'll customize it:
+This creates `component.config.json` in project root. Configure it for our project:
 
 ```json
 {
-  "outDir": "src/components/reactix"
+  "outDir": "src/components"
 }
 ```
+
+This will sync components directly into `src/components/` maintaining the atomic design structure.
 
 #### Step 2: List Available Components
 
@@ -97,14 +103,17 @@ npx reacticx list -c molecules
 npx reacticx list -c micro-interactions
 ```
 
-#### Step 3: Add Component
+#### Step 3: Sync Components
 
 ```bash
-# Add a component (defaults to atoms/)
+# Add a component (will be placed in atoms/ by default)
 npx reacticx add button
 
-# Add to specific directory
-npx reacticx add card --dir src/components/reactix/molecules
+# Add molecule component
+npx reacticx add card
+
+# Add micro-interaction component
+npx reacticx add gooey-switch
 
 # Overwrite existing component
 npx reacticx add button --overwrite
@@ -112,7 +121,7 @@ npx reacticx add button --overwrite
 
 **Output Structure:**
 ```
-src/components/reactix/
+src/components/
 ├── atoms/
 │   └── button/
 │       ├── index.tsx
@@ -121,10 +130,14 @@ src/components/reactix/
 │   └── card/
 │       ├── index.tsx
 │       └── types.ts
-└── micro-interactions/
-    └── gooey-switch/
-        ├── index.tsx
-        └── types.ts
+├── micro-interactions/
+│   └── gooey-switch/
+│       ├── index.tsx
+│       └── types.ts
+└── base/              # Our custom base components
+    ├── Button/
+    ├── Card/
+    └── ...
 ```
 
 ### Option 2: Manual Copy-Paste
@@ -139,10 +152,10 @@ Copy the component code from Reactix website. Components are provided as complet
 
 #### Step 3: Create Component File
 
-Create component files following the atomic design structure:
+Components will be synced directly into `src/components/` using the CLI, maintaining atomic design structure:
 
 ```
-src/components/reactix/
+src/components/
 ├── atoms/
 │   ├── button/
 │   │   ├── index.tsx
@@ -157,9 +170,13 @@ src/components/reactix/
 │   ├── accordion/
 │   ├── card/
 │   └── modal/
-└── micro-interactions/
-    ├── gooey-switch/
-    └── spin-button/
+├── micro-interactions/
+│   ├── gooey-switch/
+│   └── spin-button/
+└── base/              # Our custom base components
+    ├── Button/
+    ├── Card/
+    └── ...
 ```
 
 ### Step 4: Adapt to Our Design System
@@ -192,36 +209,34 @@ src/components/reactix/
 
 ### Step 5: Export from Barrel File
 
-Add the component to the appropriate category barrel file:
+After syncing components via CLI, create barrel exports for each category:
 
 **For atoms:**
 ```typescript
-// src/components/reactix/atoms/index.ts
-export { AppButton } from './button';
-export type { AppButtonProps } from './button/types';
+// src/components/atoms/index.ts
+export { Button } from './button';
+export type { IButton } from './button/types';
 ```
 
 **For molecules:**
 ```typescript
-// src/components/reactix/molecules/index.ts
-export { AppCard } from './card';
-export type { AppCardProps } from './card/types';
+// src/components/molecules/index.ts
+export { Card } from './card';
+export type { ICard } from './card/types';
 ```
 
 **For micro-interactions:**
 ```typescript
-// src/components/reactix/micro-interactions/index.ts
-export { AppGooeySwitch } from './gooey-switch';
-export type { AppGooeySwitchProps } from './gooey-switch/types';
+// src/components/micro-interactions/index.ts
+export { GooeySwitch } from './gooey-switch';
+export type { IGooeySwitch } from './gooey-switch/types';
 ```
 
-Then export from main barrel:
-```typescript
-// src/components/reactix/index.ts
-export * from './atoms';
-export * from './molecules';
-export * from './micro-interactions';
-```
+**Note**: After syncing, you'll need to:
+1. Adapt components to use our design system (Unistyles, theme tokens)
+2. Rename to follow "App" prefix convention if needed
+3. Add accessibility props
+4. Update exports in barrel files
 
 ---
 
@@ -343,61 +358,68 @@ When integrating a Reactix component, ensure:
 
 ## Component Directory Structure
 
-Following Reactix's atomic design pattern:
+Components are synced directly into `src/components/` using Reactix CLI, maintaining atomic design:
 
 ```
-src/components/reactix/
-├── atoms/                    # Basic UI elements
+src/components/
+├── atoms/                    # Basic UI elements (synced via CLI)
 │   ├── button/
 │   │   ├── index.tsx
 │   │   └── types.ts
 │   ├── input/
-│   │   ├── index.tsx
-│   │   └── types.ts
 │   └── text/
-│       ├── index.tsx
-│       └── types.ts
-├── molecules/                # Component combinations
+├── molecules/                # Component combinations (synced via CLI)
 │   ├── accordion/
-│   │   ├── index.tsx
-│   │   └── types.ts
 │   ├── card/
-│   │   ├── index.tsx
-│   │   └── types.ts
 │   └── modal/
-│       ├── index.tsx
-│       └── types.ts
-├── micro-interactions/       # Animated components
+├── micro-interactions/       # Animated components (synced via CLI)
 │   ├── gooey-switch/
-│   │   ├── index.tsx
-│   │   └── types.ts
 │   └── spin-button/
-│       ├── index.tsx
-│       └── types.ts
-└── index.ts                  # Barrel export
+└── base/                     # Our custom base components
+    ├── Button/
+    ├── Card/
+    └── ...
+```
+
+### Syncing Components
+
+Use Reactix CLI to sync components:
+
+```bash
+# Initialize config (one-time setup)
+npx reacticx init
+
+# This creates component.config.json:
+{
+  "outDir": "src/components"
+}
+
+# Sync components
+npx reacticx add button        # Adds to atoms/button/
+npx reacticx add card          # Adds to molecules/card/
+npx reacticx add gooey-switch  # Adds to micro-interactions/gooey-switch/
 ```
 
 ### Barrel Exports
 
-Each category should have its own barrel file:
+After syncing, create barrel files for each category:
 
 ```typescript
-// src/components/reactix/atoms/index.ts
-export { AppButton } from './button';
-export type { AppButtonProps } from './button/types';
-
-export { AppInput } from './input';
-export type { AppInputProps } from './input/types';
-
-export { AppText } from './text';
-export type { AppTextProps } from './text/types';
+// src/components/atoms/index.ts
+export { Button } from './button';
+export type { IButton } from './button/types';
 ```
 
 ```typescript
-// src/components/reactix/index.ts
-export * from './atoms';
-export * from './molecules';
-export * from './micro-interactions';
+// src/components/molecules/index.ts
+export { Card } from './card';
+export type { ICard } from './card/types';
+```
+
+```typescript
+// src/components/micro-interactions/index.ts
+export { GooeySwitch } from './gooey-switch';
+export type { IGooeySwitch } from './gooey-switch/types';
 ```
 
 ---
@@ -616,26 +638,26 @@ Track which Reactix components have been integrated:
 
 ### Atoms
 
-| Component | Status | Location | Notes |
-|-----------|--------|----------|-------|
-| button | ⏳ Pending | `atoms/button/` | - |
-| input | ⏳ Pending | `atoms/input/` | - |
-| text | ⏳ Pending | `atoms/text/` | - |
+| Component | Status | Sync Command | Location | Notes |
+|-----------|--------|--------------|----------|-------|
+| button | ⏳ Pending | `npx reacticx add button` | `src/components/atoms/button/` | - |
+| input | ⏳ Pending | `npx reacticx add input` | `src/components/atoms/input/` | - |
+| text | ⏳ Pending | `npx reacticx add text` | `src/components/atoms/text/` | - |
 
 ### Molecules
 
-| Component | Status | Location | Notes |
-|-----------|--------|----------|-------|
-| accordion | ⏳ Pending | `molecules/accordion/` | - |
-| card | ⏳ Pending | `molecules/card/` | - |
-| modal | ⏳ Pending | `molecules/modal/` | - |
+| Component | Status | Sync Command | Location | Notes |
+|-----------|--------|--------------|----------|-------|
+| accordion | ⏳ Pending | `npx reacticx add accordion` | `src/components/molecules/accordion/` | - |
+| card | ⏳ Pending | `npx reacticx add card` | `src/components/molecules/card/` | - |
+| modal | ⏳ Pending | `npx reacticx add modal` | `src/components/molecules/modal/` | - |
 
 ### Micro-interactions
 
-| Component | Status | Location | Notes |
-|-----------|--------|----------|-------|
-| gooey-switch | ⏳ Pending | `micro-interactions/gooey-switch/` | - |
-| spin-button | ⏳ Pending | `micro-interactions/spin-button/` | - |
+| Component | Status | Sync Command | Location | Notes |
+|-----------|--------|--------------|----------|-------|
+| gooey-switch | ⏳ Pending | `npx reacticx add gooey-switch` | `src/components/micro-interactions/gooey-switch/` | - |
+| spin-button | ⏳ Pending | `npx reacticx add spin-button` | `src/components/micro-interactions/spin-button/` | - |
 
 **Legend:**
 - ✅ Integrated
