@@ -46,6 +46,7 @@ This is the **mobile application** for **Rapid Capsule**, a comprehensive AI-pow
 ## 🚀 Tech Stack
 
 ### Core Technologies
+
 - **React Native** - Cross-platform mobile framework
 - **Expo** - Development platform and toolchain
 - **TypeScript** - Type-safe JavaScript
@@ -53,17 +54,20 @@ This is the **mobile application** for **Rapid Capsule**, a comprehensive AI-pow
 - **PNPM** - Fast, disk-efficient package manager
 
 ### State Management & Data
+
 - **React Query** (`@tanstack/react-query`) - Server state management and API caching
 - **Zustand** - Lightweight client state management
 - **React Hook Form** - Form handling with validation
 - **Zod** - Schema validation
 
 ### Networking & Storage
+
 - **Axios** - HTTP client for API communication
 - **MMKV** (`react-native-mmkv`) - Fast key-value storage for offline data
 - **@react-native-community/netinfo** - Network connectivity monitoring
 
 ### UI & Styling
+
 - **Unistyles** (`react-native-unistyles`) - Styling system with theme support
 - **React Native Reanimated** - Smooth animations
 - **React Native Gesture Handler** - Touch gestures
@@ -71,6 +75,7 @@ This is the **mobile application** for **Rapid Capsule**, a comprehensive AI-pow
 - **@shopify/flash-list** - High-performance list component
 
 ### Internationalization
+
 - **i18next** & **react-i18next** - Multi-language support
 
 ---
@@ -100,12 +105,14 @@ This project uses **PNPM** for the following reasons:
 ## 📥 Installation
 
 1. **Clone the repository:**
+
 ```bash
 git clone https://github.com/eyobassey/rapidcapusle.git
 cd rapidcapusle
 ```
 
 2. **Install dependencies:**
+
 ```bash
 pnpm install
 ```
@@ -116,6 +123,7 @@ pnpm install
    - Add other required environment variables (see `.env.example` if available)
 
 4. **Start the development server:**
+
 ```bash
 pnpm start
 ```
@@ -124,9 +132,10 @@ pnpm start
 
 ## 🎯 Available Scripts
 
-- `pnpm start` - Start Expo development server
-- `pnpm android` - Run on Android device/emulator
-- `pnpm ios` - Run on iOS simulator
+- `pnpm start` - Start Expo development server (Expo Go compatible)
+- `pnpm start:dev-client` - Start Metro in custom dev client mode
+- `pnpm android` - Build & run native Android app (custom dev client)
+- `pnpm ios` - Build & run native iOS app (custom dev client)
 - `pnpm web` - Run on web browser
 
 ---
@@ -172,6 +181,7 @@ Create new routes by adding files to the `app/` directory. See [Expo Router docu
 ### PNPM Configuration (`.npmrc`)
 
 The project includes optimized PNPM settings:
+
 - Strict peer dependencies for security
 - Frozen lockfile for consistent builds
 - Auto-install peers enabled
@@ -179,11 +189,13 @@ The project includes optimized PNPM settings:
 ### TypeScript
 
 Full TypeScript support with strict mode enabled. Path aliases configured:
+
 - `@/*` → Root directory
 
 ### Environment Variables
 
 Create a `.env` file with the following variables:
+
 ```
 API_BASE_URL=https://api.rapidcapsule.com
 WS_URL=wss://api.rapidcapsule.com
@@ -239,8 +251,12 @@ This is a production-grade health tech application. The setup includes:
 1. **Clone the repository**
 2. **Install dependencies**: `pnpm install`
 3. **Configure environment variables** (create `.env` file)
-4. **Start the dev server**: `pnpm start`
-5. **Press `i` for iOS simulator or `a` for Android emulator**
+4. **Start the dev server**:
+   - For **custom dev client** (recommended for native modules):
+     - Build once with `pnpm ios` or `pnpm android`
+     - Then run `pnpm start:dev-client`
+   - For **Expo Go** (only if you are not using native modules):
+     - Run `pnpm start` and press `i` (iOS) or `a` (Android)
 
 ---
 
@@ -288,7 +304,7 @@ The mobile app follows a modern React Native architecture:
 ## 👤 Author
 
 **Aarav Mishra**
-*Software Engineer (Mobile)*
+_Software Engineer (Mobile)_
 
 - Email: aarav@rapidcapsule.com
 - GitHub: [@aarav-rapidcapsule](https://github.com/aarav-rapidcapsule)

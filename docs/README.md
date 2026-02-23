@@ -1,6 +1,6 @@
 # Rapid Capsule Mobile App - Documentation
 
-**Last Updated**: February 13, 2026  
+**Last Updated**: February 23, 2026  
 **Author**: Aarav Mishra  
 **Version**: 1.0.0
 
@@ -28,8 +28,9 @@ docs/
     ├── api-service-layer.md          # API service layer usage guide
     ├── utilities.md                  # Utilities reference guide
     ├── components.md                 # Base components guide
-    ├── responsive-design.md         # Responsive design guide
+    ├── responsive-design.md          # Responsive design guide
     ├── reactix-integration.md        # Reactix component integration guide
+    ├── native-dev-client.md          # Native setup & custom dev client guide
     └── linting-and-commits.md        # ESLint, Prettier, and Conventional Commits guide
 ```
 
@@ -158,6 +159,16 @@ docs/
   - Component categories and organization
   - Testing and troubleshooting
 
+#### [Native Setup & Dev Client Guide](./guides/native-dev-client.md)
+
+- **Created**: February 23, 2026
+- **Purpose**: Guide for working with native dependencies and the custom dev client
+- **Contents**:
+  - Expo prebuild and native project sync
+  - Custom dev client workflow (iOS and Android)
+  - Babel configuration (Unistyles, Reanimated, aliases)
+  - App icon and app name configuration
+
 #### [Linting and Commits Guide](./guides/linting-and-commits.md)
 
 - **Created**: February 13, 2026
@@ -182,6 +193,7 @@ docs/
 - **Components**: [Components Guide](./guides/components.md)
 - **Responsive Design**: [Responsive Design Guide](./guides/responsive-design.md)
 - **Reactix Integration**: [Reactix Integration Guide](./guides/reactix-integration.md)
+- **Native Setup & Dev Client**: [Native Dev Client Guide](./guides/native-dev-client.md)
 - **Linting**: [Linting and Commits Guide](./guides/linting-and-commits.md)
 
 ---
