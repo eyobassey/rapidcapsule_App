@@ -14,16 +14,17 @@ module.exports = {
   // JavaScript and JavaScript React files (exclude config files)
   '*.{js,jsx}': [
     (files) => {
-      const configFiles = files.filter(
-        (file) =>
-          !file.includes('.eslintrc') &&
-          !file.includes('.commitlintrc') &&
-          !file.includes('.lintstagedrc') &&
-          !file.includes('.prettierrc')
-      );
-      return configFiles.length > 0
-        ? `eslint --fix --max-warnings=0 ${configFiles.join(' ')}`
-        : [];
+      const configFiles = files.filter((file) => {
+        const isConfig =
+          file.includes('.eslintrc') ||
+          file.includes('.commitlintrc') ||
+          file.includes('.lintstagedrc') ||
+          file.includes('.prettierrc') ||
+          file.includes('babel.config');
+
+        return !isConfig;
+      });
+      return configFiles.length > 0 ? `eslint --fix --max-warnings=0 ${configFiles.join(' ')}` : [];
     },
     'prettier --write',
   ],
