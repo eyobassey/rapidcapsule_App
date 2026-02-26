@@ -10,17 +10,15 @@
 import { useFonts as useExpoFonts } from 'expo-font';
 import { Platform } from 'react-native';
 
-import { FONT_FAMILIES } from '@/config/fonts';
-
 /**
  * Font loading configuration
  * Maps font names to their asset paths
- * 
+ *
  * Note: Font files must be downloaded and placed in assets/fonts/
  * See assets/fonts/README.md for download instructions
  */
 const FONT_ASSETS = {
-  // iOS: SF Pro (system font, no loading needed)
+  // iOS: SF Pro Rounded (system font, no loading needed)
   // Android: Open Runde fonts (OTF format)
   'OpenRunde-Regular': require('../../../assets/fonts/OpenRunde-Regular.otf'),
   'OpenRunde-Medium': require('../../../assets/fonts/OpenRunde-Medium.otf'),
@@ -33,7 +31,7 @@ const FONT_ASSETS = {
  */
 const getFontsToLoad = (): Record<string, number> => {
   if (Platform.OS === 'ios') {
-    // iOS uses SF Pro system font, no loading needed
+    // iOS uses SF Pro Rounded system font, no loading needed
     return {};
   }
   // Android: Load Open Runde fonts

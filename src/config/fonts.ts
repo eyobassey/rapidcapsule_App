@@ -11,15 +11,16 @@ import { Platform } from 'react-native';
 
 /**
  * Font families
- * - iOS: SF Pro Rounded (system design variant)
+ * - iOS: SF Pro Rounded (system design variant, accessed via family name)
  * - Android: Open Runde
  */
 export const FONT_FAMILIES = {
   ios: {
-    regular: '.SFProRounded-Regular',
-    medium: '.SFProRounded-Medium',
-    semibold: '.SFProRounded-Semibold',
-    bold: '.SFProRounded-Bold',
+    // iOS uses the SF Pro Rounded system family; weight is controlled via fontWeight.
+    regular: 'SF Pro Rounded',
+    medium: 'SF Pro Rounded',
+    semibold: 'SF Pro Rounded',
+    bold: 'SF Pro Rounded',
   },
   android: {
     regular: 'OpenRunde-Regular',

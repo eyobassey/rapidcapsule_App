@@ -127,8 +127,8 @@ const styles = StyleSheet.create((theme) => ({
 You can also use font family names directly:
 
 ```typescript
-// iOS (system font descriptor names)
-fontFamily: '.SFProRounded-Regular';
+// iOS (system family name)
+fontFamily: 'SF Pro Rounded';
 
 // Android
 fontFamily: 'OpenRunde-Regular';
@@ -143,10 +143,10 @@ Font configuration is defined in `src/config/fonts.ts`:
 ```typescript
 export const FONT_FAMILIES = {
   ios: {
-    regular: '.SFProRounded-Regular',
-    medium: '.SFProRounded-Medium',
-    semibold: '.SFProRounded-Semibold',
-    bold: '.SFProRounded-Bold',
+    regular: 'SF Pro Rounded',
+    medium: 'SF Pro Rounded',
+    semibold: 'SF Pro Rounded',
+    bold: 'SF Pro Rounded',
   },
   android: {
     regular: 'OpenRunde-Regular',
