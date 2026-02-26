@@ -11,15 +11,15 @@ import { Platform } from 'react-native';
 
 /**
  * Font families
- * - iOS: SF Pro (system font)
+ * - iOS: SF Pro Rounded (system design variant)
  * - Android: Open Runde
  */
 export const FONT_FAMILIES = {
   ios: {
-    regular: 'SFProDisplay-Regular',
-    medium: 'SFProDisplay-Medium',
-    semibold: 'SFProDisplay-Semibold',
-    bold: 'SFProDisplay-Bold',
+    regular: '.SFProRounded-Regular',
+    medium: '.SFProRounded-Medium',
+    semibold: '.SFProRounded-Semibold',
+    bold: '.SFProRounded-Bold',
   },
   android: {
     regular: 'OpenRunde-Regular',
@@ -32,7 +32,9 @@ export const FONT_FAMILIES = {
 /**
  * Get platform-specific font family
  */
-export const getFontFamily = (weight: 'regular' | 'medium' | 'semibold' | 'bold' = 'regular'): string => {
+export const getFontFamily = (
+  weight: 'regular' | 'medium' | 'semibold' | 'bold' = 'regular'
+): string => {
   if (Platform.OS === 'ios') {
     return FONT_FAMILIES.ios[weight];
   }

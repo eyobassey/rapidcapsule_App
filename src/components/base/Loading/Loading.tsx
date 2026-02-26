@@ -36,12 +36,6 @@ export interface AppLoadingProps extends BaseComponentProps {
   fullScreen?: boolean;
 }
 
-interface LoadingStyles {
-  container: ViewStyle;
-  fullScreen: ViewStyle;
-  message: ViewStyle;
-}
-
 export const AppLoading: React.FC<AppLoadingProps> = ({
   size = 'medium',
   message,
@@ -53,9 +47,6 @@ export const AppLoading: React.FC<AppLoadingProps> = ({
   style,
 }) => {
   const { theme } = useUnistyles();
-  const loadingStyles = (
-    styles as unknown as (theme: ReturnType<typeof useUnistyles>['theme']) => LoadingStyles
-  )(theme);
 
   const sizeMap: Record<ComponentSize | 'large', 'small' | 'large'> = {
     small: 'small',
@@ -68,8 +59,8 @@ export const AppLoading: React.FC<AppLoadingProps> = ({
   return (
     <View
       style={combineStyles(
-        loadingStyles.container,
-        fullScreen ? loadingStyles.fullScreen : null,
+        styles.container,
+        fullScreen ? styles.fullScreen : null,
         style as ViewStyle
       )}
       testID={testID}
@@ -85,7 +76,7 @@ export const AppLoading: React.FC<AppLoadingProps> = ({
       {message && (
         <AppText
           variant="bodyMedium"
-          style={loadingStyles.message}
+          style={styles.message}
           testID={testID ? `${testID}-message` : undefined}
         >
           {message}

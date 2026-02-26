@@ -1,9 +1,10 @@
-import type { StyleProp, TextStyle, ViewStyle } from "react-native";
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 interface IButton {
   children: React.ReactNode & React.ReactElement;
   readonly isLoading?: boolean;
   readonly onPress?: () => void;
+  readonly fullWidth?: boolean;
   readonly width?: number;
   readonly height?: number;
   readonly backgroundColor?: string;

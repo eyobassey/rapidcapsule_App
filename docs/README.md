@@ -28,6 +28,7 @@ docs/
     ├── api-service-layer.md          # API service layer usage guide
     ├── utilities.md                  # Utilities reference guide
     ├── components.md                 # Base components guide
+    ├── fonts.md                      # Font configuration guide (SF Pro Rounded + Open Runde)
     ├── responsive-design.md          # Responsive design guide
     ├── reactix-integration.md        # Reactix component integration guide
     ├── native-dev-client.md          # Native setup & custom dev client guide
@@ -136,6 +137,16 @@ docs/
   - Accessibility guidelines
   - Usage examples and best practices
 
+#### [Font Configuration Guide](./guides/fonts.md)
+
+- **Created**: February 20, 2026
+- **Purpose**: Platform-specific font setup (SF Pro Rounded on iOS, Open Runde on Android)
+- **Contents**:
+  - Font families and weight mapping
+  - Font loading strategy per platform
+  - Using fonts via theme typography
+  - Troubleshooting
+
 #### [Responsive Design Guide](./guides/responsive-design.md)
 
 - **Created**: February 18, 2026
@@ -191,6 +202,7 @@ docs/
 - **Security**: [Storage Security Guide](./security/storage-security.md)
 - **Utilities**: [Utilities Guide](./guides/utilities.md)
 - **Components**: [Components Guide](./guides/components.md)
+- **Fonts**: [Font Configuration Guide](./guides/fonts.md)
 - **Responsive Design**: [Responsive Design Guide](./guides/responsive-design.md)
 - **Reactix Integration**: [Reactix Integration Guide](./guides/reactix-integration.md)
 - **Native Setup & Dev Client**: [Native Dev Client Guide](./guides/native-dev-client.md)

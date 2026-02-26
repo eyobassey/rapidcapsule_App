@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { Text as RNText, TextStyle } from 'react-native';
-import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native-unistyles';
 
 import { BaseComponentProps } from '@/components/base/types';
 import { combineStyles } from '@/utils';
@@ -59,24 +59,6 @@ export interface AppTextProps extends BaseComponentProps {
   underline?: boolean;
 }
 
-interface TextStyles {
-  base: TextStyle;
-  h1: TextStyle;
-  h2: TextStyle;
-  h3: TextStyle;
-  h4: TextStyle;
-  h5: TextStyle;
-  h6: TextStyle;
-  bodyLarge: TextStyle;
-  bodyMedium: TextStyle;
-  bodySmall: TextStyle;
-  caption: TextStyle;
-  overline: TextStyle;
-  bold: TextStyle;
-  italic: TextStyle;
-  underline: TextStyle;
-}
-
 export const AppText: React.FC<AppTextProps> = ({
   children,
   variant = 'bodyMedium',
@@ -91,12 +73,7 @@ export const AppText: React.FC<AppTextProps> = ({
   testID,
   style,
 }) => {
-  const { theme } = useUnistyles();
-  const textStyles = (
-    styles as unknown as (theme: ReturnType<typeof useUnistyles>['theme']) => TextStyles
-  )(theme);
-  const variantStyle = textStyles[variant];
-
+  const variantStyle = styles[variant];
   const defaultAccessibilityLabel =
     accessibilityLabel || (typeof children === 'string' ? children : undefined);
 
@@ -107,13 +84,13 @@ export const AppText: React.FC<AppTextProps> = ({
       testID={testID}
       numberOfLines={numberOfLines}
       style={combineStyles(
-        textStyles.base,
+        styles.base,
         variantStyle,
         color ? { color } : null,
         { textAlign: align },
-        bold ? textStyles.bold : null,
-        italic ? textStyles.italic : null,
-        underline ? textStyles.underline : null,
+        bold ? styles.bold : null,
+        italic ? styles.italic : null,
+        underline ? styles.underline : null,
         style as TextStyle
       )}
     >

@@ -1,0 +1,21 @@
+{
+  "chat": {
+    "userMessage": "How are my vitals",
+    "botResponse": "Your health metrics appear stable, with no immediate concerns detected."
+  },
+  "brand": {
+    "name": "Rapid Capsule",
+    "tagline": "Your trusted AI health companion for"
+  },
+  "features": {
+    "appointments": "appointments",
+    "healthChecks": "health checks",
+    "pharmacy": "pharmacy",
+    "symptomChecks": "symptom checks",
+    "prescriptions": "prescriptions"
+  },
+  "actions": {
+    "signIn": "Sign In",
+    "getStarted": "Get Started →"
+  }
+}

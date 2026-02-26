@@ -1,48 +1,47 @@
-import { Ionicons } from "@expo/vector-icons";
-import { BlurView, type BlurViewProps } from "@sbaiahmed1/react-native-blur";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { Platform, Pressable, StyleSheet, View } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
+import { BlurView, type BlurViewProps } from 'expo-blur';
+import {
+  AndroidHaptics,
+  impactAsync,
+  ImpactFeedbackStyle,
+  performAndroidHapticsAsync,
+} from 'expo-haptics';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { LayoutChangeEvent, Platform, Pressable, StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from "react-native-reanimated";
-import { AccordionThemes } from "./presets";
+} from 'react-native-reanimated';
+
+import { AccordionThemes } from './presets';
 import type {
   AccordionContentProps,
   AccordionContextType,
   AccordionItemProps,
   AccordionProps,
   AccordionTriggerProps,
-} from "./types";
-import {
-  AndroidHaptics,
-  impactAsync,
-  ImpactFeedbackStyle,
-  performAndroidHapticsAsync,
-} from "expo-haptics";
+} from './types';
 
-const AnimatedBlurView =
-  Animated.createAnimatedComponent<BlurViewProps>(BlurView);
+const AnimatedBlurView = Animated.createAnimatedComponent<BlurViewProps>(BlurView);
 const AccordionContext = createContext<AccordionContextType | null>(null);
 const AccordionItemContext = createContext<{
   value: string;
   isOpen: boolean;
-  icon: "chevron" | "cross";
+  icon: 'chevron' | 'cross';
 } | null>(null);
 
 const useAccordionContext = () => {
   const context = useContext(AccordionContext);
-  if (!context)
-    throw new Error("Accordion components must be used within Accordion");
+  if (!context) throw new Error('Accordion components must be used within Accordion');
   return context;
 };
 
 const useAccordionItemContext = () => {
   const context = useContext(AccordionItemContext);
-  if (!context) throw new Error("Trigger and Content must be within Item");
+  if (!context) throw new Error('Trigger and Content must be within Item');
   return context;
 };
 
@@ -55,9 +54,7 @@ const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => {
   }, [isOpen]);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { rotate: `${interpolate(rotation.value, [0, 1], [0, 180])}deg` },
-    ],
+    transform: [{ rotate: `${interpolate(rotation.value, [0, 1], [0, 180])}deg` }],
   }));
 
   return (
@@ -104,8 +101,8 @@ const CrossIcon = ({ isOpen }: { isOpen: boolean }) => {
       style={{
         width: 20,
         height: 20,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
       <Animated.View
@@ -149,7 +146,7 @@ const CrossIcon = ({ isOpen }: { isOpen: boolean }) => {
 
 const Accordion = ({
   children,
-  type = "single",
+  type = 'single',
   theme = AccordionThemes.light,
   spacing = 0,
 }: AccordionProps) => {
@@ -158,7 +155,7 @@ const Accordion = ({
   const toggleItem = (id: string) => {
     setOpenItems((prev) => {
       const newSet = new Set(prev);
-      if (type === "single") {
+      if (type === 'single') {
         if (newSet.has(id)) {
           newSet.clear();
         } else {
@@ -179,7 +176,7 @@ const Accordion = ({
   const childrenArray = React.Children.toArray(children);
   const childrenWithProps = childrenArray.map((child, index) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child as React.ReactElement<any>, {
+      return React.cloneElement(child as React.ReactElement<unknown>, {
         isLast: index === childrenArray.length - 1,
       });
     }
@@ -187,9 +184,7 @@ const Accordion = ({
   });
 
   return (
-    <AccordionContext.Provider
-      value={{ openItems, toggleItem, theme, spacing }}
-    >
+    <AccordionContext.Provider value={{ openItems, toggleItem, theme, spacing }}>
       <View
         style={[
           styles.accordion,
@@ -208,7 +203,7 @@ const AccordionItem = ({
   children,
   value,
   pop = false,
-  icon = "chevron",
+  icon = 'chevron',
   popScale = 1.02,
   isLast = false,
 }: AccordionItemProps) => {
@@ -257,21 +252,16 @@ const AccordionTrigger = ({ children }: AccordionTriggerProps) => {
 
   return (
     <Pressable
-      style={({ pressed }) => [styles.trigger]}
+      style={() => [styles.trigger]}
       onPress={() => {
         toggleItem(value);
-        if (Platform.OS === "android")
-          performAndroidHapticsAsync(AndroidHaptics.Clock_Tick);
+        if (Platform.OS === 'android') performAndroidHapticsAsync(AndroidHaptics.Clock_Tick);
         else impactAsync(ImpactFeedbackStyle.Medium);
       }}
     >
       <View style={styles.triggerContent}>
         {children}
-        {icon === "chevron" ? (
-          <ChevronIcon isOpen={isOpen} />
-        ) : (
-          <CrossIcon isOpen={isOpen} />
-        )}
+        {icon === 'chevron' ? <ChevronIcon isOpen={isOpen} /> : <CrossIcon isOpen={isOpen} />}
       </View>
     </Pressable>
   );
@@ -286,7 +276,7 @@ const AccordionContent = ({ children }: AccordionContentProps) => {
   const [measured, setMeasured] = useState<boolean>(false);
   const blurIntensity = useSharedValue<number>(40);
 
-  const onLayout = (e: any) => {
+  const onLayout = (e: LayoutChangeEvent) => {
     const h = e.nativeEvent.layout.height;
     if (h > 0 && !measured) {
       setContentHeight(h);
@@ -309,7 +299,7 @@ const AccordionContent = ({ children }: AccordionContentProps) => {
   const animatedStyle = useAnimatedStyle(() => ({
     height: height.value,
     opacity: measured ? opacity.value : 0,
-    overflow: "hidden",
+    overflow: 'hidden',
   }));
 
   React.useEffect(() => {
@@ -318,8 +308,8 @@ const AccordionContent = ({ children }: AccordionContentProps) => {
     });
   }, [isOpen]);
 
-  const animatedBlurProps = useAnimatedProps(() => ({
-    blurAmount: blurIntensity.value,
+  const animatedBlurProps = useAnimatedProps<BlurViewProps>(() => ({
+    intensity: blurIntensity.value,
   }));
 
   return (
@@ -333,22 +323,20 @@ const AccordionContent = ({ children }: AccordionContentProps) => {
         <View style={styles.contentWrapper}>
           <View style={styles.content}>{children}</View>
           <AnimatedBlurView
-            blurType={
-              theme.backgroundColor === "#18181b" ||
-              theme.backgroundColor === "#0c4a6e" ||
-              theme.backgroundColor === "#7c2d12"
-                ? "dark"
-                : "systemUltraThinMaterialDark"
+            tint={
+              theme.backgroundColor === '#18181b' ||
+              theme.backgroundColor === '#0c4a6e' ||
+              theme.backgroundColor === '#7c2d12'
+                ? 'dark'
+                : 'default'
             }
             animatedProps={animatedBlurProps}
-            style={[
-              {
-                overflow: "hidden",
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-              },
-            ]}
+            style={{
+              overflow: 'hidden',
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+            }}
           />
         </View>
       </Animated.View>
@@ -362,56 +350,40 @@ Accordion.Content = AccordionContent;
 
 const styles = StyleSheet.create({
   accordion: {
-    width: "100%",
     borderRadius: 8,
-    overflow: "hidden",
     borderWidth: 1,
-  },
-  item: {
-    overflow: "hidden",
-  },
-  trigger: {
-    position: "relative",
-    overflow: "hidden",
-  },
-  triggerContent: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-  },
-  triggerText: {
-    fontSize: 15,
-    fontWeight: "500",
-    flex: 1,
-    zIndex: 1,
-  },
-  measuringContainer: {
-    position: "absolute",
-    opacity: 0,
-    left: 0,
-    right: 0,
-  },
-  contentWrapper: {
-    position: "absolute",
-    width: "100%",
+    overflow: 'hidden',
+    width: '100%',
   },
   content: {
+    paddingBottom: 16,
     paddingHorizontal: 16,
     paddingTop: 0,
-    paddingBottom: 16,
   },
-  contentText: {
-    fontSize: 14,
-    lineHeight: 20,
+  contentWrapper: {
+    position: 'absolute',
+    width: '100%',
+  },
+  item: {
+    overflow: 'hidden',
+  },
+  measuringContainer: {
+    left: 0,
+    opacity: 0,
+    position: 'absolute',
+    right: 0,
+  },
+  trigger: {
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  triggerContent: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
 });
 
-export {
-  AccordionThemes,
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-};
+export { Accordion, AccordionContent, AccordionItem, AccordionThemes, AccordionTrigger };

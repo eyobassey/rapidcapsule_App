@@ -10,8 +10,9 @@
       "@/types/*": ["./src/types/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/components/*": ["./src/components/*"],
-      "@/store/*": ["./src/store/*"]
+      "@/store/*": ["./src/store/*"],
+      "@assets/*": ["./assets/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx", "scripts/**/*.js"]
 }

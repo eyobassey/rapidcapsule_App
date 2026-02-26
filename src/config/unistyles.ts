@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native-unistyles';
+import { StyleSheet, type UnistylesThemes } from 'react-native-unistyles';
 
 import { breakpoints } from './breakpoints';
 import { darkTheme, lightTheme } from './themes';
@@ -9,10 +9,11 @@ type AppThemes = {
   dark: typeof darkTheme;
 };
 
+/** Theme type inferred from augmented UnistylesThemes (light | dark) */
+export type UnistylesTheme = UnistylesThemes[keyof UnistylesThemes];
+
 declare module 'react-native-unistyles' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface UnistylesThemes extends AppThemes {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface UnistylesBreakpoints extends AppBreakpoints {}
 }
 

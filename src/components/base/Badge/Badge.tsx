@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { TextStyle, View, ViewStyle } from 'react-native';
-import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native-unistyles';
 
 import { AppText } from '@/components/base/Text/Text';
 import { BaseComponentProps, ComponentSize, ComponentVariant } from '@/components/base/types';
@@ -37,26 +37,6 @@ export interface AppBadgeProps extends BaseComponentProps {
   dot?: boolean;
 }
 
-interface BadgeStyles {
-  base: ViewStyle;
-  text: TextStyle;
-  dot: ViewStyle;
-  primaryBadge: ViewStyle;
-  secondaryBadge: ViewStyle;
-  outlineBadge: ViewStyle;
-  ghostBadge: ViewStyle;
-  dangerBadge: ViewStyle;
-  successBadge: ViewStyle;
-  infoBadge: ViewStyle;
-  warningBadge: ViewStyle;
-  smallBadge: ViewStyle;
-  mediumBadge: ViewStyle;
-  largeBadge: ViewStyle;
-  smallText: TextStyle;
-  mediumText: TextStyle;
-  largeText: TextStyle;
-}
-
 export const AppBadge: React.FC<AppBadgeProps> = ({
   label,
   variant = 'primary',
@@ -67,13 +47,9 @@ export const AppBadge: React.FC<AppBadgeProps> = ({
   testID,
   style,
 }) => {
-  const { theme } = useUnistyles();
-  const badgeStyles = (
-    styles as unknown as (theme: ReturnType<typeof useUnistyles>['theme']) => BadgeStyles
-  )(theme);
-  const variantStyle = badgeStyles[`${variant}Badge` as keyof BadgeStyles] as ViewStyle;
-  const sizeStyle = badgeStyles[`${size}Badge` as keyof BadgeStyles] as ViewStyle;
-  const textSizeStyle = badgeStyles[`${size}Text` as keyof BadgeStyles] as TextStyle;
+  const variantStyle = styles[`${variant}Badge`] as ViewStyle;
+  const sizeStyle = styles[`${size}Badge`] as ViewStyle;
+  const textSizeStyle = styles[`${size}Text`] as TextStyle;
 
   const displayLabel = dot ? '' : String(label);
   const defaultAccessibilityLabel =
@@ -82,10 +58,10 @@ export const AppBadge: React.FC<AppBadgeProps> = ({
   return (
     <View
       style={combineStyles(
-        badgeStyles.base,
+        styles.base,
         variantStyle,
         sizeStyle,
-        dot ? badgeStyles.dot : null,
+        dot ? styles.dot : null,
         style as ViewStyle
       )}
       accessibilityLabel={defaultAccessibilityLabel}
@@ -95,7 +71,7 @@ export const AppBadge: React.FC<AppBadgeProps> = ({
       {!dot && (
         <AppText
           variant="caption"
-          style={combineStyles(badgeStyles.text, textSizeStyle)}
+          style={combineStyles(styles.text, textSizeStyle)}
           testID={testID ? `${testID}-text` : undefined}
         >
           {displayLabel}

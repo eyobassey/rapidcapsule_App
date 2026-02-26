@@ -4,9 +4,6 @@ module.exports = function (api) {
   return {
     presets: ['babel-preset-expo'],
     plugins: [
-      // Expo Router codegen and routing support
-      'expo-router/babel',
-
       // Match TS path aliases at runtime
       [
         'module-resolver',
@@ -23,7 +20,6 @@ module.exports = function (api) {
           },
         },
       ],
-
       // React Native Unistyles plugin (must run before Reanimated)
       [
         'react-native-unistyles/plugin',

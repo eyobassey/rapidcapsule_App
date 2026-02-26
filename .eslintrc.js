@@ -157,14 +157,5 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: [
-    'node_modules/',
-    '.expo/',
-    'dist/',
-    'build/',
-    'coverage/',
-    '*.config.js',
-    '*.config.ts',
-    '.husky/',
-  ],
+  ignorePatterns: ['node_modules/', '.expo/', 'dist/', 'build/', 'coverage/', '.husky/'],
 };

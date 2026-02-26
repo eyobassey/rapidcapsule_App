@@ -10,6 +10,7 @@
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 
+import type { UnistylesTheme } from '@/config/unistyles';
 import { ExtendedThemeColors, getExtendedThemeColors } from '@/types/theme.types';
 
 // Re-export for convenience
@@ -18,7 +19,7 @@ export { getExtendedThemeColors };
 /**
  * Type helper for StyleSheet.create with theme
  */
-export type StyleSheetCreator<T> = (theme: ReturnType<typeof useUnistyles>['theme']) => T;
+export type StyleSheetCreator<T> = (theme: UnistylesTheme) => T;
 
 /**
  * Get extended theme colors safely

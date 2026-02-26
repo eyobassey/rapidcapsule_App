@@ -9,12 +9,11 @@
 
 import React from 'react';
 import { Image, ImageSourcePropType, ImageStyle, TextStyle, View, ViewStyle } from 'react-native';
-import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native-unistyles';
 
 import { AppText } from '@/components/base/Text/Text';
 import { BaseComponentProps, ComponentSize } from '@/components/base/types';
-import { combineStyles } from '@/utils';
-import { getInitials } from '@/utils';
+import { combineStyles, getInitials } from '@/utils';
 
 export interface AppAvatarProps extends BaseComponentProps {
   /**
@@ -36,20 +35,6 @@ export interface AppAvatarProps extends BaseComponentProps {
   fallback?: React.ReactNode;
 }
 
-interface AvatarStyles {
-  base: ViewStyle;
-  image: ViewStyle;
-  initials: TextStyle;
-  smallAvatar: ViewStyle;
-  mediumAvatar: ViewStyle;
-  largeAvatar: ViewStyle;
-  xlargeAvatar: ViewStyle;
-  smallText: TextStyle;
-  mediumText: TextStyle;
-  largeText: TextStyle;
-  xlargeText: TextStyle;
-}
-
 export const AppAvatar: React.FC<AppAvatarProps> = ({
   source,
   name,
@@ -60,12 +45,8 @@ export const AppAvatar: React.FC<AppAvatarProps> = ({
   testID,
   style,
 }) => {
-  const { theme } = useUnistyles();
-  const avatarStyles = (
-    styles as unknown as (theme: ReturnType<typeof useUnistyles>['theme']) => AvatarStyles
-  )(theme);
-  const sizeStyle = avatarStyles[`${size}Avatar` as keyof AvatarStyles] as ViewStyle;
-  const textSizeStyle = avatarStyles[`${size}Text` as keyof AvatarStyles] as TextStyle;
+  const sizeStyle = styles[`${size}Avatar`] as ViewStyle;
+  const textSizeStyle = styles[`${size}Text`] as TextStyle;
 
   const defaultAccessibilityLabel = accessibilityLabel || (name ? `Avatar for ${name}` : 'Avatar');
 
@@ -74,7 +55,7 @@ export const AppAvatar: React.FC<AppAvatarProps> = ({
       return (
         <Image
           source={source}
-          style={avatarStyles.image as ImageStyle}
+          style={styles.image as ImageStyle}
           accessibilityLabel={defaultAccessibilityLabel}
           accessibilityRole="image"
           testID={testID ? `${testID}-image` : undefined}
@@ -90,7 +71,7 @@ export const AppAvatar: React.FC<AppAvatarProps> = ({
       return (
         <AppText
           variant="bodyMedium"
-          style={combineStyles(avatarStyles.initials, textSizeStyle)}
+          style={combineStyles(styles.initials, textSizeStyle)}
           testID={testID ? `${testID}-initials` : undefined}
         >
           {getInitials(name, 2)}
@@ -103,7 +84,7 @@ export const AppAvatar: React.FC<AppAvatarProps> = ({
 
   return (
     <View
-      style={combineStyles(avatarStyles.base, sizeStyle, style as ViewStyle)}
+      style={combineStyles(styles.base, sizeStyle, style as ViewStyle)}
       accessibilityLabel={defaultAccessibilityLabel}
       accessibilityRole={accessibilityRole}
       testID={testID}

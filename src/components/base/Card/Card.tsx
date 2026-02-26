@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { Pressable, View, ViewStyle } from 'react-native';
-import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native-unistyles';
 
 import { BaseComponentProps } from '@/components/base/types';
 import { combineStyles, getExtendedThemeColors } from '@/utils';
@@ -35,19 +35,6 @@ export interface AppCardProps extends BaseComponentProps {
   padding?: 'none' | 'small' | 'medium' | 'large';
 }
 
-interface CardStyles {
-  base: ViewStyle;
-  defaultCard: ViewStyle;
-  outlinedCard: ViewStyle;
-  elevatedCard: ViewStyle;
-  flatCard: ViewStyle;
-  nonePadding: ViewStyle;
-  smallPadding: ViewStyle;
-  mediumPadding: ViewStyle;
-  largePadding: ViewStyle;
-  pressed: ViewStyle;
-}
-
 export const AppCard: React.FC<AppCardProps> = ({
   children,
   variant = 'default',
@@ -60,18 +47,14 @@ export const AppCard: React.FC<AppCardProps> = ({
   testID,
   style,
 }) => {
-  const { theme } = useUnistyles();
-  const cardStyles = (
-    styles as unknown as (theme: ReturnType<typeof useUnistyles>['theme']) => CardStyles
-  )(theme);
-  const variantStyle = cardStyles[`${variant}Card` as keyof CardStyles] as ViewStyle;
-  const paddingStyle = cardStyles[`${padding}Padding` as keyof CardStyles] as ViewStyle;
+  const variantStyle = styles[`${variant}Card`] as ViewStyle;
+  const paddingStyle = styles[`${padding}Padding`] as ViewStyle;
 
   const defaultAccessibilityRole = accessibilityRole || (pressable ? 'button' : undefined);
 
   const content = (
     <View
-      style={combineStyles(cardStyles.base, variantStyle, paddingStyle, style as ViewStyle)}
+      style={combineStyles(styles.base, variantStyle, paddingStyle, style as ViewStyle)}
       testID={testID}
       accessibilityLabel={!pressable ? accessibilityLabel : undefined}
       accessibilityRole={!pressable ? defaultAccessibilityRole : undefined}
@@ -88,7 +71,7 @@ export const AppCard: React.FC<AppCardProps> = ({
         accessibilityRole={defaultAccessibilityRole || 'button'}
         accessibilityHint={accessibilityHint}
         testID={testID}
-        style={({ pressed }) => combineStyles(pressed ? cardStyles.pressed : null)}
+        style={({ pressed }) => combineStyles(pressed ? styles.pressed : null)}
       >
         {content}
       </Pressable>

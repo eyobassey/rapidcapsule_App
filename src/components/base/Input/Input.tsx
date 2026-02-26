@@ -69,27 +69,6 @@ export interface AppInputProps
   showPasswordToggle?: boolean;
 }
 
-interface InputStyles {
-  container: ViewStyle;
-  label: TextStyle;
-  labelError: TextStyle;
-  labelDisabled: TextStyle;
-  required: TextStyle;
-  inputContainer: ViewStyle;
-  inputContainerError: ViewStyle;
-  inputContainerDisabled: ViewStyle;
-  input: TextStyle;
-  inputWithLeftIcon: TextStyle;
-  inputWithRightIcon: TextStyle;
-  leftIcon: ViewStyle;
-  rightIcon: ViewStyle;
-  smallInput: ViewStyle;
-  mediumInput: ViewStyle;
-  largeInput: ViewStyle;
-  error: TextStyle;
-  helper: TextStyle;
-}
-
 type TextInputStyle = TextStyle | TextStyle[] | null | undefined;
 
 export const AppInput: React.FC<AppInputProps> = ({
@@ -114,10 +93,7 @@ export const AppInput: React.FC<AppInputProps> = ({
 }) => {
   const { theme } = useUnistyles();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const inputStyles = (
-    styles as unknown as (theme: ReturnType<typeof useUnistyles>['theme']) => InputStyles
-  )(theme);
-  const sizeStyle = inputStyles[`${size}Input` as keyof InputStyles] as ViewStyle;
+  const sizeStyle = styles[`${size}Input`] as ViewStyle;
   const hasError = !!error;
   const isPassword = type === 'password';
 
@@ -151,23 +127,23 @@ export const AppInput: React.FC<AppInputProps> = ({
 
   return (
     <View
-      style={combineStyles(inputStyles.container, style as ViewStyle)}
+      style={combineStyles(styles.container, style as ViewStyle)}
       testID={testID ? `${testID}-container` : undefined}
     >
       {label && (
         <AppText
           variant="bodySmall"
           style={combineStyles(
-            inputStyles.label,
-            hasError ? inputStyles.labelError : null,
-            disabled ? inputStyles.labelDisabled : null
+            styles.label,
+            hasError ? styles.labelError : null,
+            disabled ? styles.labelDisabled : null
           )}
           testID={labelId}
           accessibilityRole="text"
         >
           {label}
           {required && (
-            <AppText variant="bodySmall" style={inputStyles.required}>
+            <AppText variant="bodySmall" style={styles.required}>
               {' '}
               *
             </AppText>
@@ -176,13 +152,13 @@ export const AppInput: React.FC<AppInputProps> = ({
       )}
       <View
         style={combineStyles(
-          inputStyles.inputContainer,
+          styles.inputContainer,
           sizeStyle,
-          hasError ? inputStyles.inputContainerError : null,
-          disabled ? inputStyles.inputContainerDisabled : null
+          hasError ? styles.inputContainerError : null,
+          disabled ? styles.inputContainerDisabled : null
         )}
       >
-        {leftIcon && <View style={inputStyles.leftIcon}>{leftIcon}</View>}
+        {leftIcon && <View style={styles.leftIcon}>{leftIcon}</View>}
         <TextInput
           value={value}
           onChangeText={onChangeText}
@@ -199,9 +175,9 @@ export const AppInput: React.FC<AppInputProps> = ({
           testID={testID}
           style={
             [
-              inputStyles.input,
-              leftIcon ? inputStyles.inputWithLeftIcon : null,
-              rightIcon ? inputStyles.inputWithRightIcon : null,
+              styles.input,
+              leftIcon ? styles.inputWithLeftIcon : null,
+              rightIcon ? styles.inputWithRightIcon : null,
             ] as TextInputStyle
           }
           {...(textInputProps as unknown as Partial<
@@ -232,25 +208,20 @@ export const AppInput: React.FC<AppInputProps> = ({
             onPress={() => setIsPasswordVisible(!isPasswordVisible)}
             accessibilityLabel={isPasswordVisible ? 'Hide password' : 'Show password'}
             accessibilityRole="button"
-            style={inputStyles.rightIcon}
+            style={styles.rightIcon}
           >
             {rightIcon}
           </Pressable>
         )}
-        {!isPassword && rightIcon && <View style={inputStyles.rightIcon}>{rightIcon}</View>}
+        {!isPassword && rightIcon && <View style={styles.rightIcon}>{rightIcon}</View>}
       </View>
       {error && (
-        <AppText
-          variant="caption"
-          style={inputStyles.error}
-          testID={errorId}
-          accessibilityRole="text"
-        >
+        <AppText variant="caption" style={styles.error} testID={errorId} accessibilityRole="text">
           {error}
         </AppText>
       )}
       {helperText && !error && (
-        <AppText variant="caption" style={inputStyles.helper} testID={helperId}>
+        <AppText variant="caption" style={styles.helper} testID={helperId}>
           {helperText}
         </AppText>
       )}

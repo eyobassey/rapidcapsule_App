@@ -1,246 +1,225 @@
+/* eslint-disable react-hooks/immutability */
 // @ts-check
-import React, { memo, useEffect } from "react";
+import { LinearGradient } from 'expo-linear-gradient';
+import React, { memo, useEffect } from 'react';
 import {
+  ActivityIndicator,
+  Platform,
   Pressable,
   StyleSheet,
-  Platform,
   View,
   type ViewStyle,
-  ActivityIndicator,
-} from "react-native";
+} from 'react-native';
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  interpolate,
   Easing,
+  interpolate,
   interpolateColor,
-} from "react-native-reanimated";
-import { LinearGradient } from "expo-linear-gradient";
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+
 // @ts-check
-import type { IButton } from "./types";
+import type { IButton } from './types';
 
-export const Button: React.FC<IButton> & React.FunctionComponent<IButton> =
-  memo<IButton>(
-    ({
-      children,
-      isLoading = false,
-      onPress,
-      width = 200,
-      height = 48,
-      backgroundColor = "#fff",
-      loadingText = "Loading...",
-      loadingTextColor = "white",
-      loadingTextSize = 16,
-      borderRadius,
-      gradientColors,
-      style,
-      loadingTextStyle,
-      withPressAnimation = true,
-      animationDuration = 250,
-      disabled = false,
-      showLoadingIndicator = false,
-      renderLoadingIndicator,
-      loadingTextBackgroundColor = "#cacaca",
-    }: IButton): React.ReactNode & React.JSX.Element & React.ReactElement => {
-      const animationProgress = useSharedValue<number>(isLoading ? 1 : 0);
-      const scaleValue = useSharedValue<number>(1);
+export const Button: React.FC<IButton> & React.FunctionComponent<IButton> = memo<IButton>(
+  ({
+    children,
+    isLoading = false,
+    onPress,
+    fullWidth = false,
+    width = 200,
+    height = 48,
+    backgroundColor = '#fff',
+    loadingText = 'Loading...',
+    loadingTextColor = 'white',
+    loadingTextSize = 16,
+    borderRadius,
+    gradientColors,
+    style,
+    loadingTextStyle,
+    withPressAnimation = true,
+    animationDuration = 250,
+    disabled = false,
+    showLoadingIndicator = false,
+    renderLoadingIndicator,
+    loadingTextBackgroundColor = '#cacaca',
+  }: IButton): React.ReactNode & React.JSX.Element & React.ReactElement => {
+    const animationProgress = useSharedValue<number>(isLoading ? 1 : 0);
+    const scaleValue = useSharedValue<number>(1);
 
-      useEffect(() => {
-        animationProgress.value = withTiming<number>(isLoading ? 1 : 0, {
-          duration: animationDuration,
-          easing: Easing.bezier(0.4, 0, 0.2, 1),
-        });
-      }, [isLoading, animationDuration]);
-
-      const calculatedBorderRadius = borderRadius ?? height / 2;
-
-      const contentAnimatedStylez = useAnimatedStyle<
-        Pick<ViewStyle, "transform" | "opacity">
-      >(() => {
-        const translateY = interpolate(
-          animationProgress.value,
-          [0, 1],
-          [0, -20],
-        );
-        const opacity = interpolate(animationProgress.value, [0, 0.5], [1, 0]);
-
-        return {
-          transform: [{ translateY }],
-          opacity,
-        };
+    useEffect(() => {
+      animationProgress.value = withTiming<number>(isLoading ? 1 : 0, {
+        duration: animationDuration,
+        easing: Easing.bezier(0.4, 0, 0.2, 1),
       });
+    }, [isLoading, animationDuration]);
 
-      const loadingAnimatedStylez = useAnimatedStyle<
-        Pick<ViewStyle, "transform" | "opacity">
-      >(() => {
-        const translateY = interpolate(
-          animationProgress.value,
-          [0, 1],
-          [20, 0],
-        );
-        const opacity = interpolate(animationProgress.value, [0.5, 1], [0, 1]);
+    const calculatedBorderRadius = borderRadius ?? height / 2;
 
-        return {
-          transform: [{ translateY }],
-          opacity,
-        };
-      });
+    const contentAnimatedStylez = useAnimatedStyle<Pick<ViewStyle, 'transform' | 'opacity'>>(() => {
+      const translateY = interpolate(animationProgress.value, [0, 1], [0, -20]);
+      const opacity = interpolate(animationProgress.value, [0, 0.5], [1, 0]);
 
-      const pressAnimatedStylez = useAnimatedStyle<
-        Pick<ViewStyle, "transform" | "backgroundColor">
-      >(() => {
+      return {
+        transform: [{ translateY }],
+        opacity,
+      };
+    });
+
+    const loadingAnimatedStylez = useAnimatedStyle<Pick<ViewStyle, 'transform' | 'opacity'>>(() => {
+      const translateY = interpolate(animationProgress.value, [0, 1], [20, 0]);
+      const opacity = interpolate(animationProgress.value, [0.5, 1], [0, 1]);
+
+      return {
+        transform: [{ translateY }],
+        opacity,
+      };
+    });
+
+    const pressAnimatedStylez = useAnimatedStyle<Pick<ViewStyle, 'transform' | 'backgroundColor'>>(
+      () => {
         const bgColor = interpolateColor(
           animationProgress.value,
           [0, 1],
-          [backgroundColor, loadingTextBackgroundColor!],
+          [backgroundColor, loadingTextBackgroundColor!]
         );
         return {
           transform: [{ scale: scaleValue.value }],
           backgroundColor: bgColor,
         };
-      });
+      }
+    );
 
-      const handlePressIn = () => {
-        if (withPressAnimation && !disabled && !isLoading) {
-          scaleValue.value = withTiming(0.95, { duration: 100 });
-        }
-      };
+    const handlePressIn = () => {
+      if (withPressAnimation && !disabled && !isLoading) {
+        scaleValue.value = withTiming(0.95, { duration: 100 });
+      }
+    };
 
-      const handlePressOut = () => {
-        if (withPressAnimation && !disabled && !isLoading) {
-          scaleValue.value = withTiming(1, { duration: 200 });
-        }
-      };
+    const handlePressOut = () => {
+      if (withPressAnimation && !disabled && !isLoading) {
+        scaleValue.value = withTiming(1, { duration: 200 });
+      }
+    };
 
-      const renderInnerContent = () => (
-        <View style={styles.contentWrapper}>
-          <Animated.View
-            style={[styles.contentContainer, contentAnimatedStylez]}
-          >
-            {children}
-          </Animated.View>
+    const renderInnerContent = () => (
+      <View style={styles.contentWrapper}>
+        <Animated.View style={[styles.contentContainer, contentAnimatedStylez]}>
+          {children}
+        </Animated.View>
 
-          <Animated.View
-            style={[styles.loadingContainer, loadingAnimatedStylez]}
-          >
-            {showLoadingIndicator &&
-              (renderLoadingIndicator ? (
-                renderLoadingIndicator()
-              ) : (
-                <Animated.View style={{ marginRight: loadingText ? 8 : 0 }}>
-                  <ActivityIndicator color={"#000"} size={"small"} />
-                </Animated.View>
-              ))}
-            <Animated.Text
-              style={[
-                styles.loadingText,
-                {
-                  color: loadingTextColor,
-                  fontSize: loadingTextSize,
-                },
-                loadingTextStyle,
-              ]}
-            >
-              {loadingText}
-            </Animated.Text>
-          </Animated.View>
-        </View>
-      );
-
-      const buttonContent = gradientColors ? (
-        <Animated.View style={[pressAnimatedStylez]}>
-          <LinearGradient
-            colors={gradientColors as [string, string, ...string[]]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
+        <Animated.View style={[styles.loadingContainer, loadingAnimatedStylez]}>
+          {showLoadingIndicator &&
+            (renderLoadingIndicator ? (
+              renderLoadingIndicator()
+            ) : (
+              <Animated.View style={{ marginRight: loadingText ? 8 : 0 }}>
+                <ActivityIndicator color={'#000'} size={'small'} />
+              </Animated.View>
+            ))}
+          <Animated.Text
             style={[
-              styles.button,
+              styles.loadingText,
               {
-                width,
-                height,
-                borderRadius: calculatedBorderRadius,
+                color: loadingTextColor,
+                fontSize: loadingTextSize,
               },
-              style,
+              loadingTextStyle,
             ]}
           >
-            {renderInnerContent()}
-          </LinearGradient>
+            {loadingText}
+          </Animated.Text>
         </Animated.View>
-      ) : (
-        <Animated.View
-          style={[
-            styles.button,
-            {
-              width,
-              height,
-              backgroundColor,
-              borderRadius: calculatedBorderRadius,
-            },
-            pressAnimatedStylez,
-            style,
-          ]}
+      </View>
+    );
+
+    const sizeStyle = fullWidth ? { width: '100%' as const, height } : { width, height };
+
+    const buttonContent = gradientColors ? (
+      <Animated.View style={[pressAnimatedStylez, fullWidth && styles.fullWidth]}>
+        <LinearGradient
+          colors={gradientColors as [string, string, ...string[]]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={[styles.button, sizeStyle, { borderRadius: calculatedBorderRadius }, style]}
         >
           {renderInnerContent()}
-        </Animated.View>
-      );
+        </LinearGradient>
+      </Animated.View>
+    ) : (
+      <Animated.View
+        style={[
+          styles.button,
+          sizeStyle,
+          { backgroundColor, borderRadius: calculatedBorderRadius },
+          pressAnimatedStylez,
+          style,
+        ]}
+      >
+        {renderInnerContent()}
+      </Animated.View>
+    );
 
-      return (
-        <Pressable
-          onPress={onPress}
-          disabled={isLoading || disabled}
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          style={({ pressed }) => [
-            styles.pressable,
-            Platform.OS === "ios" && pressed && styles.pressed,
-          ]}
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityState={{ disabled: isLoading || disabled }}
-        >
-          {buttonContent}
-        </Pressable>
-      );
-    },
-  );
+    return (
+      <Pressable
+        onPress={onPress}
+        disabled={isLoading || disabled}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        style={({ pressed }) => [
+          styles.pressable,
+          fullWidth && styles.fullWidth,
+          Platform.OS === 'ios' && pressed && styles.pressed,
+        ]}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityState={{ disabled: isLoading || disabled }}
+      >
+        {buttonContent}
+      </Pressable>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  contentContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    position: 'absolute',
+  },
+  contentWrapper: {
+    alignItems: 'center',
+    height: '100%',
+    justifyContent: 'center',
+    position: 'relative',
+    width: '100%',
+  },
+  fullWidth: {
+    alignSelf: 'stretch',
+    width: '100%',
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    position: 'absolute',
+  },
+  loadingText: {
+    fontWeight: '600',
+  },
   pressable: {
-    alignSelf: "flex-start",
+    alignSelf: 'center',
   },
   pressed: {
     opacity: 0.9,
   },
-  button: {
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden",
-  },
-  contentWrapper: {
-    position: "relative",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "100%",
-  },
-  contentContainer: {
-    position: "absolute",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  loadingContainer: {
-    position: "absolute",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  loadingText: {
-    fontWeight: "600",
-  },
 });
 
-export default memo<React.FC<IButton> & React.FunctionComponent<IButton>>(
-  Button,
-);
+export default memo<React.FC<IButton> & React.FunctionComponent<IButton>>(Button);

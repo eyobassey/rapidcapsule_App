@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
-import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native-unistyles';
 
 import { BaseComponentProps } from '@/components/base/types';
 
@@ -35,15 +35,6 @@ export interface AppSeparatorProps extends BaseComponentProps {
   spacing?: number;
 }
 
-interface SeparatorStyles {
-  base: ViewStyle;
-  horizontalSeparator: ViewStyle;
-  verticalSeparator: ViewStyle;
-  defaultSeparator: ViewStyle;
-  dashedSeparator: ViewStyle;
-  dottedSeparator: ViewStyle;
-}
-
 export const AppSeparator: React.FC<AppSeparatorProps> = ({
   orientation = 'horizontal',
   thickness = 1,
@@ -53,14 +44,8 @@ export const AppSeparator: React.FC<AppSeparatorProps> = ({
   testID,
   style,
 }) => {
-  const { theme } = useUnistyles();
-  const separatorStyles = (
-    styles as unknown as (theme: ReturnType<typeof useUnistyles>['theme']) => SeparatorStyles
-  )(theme);
-  const orientationStyle = separatorStyles[
-    `${orientation}Separator` as keyof SeparatorStyles
-  ] as ViewStyle;
-  const variantStyle = separatorStyles[`${variant}Separator` as keyof SeparatorStyles] as ViewStyle;
+  const orientationStyle = styles[`${orientation}Separator`] as ViewStyle;
+  const variantStyle = styles[`${variant}Separator`] as ViewStyle;
 
   const dynamicStyles: ViewStyle = {
     borderWidth: thickness,
@@ -68,7 +53,7 @@ export const AppSeparator: React.FC<AppSeparatorProps> = ({
   };
 
   const combinedStyle: StyleProp<ViewStyle> = [
-    separatorStyles.base,
+    styles.base,
     orientationStyle,
     variantStyle,
     dynamicStyles,

@@ -13,7 +13,7 @@ import {
   PressableProps as RNPressableProps,
   ViewStyle,
 } from 'react-native';
-import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native-unistyles';
 
 import { AccessiblePressableProps } from '@/components/base/types';
 import { combineStyles } from '@/utils';
@@ -48,15 +48,6 @@ export interface AppPressableProps
   minTouchTarget?: boolean;
 }
 
-interface PressableStyles {
-  minTouchTarget: ViewStyle;
-  defaultPressable: ViewStyle;
-  opacityPressable: ViewStyle;
-  scalePressable: ViewStyle;
-  pressed: ViewStyle;
-  disabled: ViewStyle;
-}
-
 export const AppPressable: React.FC<AppPressableProps> = ({
   children,
   variant = 'default',
@@ -71,12 +62,7 @@ export const AppPressable: React.FC<AppPressableProps> = ({
   style,
   ...pressableProps
 }) => {
-  const { theme } = useUnistyles();
-  const pressableStyles = (
-    styles as unknown as (theme: ReturnType<typeof useUnistyles>['theme']) => PressableStyles
-  )(theme);
-  const variantStyle = pressableStyles[`${variant}Pressable` as keyof PressableStyles] as ViewStyle;
-
+  const variantStyle = styles[`${variant}Pressable`] as ViewStyle;
   const isDisabled = disabled || loading;
 
   const defaultAccessibilityHint =
@@ -93,10 +79,10 @@ export const AppPressable: React.FC<AppPressableProps> = ({
       testID={testID}
       style={({ pressed }) =>
         combineStyles(
-          minTouchTarget ? pressableStyles.minTouchTarget : null,
+          minTouchTarget ? styles.minTouchTarget : null,
           variantStyle,
-          pressed && !isDisabled ? pressableStyles.pressed : null,
-          isDisabled ? pressableStyles.disabled : null,
+          pressed && !isDisabled ? styles.pressed : null,
+          isDisabled ? styles.disabled : null,
           style as ViewStyle
         )
       }

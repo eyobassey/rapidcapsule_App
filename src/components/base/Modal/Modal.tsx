@@ -14,15 +14,14 @@ import {
   Modal as RNModal,
   Platform,
   Pressable,
-  TextStyle,
   View,
   ViewStyle,
 } from 'react-native';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
-import { Button } from '@/shared/ui/atoms/button';
 import { AppText } from '@/components/base/Text/Text';
 import { BaseComponentProps } from '@/components/base/types';
+import { Button } from '@/shared/ui/atoms/button';
 import { combineStyles, getExtendedThemeColors } from '@/utils';
 
 export interface AppModalProps extends BaseComponentProps {
@@ -75,23 +74,6 @@ export interface AppModalProps extends BaseComponentProps {
   size?: 'small' | 'medium' | 'large' | 'fullscreen';
 }
 
-interface ModalStyles {
-  backdrop: ViewStyle;
-  backdropPressable: ViewStyle;
-  content: ViewStyle;
-  smallModal: ViewStyle;
-  mediumModal: ViewStyle;
-  largeModal: ViewStyle;
-  fullscreenModal: ViewStyle;
-  header: ViewStyle;
-  title: TextStyle;
-  closeButton: ViewStyle;
-  closeButtonText: TextStyle;
-  body: ViewStyle;
-  footer: ViewStyle;
-  footerButton: ViewStyle;
-}
-
 export const AppModal: React.FC<AppModalProps> = ({
   visible,
   title,
@@ -110,10 +92,7 @@ export const AppModal: React.FC<AppModalProps> = ({
   style,
 }) => {
   const { theme } = useUnistyles();
-  const modalStyles = (
-    styles as unknown as (theme: ReturnType<typeof useUnistyles>['theme']) => ModalStyles
-  )(theme);
-  const sizeStyle = modalStyles[`${size}Modal` as keyof ModalStyles] as ViewStyle;
+  const sizeStyle = styles[`${size}Modal`] as ViewStyle;
 
   const defaultAccessibilityLabel = accessibilityLabel || title || 'Modal dialog';
 
@@ -146,28 +125,28 @@ export const AppModal: React.FC<AppModalProps> = ({
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={modalStyles.backdrop}
+        style={styles.backdrop}
       >
         <Pressable
-          style={modalStyles.backdropPressable}
+          style={styles.backdropPressable}
           onPress={dismissible ? onClose : undefined}
           accessibilityLabel="Close modal"
           accessibilityRole="button"
           testID={testID ? `${testID}-backdrop` : undefined}
         >
           <Pressable
-            style={combineStyles(modalStyles.content, sizeStyle, style as ViewStyle)}
+            style={combineStyles(styles.content, sizeStyle, style as ViewStyle)}
             onPress={(e) => e.stopPropagation()}
             accessibilityLabel={defaultAccessibilityLabel}
             accessibilityRole={accessibilityRole as AccessibilityRole}
             testID={testID ? `${testID}-content` : undefined}
           >
             {(title || showCloseButton) && (
-              <View style={modalStyles.header}>
+              <View style={styles.header}>
                 {title && (
                   <AppText
                     variant="h3"
-                    style={modalStyles.title}
+                    style={styles.title}
                     testID={testID ? `${testID}-title` : undefined}
                   >
                     {title}
@@ -176,22 +155,22 @@ export const AppModal: React.FC<AppModalProps> = ({
                 {showCloseButton && (
                   <Pressable
                     onPress={onClose}
-                    style={modalStyles.closeButton}
+                    style={styles.closeButton}
                     accessibilityLabel="Close"
                     accessibilityRole="button"
                     accessibilityHint="Closes the modal dialog"
                     testID={testID ? `${testID}-close` : undefined}
                   >
-                    <AppText variant="h4" style={modalStyles.closeButtonText}>
+                    <AppText variant="h4" style={styles.closeButtonText}>
                       ×
                     </AppText>
                   </Pressable>
                 )}
               </View>
             )}
-            <View style={modalStyles.body}>{children}</View>
+            <View style={styles.body}>{children}</View>
             {(primaryActionLabel || secondaryActionLabel) && (
-              <View style={modalStyles.footer}>
+              <View style={styles.footer}>
                 {secondaryActionLabel && (
                   <Button
                     onPress={onSecondaryAction || onClose}
@@ -209,7 +188,7 @@ export const AppModal: React.FC<AppModalProps> = ({
                     height={44}
                     backgroundColor={theme.colors.primary}
                   >
-                    <AppText style={{ color: '#FFFFFF' }}>{primaryActionLabel}</AppText>
+                    <AppText style={styles.primaryActionText}>{primaryActionLabel}</AppText>
                   </Button>
                 )}
               </View>
@@ -296,6 +275,9 @@ const styles = StyleSheet.create((theme) => {
     mediumModal: {
       maxWidth: 600,
       width: '85%',
+    },
+    primaryActionText: {
+      color: theme.colors.buttonText,
     },
     // Sizes
     smallModal: {

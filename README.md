@@ -150,13 +150,20 @@ rapidcapusle/
 │   └── ...                   # Other screens
 ├── src/                      # Source code
 │   ├── components/           # Reusable UI components
+│   │   ├── base/             # Atomic base components (Text, Screen, etc.)
+│   │   └── home/             # Home screen components
 │   ├── config/               # Configuration files
 │   │   ├── themes.ts         # Theme configuration
-│   │   └── unistyles.ts      # Unistyles setup
+│   │   ├── unistyles.ts      # Unistyles setup
+│   │   └── i18n.ts           # i18next initialization
+│   ├── locales/              # Translation JSON files
+│   │   └── en/               # English translations (one file per namespace)
 │   ├── services/             # API services and utilities
 │   ├── store/                # State management (Zustand)
 │   └── types/                # TypeScript type definitions
 ├── assets/                   # Images, fonts, and other assets
+│   ├── icons/                # Streamline SVG icons (run `pnpm icons` after adding)
+│   └── fonts/                # Custom font files (Android)
 ├── app.json                  # Expo configuration
 ├── package.json              # Dependencies and scripts
 ├── tsconfig.json             # TypeScript configuration

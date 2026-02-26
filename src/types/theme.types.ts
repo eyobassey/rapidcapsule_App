@@ -7,7 +7,7 @@
  * Author: Aarav Mishra
  */
 
-import { useUnistyles } from 'react-native-unistyles';
+import type { UnistylesTheme } from '@/config/unistyles';
 
 /**
  * Extended theme colors with optional properties
@@ -41,9 +41,7 @@ export interface ExtendedThemeColors {
 /**
  * Get extended theme colors with fallbacks
  */
-export const getExtendedThemeColors = (
-  colors: ReturnType<typeof useUnistyles>['theme']['colors']
-): ExtendedThemeColors => {
+export const getExtendedThemeColors = (colors: UnistylesTheme['colors']): ExtendedThemeColors => {
   return {
     ...colors,
     secondary: (colors as Partial<ExtendedThemeColors>).secondary || colors.primary,

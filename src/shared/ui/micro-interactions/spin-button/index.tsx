@@ -1,57 +1,53 @@
+/* eslint-disable react-hooks/immutability */
 /**
  * Animation inspired by:
  * https://x.com/dev_ya/status/1991193618787254462
  * Interaction design by Yanis Lebzar.
  */
 
-import { StyleSheet, Pressable } from "react-native";
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useState } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-  withRepeat,
   Easing,
   interpolateColor,
   LinearTransition,
+  useAnimatedStyle,
+  useSharedValue,
   withDelay,
+  withRepeat,
   withSpring,
-} from "react-native-reanimated";
-import { CircularLoader } from "@/components/molecules/Loaders/circular";
-import type {
-  SpinButtonProps,
-  AnimationConfig,
-  CharacterAnimationParams,
-  TextAnimationProps,
-  CharacterProps,
-} from "./types";
+  withTiming,
+} from 'react-native-reanimated';
+
+import { CircleLoadingIndicator } from '@/shared/ui/molecules/circle-loader';
+
 import {
   BUTTON_SCALE,
   DEFAULT_ANIMATION_CONFIG,
   DEFAULT_BUTTON_COLORS,
+  DEFAULT_BUTTON_STYLE,
   DEFAULT_CHARACTER_ENTER_FINAL,
   DEFAULT_CHARACTER_ENTER_INITIAL,
   DEFAULT_CHARACTER_EXIT_FINAL,
   DEFAULT_CHARACTER_EXIT_INITIAL,
   DEFAULT_SPINNER_CONFIG,
-  DEFAULT_BUTTON_STYLE,
-} from "./conf";
+} from './conf';
+import type {
+  AnimationConfig,
+  CharacterAnimationParams,
+  CharacterProps,
+  SpinButtonProps,
+  TextAnimationProps,
+} from './types';
 
-const mergeDeep = <T extends Record<string, any>>(
-  target: T,
-  source: Partial<T>,
-): T => {
+const mergeDeep = <T extends Record<string, unknown>>(target: T, source: Partial<T>): T => {
   const output = { ...target };
 
   for (const key in source) {
-    if (
-      source[key] &&
-      typeof source[key] === "object" &&
-      !Array.isArray(source[key])
-    ) {
+    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
       output[key] = mergeDeep(
-        output[key] as Record<string, any>,
-        source[key] as Record<string, any>,
+        output[key] as Record<string, unknown>,
+        source[key] as Record<string, unknown>
       ) as T[Extract<keyof T, string>];
     } else if (source[key] !== undefined) {
       output[key] = source[key] as T[Extract<keyof T, string>];
@@ -69,23 +65,15 @@ const StaggeredText: React.FC<
     readonly exitInitial: CharacterAnimationParams;
     readonly exitFinal: CharacterAnimationParams;
   }
-> = ({
-  text,
-  style,
-  animationConfig,
-  enterInitial,
-  enterFinal,
-  exitInitial,
-  exitFinal,
-}) => {
+> = ({ text, style, animationConfig, enterInitial, enterFinal, exitInitial, exitFinal }) => {
   const characters = Array.from(text);
 
   return (
     <Animated.View
       style={styles.textWrapper}
-      layout={LinearTransition.duration(
-        animationConfig.buttonTransitionDuration,
-      ).easing(animationConfig.timing.easing!)}
+      layout={LinearTransition.duration(animationConfig.buttonTransitionDuration).easing(
+        animationConfig.timing.easing!
+      )}
     >
       {characters.map((char, index) => (
         <Character
@@ -117,7 +105,7 @@ const Character: React.FC<CharacterProps> = ({
   const animationDelay = (index + 1) * animationConfig.characterDelay;
 
   const enteringAnimation = () => {
-    "worklet";
+    'worklet';
 
     const springConfig = animationConfig.spring;
     const timingConfig = {
@@ -127,28 +115,16 @@ const Character: React.FC<CharacterProps> = ({
     return {
       initialValues: {
         opacity: enterInitial.opacity,
-        transform: [
-          { translateY: enterInitial.translateY },
-          { scale: enterInitial.scale },
-        ],
+        transform: [{ translateY: enterInitial.translateY }, { scale: enterInitial.scale }],
       },
       animations: {
-        opacity: withDelay(
-          animationDelay,
-          withTiming(enterFinal.opacity, timingConfig),
-        ),
+        opacity: withDelay(animationDelay, withTiming(enterFinal.opacity, timingConfig)),
         transform: [
           {
-            translateY: withDelay(
-              animationDelay,
-              withSpring(enterFinal.translateY, springConfig),
-            ),
+            translateY: withDelay(animationDelay, withSpring(enterFinal.translateY, springConfig)),
           },
           {
-            scale: withDelay(
-              animationDelay,
-              withSpring(enterFinal.scale, springConfig),
-            ),
+            scale: withDelay(animationDelay, withSpring(enterFinal.scale, springConfig)),
           },
         ],
       },
@@ -156,7 +132,7 @@ const Character: React.FC<CharacterProps> = ({
   };
 
   const exitingAnimation = () => {
-    "worklet";
+    'worklet';
 
     const timingConfig = {
       duration: animationConfig.characterExitDuration,
@@ -165,28 +141,16 @@ const Character: React.FC<CharacterProps> = ({
     return {
       initialValues: {
         opacity: exitInitial.opacity,
-        transform: [
-          { translateY: exitInitial.translateY },
-          { scale: exitInitial.scale },
-        ],
+        transform: [{ translateY: exitInitial.translateY }, { scale: exitInitial.scale }],
       },
       animations: {
-        opacity: withDelay(
-          animationDelay,
-          withTiming(exitFinal.opacity, timingConfig),
-        ),
+        opacity: withDelay(animationDelay, withTiming(exitFinal.opacity, timingConfig)),
         transform: [
           {
-            translateY: withDelay(
-              animationDelay,
-              withTiming(exitFinal.translateY, timingConfig),
-            ),
+            translateY: withDelay(animationDelay, withTiming(exitFinal.translateY, timingConfig)),
           },
           {
-            scale: withDelay(
-              animationDelay,
-              withTiming(exitFinal.scale, timingConfig),
-            ),
+            scale: withDelay(animationDelay, withTiming(exitFinal.scale, timingConfig)),
           },
         ],
       },
@@ -197,10 +161,8 @@ const Character: React.FC<CharacterProps> = ({
     <Animated.Text
       entering={enteringAnimation}
       exiting={exitingAnimation}
-      layout={LinearTransition.duration(180).easing(
-        animationConfig.timing.easing!,
-      )}
-      style={[style]}
+      layout={LinearTransition.duration(180).easing(animationConfig.timing.easing!)}
+      style={style}
     >
       {char}
     </Animated.Text>
@@ -208,8 +170,8 @@ const Character: React.FC<CharacterProps> = ({
 };
 
 const SpinButton: React.FC<SpinButtonProps> = ({
-  idleText = "Save",
-  activeText = "Saving",
+  idleText = 'Save',
+  activeText = 'Saving',
   colors,
   animationConfig,
   spinnerConfig,
@@ -226,14 +188,8 @@ const SpinButton: React.FC<SpinButtonProps> = ({
   const isSaving = controlled ? (isActive ?? false) : internalState;
 
   const mergedColors = mergeDeep(DEFAULT_BUTTON_COLORS, colors ?? {});
-  const mergedAnimationConfig = mergeDeep(
-    DEFAULT_ANIMATION_CONFIG,
-    animationConfig ?? {},
-  );
-  const mergedSpinnerConfig = mergeDeep(
-    DEFAULT_SPINNER_CONFIG,
-    spinnerConfig ?? {},
-  );
+  const mergedAnimationConfig = mergeDeep(DEFAULT_ANIMATION_CONFIG, animationConfig ?? {});
+  const mergedSpinnerConfig = mergeDeep(DEFAULT_SPINNER_CONFIG, spinnerConfig ?? {});
   const mergedButtonStyle = mergeDeep(DEFAULT_BUTTON_STYLE, buttonStyle ?? {});
 
   const buttonScale = useSharedValue<number>(1);
@@ -259,10 +215,7 @@ const SpinButton: React.FC<SpinButtonProps> = ({
       easing: mergedAnimationConfig.timing.easing,
     };
 
-    buttonBackgroundProgress.value = withTiming(
-      newState ? 1 : 0,
-      colorTimingConfig,
-    );
+    buttonBackgroundProgress.value = withTiming(newState ? 1 : 0, colorTimingConfig);
     textColorProgress.value = withTiming(newState ? 1 : 0, colorTimingConfig);
 
     if (newState) {
@@ -276,7 +229,7 @@ const SpinButton: React.FC<SpinButtonProps> = ({
           easing: Easing.linear,
         }),
         -1,
-        false,
+        false
       );
     } else {
       spinnerScale.value = withTiming<number>(0, {
@@ -313,7 +266,7 @@ const SpinButton: React.FC<SpinButtonProps> = ({
     const backgroundColor = interpolateColor(
       buttonBackgroundProgress.value,
       [0, 1],
-      [mergedColors.idle.background, mergedColors.active.background],
+      [mergedColors.idle.background, mergedColors.active.background]
     );
 
     return {
@@ -327,7 +280,7 @@ const SpinButton: React.FC<SpinButtonProps> = ({
     const color = interpolateColor(
       textColorProgress.value,
       [0, 1],
-      [mergedColors.idle.text, mergedColors.active.text],
+      [mergedColors.idle.text, mergedColors.active.text]
     );
 
     return {
@@ -342,7 +295,7 @@ const SpinButton: React.FC<SpinButtonProps> = ({
       backgroundColor: interpolateColor(
         spinnerScale.value,
         [0, 1],
-        ["transparent", mergedSpinnerConfig.containerBackground],
+        ['transparent', mergedSpinnerConfig.containerBackground]
       ),
     };
   });
@@ -355,16 +308,16 @@ const SpinButton: React.FC<SpinButtonProps> = ({
             paddingHorizontal: mergedButtonStyle.paddingHorizontal,
             paddingVertical: mergedButtonStyle.paddingVertical,
             borderRadius: mergedButtonStyle.borderRadius,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
           },
           animatedButtonStyle,
         ]}
-        layout={LinearTransition.duration(
-          mergedAnimationConfig.buttonTransitionDuration,
-        ).easing(mergedAnimationConfig.timing.easing!)}
+        layout={LinearTransition.duration(mergedAnimationConfig.buttonTransitionDuration).easing(
+          mergedAnimationConfig.timing.easing!
+        )}
       >
         <StaggeredText
           text={isSaving ? activeText : idleText}
@@ -385,15 +338,15 @@ const SpinButton: React.FC<SpinButtonProps> = ({
         <Animated.View
           style={[
             {
-              position: "absolute",
+              position: 'absolute',
               right: mergedSpinnerConfig.position.right,
               bottom: mergedSpinnerConfig.position.bottom,
               width: mergedSpinnerConfig.containerSize,
               height: mergedSpinnerConfig.containerSize,
               backgroundColor: mergedSpinnerConfig.containerBackground,
               borderRadius: 99,
-              justifyContent: "center",
-              alignItems: "center",
+              justifyContent: 'center',
+              alignItems: 'center',
             },
             animatedSpinnerContainerStyle,
           ]}
@@ -402,14 +355,14 @@ const SpinButton: React.FC<SpinButtonProps> = ({
             style={{
               width: mergedSpinnerConfig.size,
               height: mergedSpinnerConfig.size,
-              justifyContent: "center",
-              alignItems: "center",
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            <CircularLoader
-              activeColor={mergedSpinnerConfig.color}
-              size={mergedSpinnerConfig.size}
-              strokeWidth={mergedSpinnerConfig.strokeWidth}
+            <CircleLoadingIndicator
+              dotColor={mergedSpinnerConfig.color}
+              dotRadius={mergedSpinnerConfig.size / 6}
+              dotSpacing={mergedSpinnerConfig.size / 3}
               duration={800}
             />
           </Animated.View>
@@ -423,7 +376,7 @@ export default SpinButton;
 
 const styles = StyleSheet.create({
   textWrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 });

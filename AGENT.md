@@ -95,7 +95,8 @@ Use **only** when you are sure no native code or config is impacted.
 - `app/` — Expo Router routes (`_layout.tsx`, `index.tsx`, other screens).
 - `src/components/base` — locally defined base UI components (atomic/Reactix-aligned).
 - `src/shared/ui` — shared UI primitives (atoms/molecules/micro-interactions).
-- `src/config` — themes, Unistyles config, breakpoints, env.
+- `src/config` — themes, Unistyles config, breakpoints, env, i18n init.
+- `src/locales` — translation JSON files, organized by `{lang}/{namespace}.json` (e.g. `en/home.json`).
 - `src/services` — API client, repositories, network and storage services.
 - `src/store` — Zustand stores (`app`, `auth`, `ui`, etc.).
 - `src/utils` — cross-cutting utilities (date, validation, responsive, etc.).
@@ -147,6 +148,8 @@ When responding to a prompt (feature, bugfix, refactor), follow this sequence:
 
 - **Unistyles**
   - All style changes should use the existing Unistyles theme/breakpoints.
+  - Use `StyleSheet.create(theme => ({ ... }))` and access styles directly (e.g. `styles.container`). Do not call styles as a function or cast.
+  - Use `useUnistyles()` only when theme values are needed for logic (e.g. dynamic heights, `placeholderTextColor`, `ActivityIndicator` color).
   - If adding themes or tokens, update `src/config/unistyles.ts` and related theme files.
   - If you update breakpoints or responsive behavior, also review `docs/guides/responsive-design.md`.
 
@@ -157,6 +160,13 @@ When responding to a prompt (feature, bugfix, refactor), follow this sequence:
 - **MMKV / Storage**
   - Use existing storage services (`src/services/storage`) instead of direct MMKV calls.
   - Follow security considerations from `docs/security/storage-security.md`.
+
+- **Icons (Streamline)**
+  - Icons are SVGs from [StreamlineHQ](https://www.streamlinehq.com/), stored in `assets/icons/`.
+  - To add an icon: download the SVG, drop it into `assets/icons/`, run `pnpm icons`.
+  - The script auto-generates `assets/icons/index.ts` (PascalCase barrel) — never edit this file manually.
+  - Use `<AppIcon name="ArrowRight" size={24} />` in components. The `name` prop is type-safe.
+  - `AppIcon` defaults color to `theme.colors.text`; override with the `color` prop.
 
 - **Skia**
   - If Skia errors mention missing binaries, run the postinstall script (documented in native-dev-client guide).
@@ -247,6 +257,48 @@ When a prompt asks for:
 - **Docs-only updates**
   - Keep in sync with actual behavior and scripts.
   - Use existing tone and structure (overview, purpose, contents).
+
+---
+
+## 10. Internationalization (i18n)
+
+- i18n is configured via **i18next + react-i18next** in `src/config/i18n.ts` and loaded in `app/_layout.tsx`.
+- All **user-facing text** must use translation keys (via `useTranslation` hook), never hardcoded strings.
+
+### Locale file structure
+
+```
+src/locales/
+  en/
+    common.json     ← shared keys (Cancel, OK, Error, etc.)
+    home.json       ← home screen keys
+    <screen>.json   ← one file per screen / feature namespace
+```
+
+To add a new language, create a matching folder (e.g. `es/`) with the same filenames and keys, then register it in `src/config/i18n.ts`.
+
+### Key conventions
+
+- Keys use **nested camelCase objects** (i18next standard), not natural language or hyphens.
+- Group keys by section inside each namespace file:
+  ```json
+  {
+    "actions": { "signIn": "Sign In", "getStarted": "Get Started →" },
+    "brand": { "name": "Rapid Capsule" }
+  }
+  ```
+- In code, use **dot-notation** within the namespace: `t('actions.signIn')`.
+- Pass the namespace to the hook: `const { t } = useTranslation('home')`.
+
+### Adding new screen copy
+
+1. Create or update `src/locales/en/<namespace>.json` with nested camelCase keys.
+2. Import it in `src/config/i18n.ts` and add to `resources` + `ns` array.
+3. Use `useTranslation('<namespace>')` in the component.
+
+### Editor support
+
+The project includes `.vscode/settings.json` with **i18n-ally** configuration. The extension provides inline previews, missing-key warnings, and auto-complete for translation keys.
 
 Always end work with:
 

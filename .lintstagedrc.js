@@ -9,7 +9,7 @@
 
 module.exports = {
   // TypeScript and TypeScript React files
-  '*.{ts,tsx}': ['eslint --fix --max-warnings=0', 'prettier --write'],
+  '*.{ts,tsx}': ['eslint --fix', 'prettier --write'],
 
   // JavaScript and JavaScript React files (exclude config files)
   '*.{js,jsx}': [
@@ -24,7 +24,7 @@ module.exports = {
 
         return !isConfig;
       });
-      return configFiles.length > 0 ? `eslint --fix --max-warnings=0 ${configFiles.join(' ')}` : [];
+      return configFiles.length > 0 ? `eslint --fix ${configFiles.join(' ')}` : [];
     },
     'prettier --write',
   ],

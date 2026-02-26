@@ -7,13 +7,18 @@
  * Author: Aarav Mishra
  */
 
+export * from './AppIcon/AppIcon';
+export * from './AppLogo/AppLogo';
 export * from './Avatar/Avatar';
 export * from './Badge/Badge';
 export * from './Card/Card';
+export * from './ChatBubble/ChatBubble';
+export * from './EkaAvatar/EkaAvatar';
 export * from './Input/Input';
 export * from './Loading/Loading';
 export * from './Modal/Modal';
 export * from './Pressable/Pressable';
+export * from './Screen/Screen';
 export * from './Separator/Separator';
 export * from './Text/Text';
 export * from './types';

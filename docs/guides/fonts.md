@@ -7,8 +7,9 @@
 
 ## Overview
 
-The Rapid Capsule mobile app uses platform-specific fonts:
-- **iOS**: SF Pro (system font)
+The Rapid Capsule mobile app uses platform-specific rounded fonts:
+
+- **iOS**: SF Pro Rounded (system font)
 - **Android**: Open Runde
 
 Fonts are automatically loaded when the app starts using `expo-font`.
@@ -17,11 +18,12 @@ Fonts are automatically loaded when the app starts using `expo-font`.
 
 ## Font Setup
 
-### iOS: SF Pro
+### iOS: SF Pro Rounded
 
-SF Pro is Apple's system font and is available on all iOS devices. No additional setup is required - the app will use the system font automatically.
+SF Pro Rounded is Apple's rounded system font variant, available on iOS 13+. No additional setup is required - the app accesses it via system font descriptor names.
 
 **Font Weights Available:**
+
 - Regular (400)
 - Medium (500)
 - Semibold (600)
@@ -46,6 +48,7 @@ Open Runde is a rounded variant of Inter, designed to be similar to SF Pro Round
 **Note**: The release contains both OTF and WOFF formats. Use the OTF files from the `otf` folder (React Native/Expo supports OTF format).
 
 **Required Font Files:**
+
 ```
 assets/fonts/
 ├── OpenRunde-Regular.otf
@@ -66,12 +69,12 @@ import { useFonts } from '@/utils/font/font.utils';
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts();
-  
+
   // Show loading screen until fonts are loaded
   if (!fontsLoaded) {
     return <LoadingScreen />;
   }
-  
+
   return <App />;
 }
 ```
@@ -111,7 +114,7 @@ const styles = StyleSheet.create((theme) => ({
     fontFamily: getFontFamily('regular'),
     fontSize: theme.typography.fontSize.md,
   },
-  
+
   boldText: {
     fontFamily: getFontFamily('bold'),
     fontSize: theme.typography.fontSize.lg,
@@ -124,11 +127,11 @@ const styles = StyleSheet.create((theme) => ({
 You can also use font family names directly:
 
 ```typescript
-// iOS
-fontFamily: 'SFProDisplay-Regular'
+// iOS (system font descriptor names)
+fontFamily: '.SFProRounded-Regular';
 
 // Android
-fontFamily: 'OpenRunde-Regular'
+fontFamily: 'OpenRunde-Regular';
 ```
 
 ---
@@ -140,10 +143,10 @@ Font configuration is defined in `src/config/fonts.ts`:
 ```typescript
 export const FONT_FAMILIES = {
   ios: {
-    regular: 'SFProDisplay-Regular',
-    medium: 'SFProDisplay-Medium',
-    semibold: 'SFProDisplay-Semibold',
-    bold: 'SFProDisplay-Bold',
+    regular: '.SFProRounded-Regular',
+    medium: '.SFProRounded-Medium',
+    semibold: '.SFProRounded-Semibold',
+    bold: '.SFProRounded-Bold',
   },
   android: {
     regular: 'OpenRunde-Regular',
@@ -160,12 +163,12 @@ export const FONT_FAMILIES = {
 
 Font weights are standardized across platforms:
 
-| Weight | Value | iOS Font | Android Font |
-|--------|-------|----------|--------------|
-| Regular | 400 | SFProDisplay-Regular | OpenRunde-Regular |
-| Medium | 500 | SFProDisplay-Medium | OpenRunde-Medium |
-| Semibold | 600 | SFProDisplay-Semibold | OpenRunde-SemiBold |
-| Bold | 700 | SFProDisplay-Bold | OpenRunde-Bold |
+| Weight   | Value | iOS Font               | Android Font       |
+| -------- | ----- | ---------------------- | ------------------ |
+| Regular  | 400   | .SFProRounded-Regular  | OpenRunde-Regular  |
+| Medium   | 500   | .SFProRounded-Medium   | OpenRunde-Medium   |
+| Semibold | 600   | .SFProRounded-Semibold | OpenRunde-SemiBold |
+| Bold     | 700   | .SFProRounded-Bold     | OpenRunde-Bold     |
 
 ---
 
@@ -187,10 +190,10 @@ Font weights are standardized across platforms:
 
 ### iOS Font Issues
 
-SF Pro is a system font, so it should always work. If you're seeing fallback fonts:
+SF Pro Rounded is a system font, so it should always work. If you're seeing fallback fonts:
 
-1. **Check font name**: Ensure you're using `SFProDisplay-*` names
-2. **Verify iOS version**: SF Pro is available on iOS 9.0+
+1. **Check font name**: Ensure you're using `.SFProRounded-*` names (note the leading dot)
+2. **Verify iOS version**: SF Pro Rounded is available on iOS 13.0+
 3. **Use system font**: Consider using `System` as fallback
 
 ---
@@ -207,7 +210,7 @@ SF Pro is a system font, so it should always work. If you're seeing fallback fon
 
 ## License
 
-- **SF Pro**: Apple's proprietary font (system font on iOS)
+- **SF Pro Rounded**: Apple's proprietary font (system font on iOS 13+)
 - **Open Runde**: SIL Open Font License - See https://github.com/lauridskern/open-runde/blob/main/LICENSE.txt
 
 Both fonts are free to use for this project.

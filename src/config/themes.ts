@@ -1,39 +1,48 @@
 import { Platform } from 'react-native';
 
 import { FONT_FAMILIES } from './fonts';
+import { foundationColors } from './foundation-colors';
+
+const { base, slate, blue, green, red, amber, sky, emerald, gray: _gray } = foundationColors;
 
 // Light theme
 export const lightTheme = {
   colors: {
     // Primary colors
-    primary: '#007AFF',
-    primaryDark: '#0051D5',
-    primaryLight: '#5AC8FA',
-    
+    primary: blue[600],
+    primaryDark: blue[700],
+    primaryLight: blue[400],
+
     // Background colors
-    background: '#FFFFFF',
-    backgroundSecondary: '#F5F5F7',
-    backgroundTertiary: '#E5E5EA',
-    
+    background: base.white,
+    backgroundSecondary: slate[50],
+    backgroundTertiary: slate[100],
+
     // Text colors
-    text: '#000000',
-    textSecondary: '#6E6E73',
-    textTertiary: '#8E8E93',
-    
+    text: slate[900],
+    textSecondary: slate[600],
+    textTertiary: slate[500],
+
     // Border colors
-    border: '#C6C6C8',
-    borderLight: '#E5E5EA',
-    
+    border: slate[200],
+    borderLight: slate[100],
+
     // Status colors
-    success: '#34C759',
-    error: '#FF3B30',
-    warning: '#FF9500',
-    info: '#007AFF',
-    
+    success: green[500],
+    error: red[500],
+    warning: amber[400],
+    info: sky[500],
+
     // Health tech specific
-    healthPrimary: '#007AFF',
-    healthSecondary: '#5AC8FA',
-    healthAccent: '#34C759',
+    healthPrimary: blue[600],
+    healthSecondary: sky[400],
+    healthAccent: emerald[400],
+
+    // Common UI text helpers
+    buttonText: base.white,
+
+    // Full Figma foundation palette
+    palette: foundationColors,
   },
   spacing: {
     xs: 4,
@@ -73,34 +82,40 @@ export const lightTheme = {
 export const darkTheme = {
   colors: {
     // Primary colors
-    primary: '#0A84FF',
-    primaryDark: '#0051D5',
-    primaryLight: '#5AC8FA',
-    
+    primary: blue[400],
+    primaryDark: blue[500],
+    primaryLight: sky[300],
+
     // Background colors
-    background: '#000000',
-    backgroundSecondary: '#1C1C1E',
-    backgroundTertiary: '#2C2C2E',
-    
+    background: slate[950],
+    backgroundSecondary: slate[900],
+    backgroundTertiary: slate[800],
+
     // Text colors
-    text: '#FFFFFF',
-    textSecondary: '#98989D',
-    textTertiary: '#636366',
-    
+    text: base.white,
+    textSecondary: slate[300],
+    textTertiary: slate[400],
+
     // Border colors
-    border: '#38383A',
-    borderLight: '#2C2C2E',
-    
+    border: slate[700],
+    borderLight: slate[600],
+
     // Status colors
-    success: '#30D158',
-    error: '#FF453A',
-    warning: '#FF9F0A',
-    info: '#0A84FF',
-    
+    success: green[400],
+    error: red[400],
+    warning: amber[300],
+    info: sky[400],
+
     // Health tech specific
-    healthPrimary: '#0A84FF',
-    healthSecondary: '#5AC8FA',
-    healthAccent: '#30D158',
+    healthPrimary: blue[400],
+    healthSecondary: sky[400],
+    healthAccent: emerald[400],
+
+    // Common UI text helpers
+    buttonText: base.white,
+
+    // Full Figma foundation palette
+    palette: foundationColors,
   },
   spacing: {
     xs: 4,
