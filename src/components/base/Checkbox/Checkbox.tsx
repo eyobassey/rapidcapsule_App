@@ -71,5 +71,6 @@ const styles = StyleSheet.create((theme) => ({
   label: {
     color: theme.colors.textSecondary,
     marginLeft: theme.spacing.sm,
+    maxWidth: '95%',
   },
 }));
