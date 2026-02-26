@@ -1,10 +1,10 @@
 import appleLogo from '@assets/apple.png';
 import googleLogo from '@assets/google.png';
-import loginHero from '@assets/login.png';
+import registerHero from '@assets/register.png';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Linking, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import {
@@ -17,20 +17,14 @@ import {
   Screen,
 } from '@/components/base';
 import { Button } from '@/shared/ui/atoms/button';
-import { SegmentedControl } from '@/shared/ui/organisms';
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
   const { theme } = useUnistyles();
   const { t } = useTranslation('auth');
   const router = useRouter();
 
-  const [segmentIndex, setSegmentIndex] = useState(0);
-  const [keepSignedIn, setKeepSignedIn] = useState(false);
-
-  const handleForgotPassword = () => {
-    // Placeholder – wire to real route or deep link later
-    void Linking.openURL('mailto:support@example.com');
-  };
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [marketingOptIn, setMarketingOptIn] = useState(false);
 
   return (
     <Screen gradient="subtle" edges={['top']}>
@@ -43,69 +37,67 @@ export default function LoginScreen() {
         <View style={styles.container}>
           <View style={styles.header}>
             <View style={styles.logoWrapper}>
-              <AppImage source={loginHero} rounded style={styles.logoImage} />
+              <AppImage source={registerHero} rounded style={styles.logoImage} />
             </View>
             <AppText variant="h2" align="center">
-              {t('login.title')}
+              {t('register.title')}
             </AppText>
           </View>
 
           <View style={styles.card}>
-            <View style={styles.segmentWrapper}>
-              <SegmentedControl
-                currentIndex={segmentIndex}
-                onChange={setSegmentIndex}
-                borderRadius={theme.borderRadius.full}
-                paddingVertical={theme.spacing.sm}
-              >
-                <AppText align="center">{t('login.segments.patient')}</AppText>
-                <AppText align="center">{t('login.segments.specialist')}</AppText>
-              </SegmentedControl>
-            </View>
-
             <View style={styles.formSection}>
               <AppInput
                 size="large"
-                label={t('login.fields.emailLabel')}
+                label={t('register.fields.emailLabel')}
                 variant="pill"
                 type="email"
-                placeholder={t('login.fields.emailPlaceholder')}
+                placeholder={t('register.fields.emailPlaceholder')}
               />
 
               <AppInput
                 size="large"
-                label={t('login.fields.passwordLabel')}
+                label={t('register.fields.passwordLabel')}
                 type="password"
                 variant="pill"
-                placeholder={t('login.fields.passwordPlaceholder')}
+                placeholder={t('register.fields.passwordPlaceholder')}
                 rightIcon={
                   <AppIcon name="Invisible1" size={20} color={theme.colors.palette.gray[500]} />
                 }
                 showPasswordToggle
               />
 
-              <View style={styles.rowBetween}>
+              <AppInput
+                size="large"
+                label={t('register.fields.confirmPasswordLabel')}
+                type="password"
+                variant="pill"
+                placeholder={t('register.fields.confirmPasswordPlaceholder')}
+                rightIcon={
+                  <AppIcon name="Invisible1" size={20} color={theme.colors.palette.gray[500]} />
+                }
+                showPasswordToggle
+              />
+
+              <View style={styles.checkboxGroup}>
                 <Checkbox
                   size={20}
-                  isChecked={keepSignedIn}
-                  onPress={(isChecked: boolean) => setKeepSignedIn(isChecked)}
-                  label={t('login.checkbox.keepSignedIn')}
+                  isChecked={agreeTerms}
+                  onPress={(checked: boolean) => setAgreeTerms(checked)}
+                  label={t('register.checkbox.terms.label')}
+                  emphasisText={t('register.checkbox.terms.emphasis')}
                 />
-                <AppPressable
-                  variant="opacity"
-                  style={styles.linkPressable}
-                  onPress={handleForgotPassword}
-                >
-                  <AppText variant="bodySmall" color={theme.colors.palette.blue[500]}>
-                    {t('login.forgotPassword')}
-                  </AppText>
-                </AppPressable>
+                <Checkbox
+                  size={20}
+                  isChecked={marketingOptIn}
+                  onPress={(checked: boolean) => setMarketingOptIn(checked)}
+                  label={t('register.checkbox.marketing.label')}
+                />
               </View>
 
               <View style={styles.primaryButtonWrapper}>
                 <Button fullWidth height={52}>
                   <AppText variant="bodyMedium" align="center" style={styles.primaryButtonText}>
-                    {t('login.primaryAction')}
+                    {t('register.primaryAction')}
                   </AppText>
                 </Button>
               </View>
@@ -114,7 +106,7 @@ export default function LoginScreen() {
             <View style={styles.dividerRow}>
               <View style={styles.divider} />
               <AppText variant="bodySmall" color="#94A3B8">
-                {t('login.dividerOr')}
+                {t('register.dividerOr')}
               </AppText>
               <View style={styles.divider} />
             </View>
@@ -124,7 +116,7 @@ export default function LoginScreen() {
                 <View style={styles.socialContent}>
                   <AppImage source={googleLogo} style={styles.socialIcon} />
                   <AppText variant="bodyMedium" align="center">
-                    {t('login.social.google')}
+                    {t('register.social.google')}
                   </AppText>
                 </View>
               </View>
@@ -132,7 +124,7 @@ export default function LoginScreen() {
                 <View style={styles.socialContent}>
                   <AppImage source={appleLogo} style={styles.socialIcon} />
                   <AppText variant="bodyMedium" align="center" style={styles.appleText}>
-                    {t('login.social.apple')}
+                    {t('register.social.apple')}
                   </AppText>
                 </View>
               </View>
@@ -142,14 +134,20 @@ export default function LoginScreen() {
           <View style={styles.footer}>
             <View style={styles.footerRow}>
               <AppText variant="bodySmall" color="#64748B">
-                {t('login.footer.prompt')}
+                {t('register.footer.loginPrompt')}
               </AppText>
-              <AppPressable variant="opacity" onPress={() => router.push('/register')}>
+              <AppPressable variant="opacity" onPress={() => router.push('/login')}>
                 <AppText variant="bodySmall" color={theme.colors.palette.blue[500]}>
-                  {t('login.footer.signupCta')}
+                  {t('register.footer.loginCta')}
                 </AppText>
               </AppPressable>
             </View>
+            <AppText variant="bodySmall" align="center" color="#64748B">
+              {t('register.footer.specialistPrompt')}{' '}
+              <AppText variant="bodySmall" color={theme.colors.palette.blue[500]}>
+                {t('register.footer.specialistCta')}
+              </AppText>
+            </AppText>
           </View>
         </View>
       </ScrollView>
@@ -167,6 +165,10 @@ const styles = StyleSheet.create((theme) => ({
   card: {
     gap: theme.spacing.md,
     width: '100%',
+  },
+  checkboxGroup: {
+    gap: theme.spacing.xs,
+    marginTop: theme.spacing.sm,
   },
   container: {
     flex: 1,
@@ -187,10 +189,8 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: 'row',
     gap: theme.spacing.sm,
   },
-  fieldLabel: {
-    color: theme.colors.textSecondary,
-  },
   footer: {
+    gap: theme.spacing.xs,
     marginTop: theme.spacing.md,
   },
   footerRow: {
@@ -201,6 +201,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   formSection: {
     gap: theme.spacing.md,
+    marginTop: theme.spacing.lg,
     width: '100%',
   },
   googleButton: {
@@ -210,15 +211,6 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: 'center',
     gap: theme.spacing.sm,
   },
-  inputPlaceholder: {
-    backgroundColor: theme.colors.background,
-    borderRadius: theme.borderRadius.full,
-    boxShadow: '0px 0px 0px 0.8px #00000005, 0px 8px 24px -4px rgba(15, 23, 42, 0.32)',
-    height: 52,
-  },
-  linkPressable: {
-    paddingVertical: theme.spacing.xs / 2,
-  },
   logoImage: {
     height: 80,
     width: 80,
@@ -227,25 +219,14 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  passwordLabel: {
-    marginTop: theme.spacing.sm,
-  },
   primaryButtonText: {
     color: theme.colors.buttonText,
   },
   primaryButtonWrapper: {
     marginTop: theme.spacing.md,
   },
-  rowBetween: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   scrollContent: {
     flexGrow: 1,
-  },
-  segmentWrapper: {
-    alignItems: 'center',
   },
   socialButton: {
     alignItems: 'center',
