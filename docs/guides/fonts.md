@@ -18,9 +18,11 @@ Fonts are automatically loaded when the app starts using `expo-font`.
 
 ## Font Setup
 
-### iOS: SF Pro Rounded
+### iOS: SF Pro Rounded / ui-rounded alias
 
-SF Pro Rounded is Apple's rounded system font variant, available on iOS 13+. No additional setup is required - the app accesses it via system font descriptor names.
+SF Pro Rounded is Apple's rounded system font variant, available on iOS 13+. In this app, we refer to
+the primary UI font as the **`ui-rounded`** family, which is an alias that maps to SF Pro Rounded
+on iOS. No additional setup is required - the app accesses it via the `ui-rounded` family name.
 
 **Font Weights Available:**
 
@@ -127,8 +129,8 @@ const styles = StyleSheet.create((theme) => ({
 You can also use font family names directly:
 
 ```typescript
-// iOS (system family name)
-fontFamily: 'SF Pro Rounded';
+// iOS (alias family, mapped to SF Pro Rounded)
+fontFamily: 'ui-rounded';
 
 // Android
 fontFamily: 'OpenRunde-Regular';
@@ -143,10 +145,10 @@ Font configuration is defined in `src/config/fonts.ts`:
 ```typescript
 export const FONT_FAMILIES = {
   ios: {
-    regular: 'SF Pro Rounded',
-    medium: 'SF Pro Rounded',
-    semibold: 'SF Pro Rounded',
-    bold: 'SF Pro Rounded',
+    regular: 'ui-rounded',
+    medium: 'ui-rounded',
+    semibold: 'ui-rounded',
+    bold: 'ui-rounded',
   },
   android: {
     regular: 'OpenRunde-Regular',
