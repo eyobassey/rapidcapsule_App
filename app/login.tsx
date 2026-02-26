@@ -167,7 +167,7 @@ const styles = StyleSheet.create((theme) => ({
     borderBottomColor: theme.colors.background,
     borderBottomWidth: 1,
     flex: 1,
-    height: StyleSheet.hairlineWidth,
+    height: 2,
   },
   dividerRow: {
     alignItems: 'center',
