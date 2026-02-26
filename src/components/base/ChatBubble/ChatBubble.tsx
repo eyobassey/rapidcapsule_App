@@ -36,8 +36,8 @@ const styles = StyleSheet.create((theme) => ({
     backgroundColor: theme.colors.background,
     borderRadius: 20,
     boxShadow: BUBBLE_SHADOW,
-    paddingHorizontal: theme.spacing.md + theme.spacing.xs,
-    paddingVertical: theme.spacing.md - 2,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.sm,
     position: 'relative',
     zIndex: 1,
   },
@@ -64,7 +64,7 @@ const styles = StyleSheet.create((theme) => ({
   dotSmRight: { right: -3 },
   wrapper: {
     marginBottom: TRAIL_SPACE,
-    maxWidth: '80%',
+    maxWidth: '90%',
     position: 'relative',
   },
 }));

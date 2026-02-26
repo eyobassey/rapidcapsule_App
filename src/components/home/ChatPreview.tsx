@@ -13,7 +13,7 @@ export const ChatPreview: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.rowUser}>
         <ChatBubble variant="outgoing">
-          <AppText variant="h4" align="left">
+          <AppText variant="h4" align="left" style={{ fontWeight: '500' }}>
             {t('chat.userMessage')}
           </AppText>
         </ChatBubble>
@@ -22,8 +22,8 @@ export const ChatPreview: React.FC = () => {
 
       <View style={styles.rowBot}>
         <EkaAvatar size={40} />
-        <ChatBubble variant="incoming">
-          <AppText variant="h4" align="left">
+        <ChatBubble variant="incoming" style={styles.chatBubble}>
+          <AppText variant="h4" align="left" style={{ fontWeight: '500' }}>
             {t('chat.botResponse')}
           </AppText>
         </ChatBubble>
@@ -33,6 +33,9 @@ export const ChatPreview: React.FC = () => {
 };
 
 const styles = StyleSheet.create((theme) => ({
+  chatBubble: {
+    maxWidth: '70%',
+  },
   container: {
     gap: theme.spacing.md,
     paddingTop: theme.spacing.xxl,

@@ -58,7 +58,7 @@ export const BrandSection: React.FC = () => {
                   <AppText variant="bodyMedium" color={textColor}>
                     {' '}
                     {t(feature.key)}
-                    {needsComma ? ',' : ''}
+                    {needsComma ? ',' : ' '}
                     {isLast ? '.' : ''}
                   </AppText>
                 </View>
