@@ -13,7 +13,7 @@ export const ChatPreview: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.rowUser}>
         <ChatBubble variant="outgoing">
-          <AppText variant="bodyMedium" align="left">
+          <AppText variant="h4" align="left">
             {t('chat.userMessage')}
           </AppText>
         </ChatBubble>
@@ -23,7 +23,7 @@ export const ChatPreview: React.FC = () => {
       <View style={styles.rowBot}>
         <EkaAvatar size={40} />
         <ChatBubble variant="incoming">
-          <AppText variant="bodyMedium" align="left">
+          <AppText variant="h4" align="left">
             {t('chat.botResponse')}
           </AppText>
         </ChatBubble>
