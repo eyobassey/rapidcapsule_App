@@ -88,7 +88,7 @@ export default function LoginScreen() {
                 style={styles.linkPressable}
                 onPress={handleForgotPassword}
               >
-                <AppText variant="bodySmall" color="#2563EB" style={styles.link}>
+                <AppText variant="bodySmall" color={theme.colors.palette.blue[500]}>
                   {t('login.forgotPassword')}
                 </AppText>
               </AppPressable>
@@ -163,7 +163,9 @@ const styles = StyleSheet.create((theme) => ({
     paddingTop: theme.spacing.xl,
   },
   divider: {
-    backgroundColor: theme.colors.borderLight,
+    backgroundColor: theme.colors.palette.sky[200],
+    borderBottomColor: theme.colors.background,
+    borderBottomWidth: 1,
     flex: 1,
     height: StyleSheet.hairlineWidth,
   },
@@ -194,9 +196,6 @@ const styles = StyleSheet.create((theme) => ({
     borderRadius: theme.borderRadius.full,
     boxShadow: '0px 0px 0px 0.8px #00000005, 0px 8px 24px -4px rgba(15, 23, 42, 0.32)',
     height: 52,
-  },
-  link: {
-    textDecorationLine: 'underline',
   },
   linkPressable: {
     paddingVertical: theme.spacing.xs / 2,
@@ -230,7 +229,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: 'center',
     borderRadius: theme.borderRadius.full,
     flex: 1,
-    height: 44,
+    height: 50,
     justifyContent: 'center',
   },
   socialContent: {
