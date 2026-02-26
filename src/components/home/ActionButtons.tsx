@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
@@ -11,13 +12,19 @@ export const ActionButtons: React.FC = () => {
   const { t } = useTranslation('home');
   const { theme } = useUnistyles();
   const colors = getExtendedThemeColors(theme.colors);
+  const router = useRouter();
 
   const signInHeight = theme.spacing.lg * 2;
   const ctaHeight = theme.spacing.lg * 2 + theme.spacing.xs;
 
   return (
     <View style={styles.container}>
-      <Button fullWidth height={signInHeight} backgroundColor={colors.backgroundSecondary}>
+      <Button
+        fullWidth
+        height={signInHeight}
+        backgroundColor={colors.backgroundSecondary}
+        onPress={() => router.push('/login')}
+      >
         <AppText variant="bodyMedium" align="center" bold>
           {t('actions.signIn')}
         </AppText>

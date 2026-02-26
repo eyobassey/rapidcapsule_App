@@ -4,13 +4,17 @@
 import AiFileSpark from './Ai-File-Spark.svg';
 import CalendarEvent from './Calendar-Event.svg';
 import EntEarNoseThroat from './Ent-Ear-Nose-Throat.svg';
+import Invisible1 from './Invisible-1.svg';
 import Medicines from './Medicines.svg';
 import Stethoscope from './Stethoscope.svg';
+import Visible from './Visible.svg';
 
 export const Icons = {
   AiFileSpark,
   CalendarEvent,
   EntEarNoseThroat,
+  Invisible1,
   Medicines,
   Stethoscope,
+  Visible,
 } as const;

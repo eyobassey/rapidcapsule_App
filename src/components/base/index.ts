@@ -8,11 +8,13 @@
  */
 
 export * from './AppIcon/AppIcon';
+export * from './AppImage/AppImage';
 export * from './AppLogo/AppLogo';
 export * from './Avatar/Avatar';
 export * from './Badge/Badge';
 export * from './Card/Card';
 export * from './ChatBubble/ChatBubble';
+export * from './Checkbox/Checkbox';
 export * from './EkaAvatar/EkaAvatar';
 export * from './Input/Input';
 export * from './Loading/Loading';

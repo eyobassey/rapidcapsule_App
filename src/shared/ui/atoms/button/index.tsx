@@ -18,6 +18,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { useUnistyles } from 'react-native-unistyles';
 
 // @ts-check
 import type { IButton } from './types';
@@ -30,7 +31,7 @@ export const Button: React.FC<IButton> & React.FunctionComponent<IButton> = memo
     fullWidth = false,
     width = 200,
     height = 48,
-    backgroundColor = '#fff',
+    backgroundColor,
     loadingText = 'Loading...',
     loadingTextColor = 'white',
     loadingTextSize = 16,
@@ -45,6 +46,9 @@ export const Button: React.FC<IButton> & React.FunctionComponent<IButton> = memo
     renderLoadingIndicator,
     loadingTextBackgroundColor = '#cacaca',
   }: IButton): React.ReactNode & React.JSX.Element & React.ReactElement => {
+    const { theme } = useUnistyles();
+    const resolvedBackgroundColor = backgroundColor ?? theme.colors.primary;
+
     const animationProgress = useSharedValue<number>(isLoading ? 1 : 0);
     const scaleValue = useSharedValue<number>(1);
 
@@ -82,7 +86,7 @@ export const Button: React.FC<IButton> & React.FunctionComponent<IButton> = memo
         const bgColor = interpolateColor(
           animationProgress.value,
           [0, 1],
-          [backgroundColor, loadingTextBackgroundColor!]
+          [resolvedBackgroundColor, loadingTextBackgroundColor!]
         );
         return {
           transform: [{ scale: scaleValue.value }],
@@ -152,7 +156,7 @@ export const Button: React.FC<IButton> & React.FunctionComponent<IButton> = memo
         style={[
           styles.button,
           sizeStyle,
-          { backgroundColor, borderRadius: calculatedBorderRadius },
+          { backgroundColor: resolvedBackgroundColor, borderRadius: calculatedBorderRadius },
           pressAnimatedStylez,
           style,
         ]}

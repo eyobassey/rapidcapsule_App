@@ -12,6 +12,7 @@ import { Text as RNText, TextStyle } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
 import { BaseComponentProps } from '@/components/base/types';
+import { getFontFamily } from '@/config/fonts';
 import { combineStyles } from '@/utils';
 
 export type TextVariant =
@@ -105,58 +106,69 @@ const styles = StyleSheet.create((theme) => ({
   },
   // Body text
   bodyLarge: {
+    fontFamily: getFontFamily('regular'),
     fontSize: theme.typography.fontSize.lg,
     fontWeight: theme.typography.fontWeight.regular,
     lineHeight: theme.typography.fontSize.lg * 1.5,
   },
   bodyMedium: {
+    fontFamily: getFontFamily('regular'),
     fontSize: theme.typography.fontSize.md,
-    fontWeight: theme.typography.fontWeight.regular,
+    fontWeight: theme.typography.fontWeight.medium,
     lineHeight: theme.typography.fontSize.md * 1.5,
   },
   bodySmall: {
+    fontFamily: getFontFamily('regular'),
     fontSize: theme.typography.fontSize.sm,
     fontWeight: theme.typography.fontWeight.regular,
     lineHeight: theme.typography.fontSize.sm * 1.5,
   },
   // Modifiers
   bold: {
+    fontFamily: getFontFamily('bold'),
     fontWeight: theme.typography.fontWeight.bold,
   },
   // Caption
   caption: {
     color: theme.colors.textSecondary,
+    fontFamily: getFontFamily('regular'),
     fontSize: theme.typography.fontSize.xs,
     fontWeight: theme.typography.fontWeight.regular,
     lineHeight: theme.typography.fontSize.xs * 1.4,
   },
   // Headings
   h1: {
+    fontFamily: getFontFamily('bold'),
     fontSize: theme.typography.fontSize.xxl,
     fontWeight: theme.typography.fontWeight.bold,
     lineHeight: theme.typography.fontSize.xxl * 1.2,
   },
   h2: {
+    fontFamily: getFontFamily('bold'),
     fontSize: theme.typography.fontSize.xl,
     fontWeight: theme.typography.fontWeight.bold,
     lineHeight: theme.typography.fontSize.xl * 1.2,
   },
   h3: {
+    fontFamily: getFontFamily('bold'),
     fontSize: theme.typography.fontSize.lg,
     fontWeight: theme.typography.fontWeight.bold,
     lineHeight: theme.typography.fontSize.lg * 1.2,
   },
   h4: {
+    fontFamily: getFontFamily('semibold'),
     fontSize: theme.typography.fontSize.md,
     fontWeight: theme.typography.fontWeight.semibold,
     lineHeight: theme.typography.fontSize.md * 1.3,
   },
   h5: {
+    fontFamily: getFontFamily('semibold'),
     fontSize: theme.typography.fontSize.sm,
     fontWeight: theme.typography.fontWeight.semibold,
     lineHeight: theme.typography.fontSize.sm * 1.3,
   },
   h6: {
+    fontFamily: getFontFamily('semibold'),
     fontSize: theme.typography.fontSize.xs,
     fontWeight: theme.typography.fontWeight.semibold,
     lineHeight: theme.typography.fontSize.xs * 1.3,
@@ -166,6 +178,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   // Overline
   overline: {
+    fontFamily: getFontFamily('semibold'),
     fontSize: theme.typography.fontSize.xs,
     fontWeight: theme.typography.fontWeight.semibold,
     letterSpacing: 1,

@@ -52,6 +52,11 @@ export interface AppInputProps
    */
   size?: 'small' | 'medium' | 'large';
   /**
+   * Visual variant
+   * @default 'default'
+   */
+  variant?: 'default' | 'pill';
+  /**
    * Left icon component
    */
   leftIcon?: React.ReactNode;
@@ -79,6 +84,7 @@ export const AppInput: React.FC<AppInputProps> = ({
   required = false,
   disabled = false,
   size = 'medium',
+  variant = 'default',
   leftIcon,
   rightIcon,
   type = 'text',
@@ -96,6 +102,7 @@ export const AppInput: React.FC<AppInputProps> = ({
   const sizeStyle = styles[`${size}Input`] as ViewStyle;
   const hasError = !!error;
   const isPassword = type === 'password';
+  const isPill = variant === 'pill';
 
   // Determine keyboard type and auto complete
   const keyboardType: 'default' | 'email-address' | 'phone-pad' | 'numeric' =
@@ -154,6 +161,7 @@ export const AppInput: React.FC<AppInputProps> = ({
         style={combineStyles(
           styles.inputContainer,
           sizeStyle,
+          isPill ? styles.inputContainerPill : null,
           hasError ? styles.inputContainerError : null,
           disabled ? styles.inputContainerDisabled : null
         )}
@@ -253,7 +261,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: 'center',
     backgroundColor: theme.colors.background,
     borderColor: theme.colors.border,
-    borderRadius: theme.borderRadius.md,
+    borderRadius: theme.borderRadius.xl,
     borderWidth: 1,
     flexDirection: 'row',
     minHeight: 44, // Minimum touch target size
@@ -265,8 +273,13 @@ const styles = StyleSheet.create((theme) => ({
   inputContainerError: {
     borderColor: theme.colors.error,
   },
+  inputContainerPill: {
+    borderRadius: theme.borderRadius.full,
+    borderWidth: 0,
+    boxShadow: '0px 0px 0px 0.8px #00000005, 0px 4px 16px -4px rgba(15, 23, 42, 0.18)',
+  },
   inputWithLeftIcon: {
-    paddingLeft: theme.spacing.xs,
+    paddingLeft: theme.spacing.sm,
   },
   inputWithRightIcon: {
     paddingRight: theme.spacing.xs,
