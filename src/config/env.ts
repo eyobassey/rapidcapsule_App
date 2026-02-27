@@ -30,7 +30,7 @@ const getEnvVar = (key: string, fallback: string): string => {
  * Uses expo-constants for accessing environment variables
  */
 export const env: EnvConfig = {
-  apiBaseUrl: getEnvVar('API_BASE_URL', 'https://api.rapidcapsule.com'),
+  apiBaseUrl: getEnvVar('API_BASE_URL', 'https://api.rapidcapsule.com/api'),
   wsUrl: getEnvVar('WS_URL', 'wss://api.rapidcapsule.com'),
   apiTimeout: parseInt(getEnvVar('API_TIMEOUT', '30000'), 10),
   enableLogging: getEnvVar('ENABLE_LOGGING', 'true') === 'true',

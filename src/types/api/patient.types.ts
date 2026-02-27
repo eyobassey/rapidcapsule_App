@@ -32,6 +32,11 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface VerifyEmailOtpRequest {
+  email: string;
+  otp: string;
+}
+
 export interface RegisterRequest {
   email: string;
   password: string;
@@ -42,12 +47,24 @@ export interface RegisterRequest {
 
 export interface AuthResponse {
   accessToken: string;
-  refreshToken: string;
   user: Patient;
+  /**
+   * Optional refresh token.
+   * Some auth flows may only return an access token on login.
+   */
+  refreshToken?: string;
 }
 
 export type LoginResponse = ApiResponse<AuthResponse>;
-export type RegisterResponse = ApiResponse<AuthResponse>;
+
+export type VerifyEmailOtpResponse = ApiResponse<{ accessToken: string }>;
+
+export interface RegisterResult {
+  userId: string;
+  isEmailVerified: boolean;
+}
+
+export type RegisterResponse = ApiResponse<RegisterResult>;
 
 /**
  * Appointment Types

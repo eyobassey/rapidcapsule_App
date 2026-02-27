@@ -12,6 +12,7 @@ import {
   Appointment,
   AppointmentResponse,
   AppointmentsResponse,
+  AuthResponse,
   CreateAppointmentRequest,
   CreateHealthCheckupRequest,
   CreatePaymentRequest,
@@ -32,6 +33,8 @@ import {
   RegisterResponse,
   UpdateAppointmentRequest,
   UpdateHealthCheckupRequest,
+  VerifyEmailOtpRequest,
+  VerifyEmailOtpResponse,
   Vital,
   VitalResponse,
   VitalsResponse,
@@ -44,6 +47,7 @@ import {
 export interface IPatientRepository {
   // Authentication
   login(credentials: LoginRequest): Promise<LoginResponse>;
+  verifyEmailOtp(payload: VerifyEmailOtpRequest): Promise<VerifyEmailOtpResponse>;
   register(data: RegisterRequest): Promise<RegisterResponse>;
   logout(): Promise<void>;
   refreshToken(): Promise<ApiResponse<{ accessToken: string }>>;
@@ -83,7 +87,7 @@ export interface IPatientRepository {
  * Patient Repository Implementation
  */
 export class PatientRepository extends BaseRepository implements IPatientRepository {
-  readonly basePath = '/patient';
+  readonly basePath = '';
 
   constructor() {
     super(apiClient);
@@ -92,15 +96,114 @@ export class PatientRepository extends BaseRepository implements IPatientReposit
   // ==================== Authentication ====================
 
   async login(credentials: LoginRequest): Promise<LoginResponse> {
-    return this.post<LoginResponse['data']>('/auth/login', credentials).then(
-      (data) => ({ success: true, data }) as LoginResponse
-    );
+    type LoginUserRaw = {
+      _id: string;
+      email?: string;
+      profile?: {
+        first_name?: string;
+        last_name?: string;
+      };
+      user_type?: string;
+      phone?: {
+        country_code?: string;
+        number?: string;
+      };
+      profile_picture?: string;
+      is_email_verified?: boolean;
+      is_phone_verified?: boolean;
+      created_at?: string;
+      updated_at?: string;
+    };
+
+    type LoginResponseRaw = {
+      success: boolean;
+      message: string;
+      data: {
+        access_token: string;
+        user: LoginUserRaw;
+      };
+    };
+
+    const raw = await this.post<LoginResponseRaw>('/auth/login', credentials);
+
+    const rawUser = raw.data.user;
+
+    const normalizedUser: Patient = {
+      id: rawUser._id,
+      email: rawUser.email ?? '',
+      firstName: rawUser.profile?.first_name ?? '',
+      lastName: rawUser.profile?.last_name ?? '',
+      phoneNumber: rawUser.phone?.number,
+      profilePicture: rawUser.profile_picture,
+      isEmailVerified: rawUser.is_email_verified ?? false,
+      isPhoneVerified: rawUser.is_phone_verified ?? false,
+      createdAt: rawUser.created_at ?? '',
+      updatedAt: rawUser.updated_at ?? '',
+    };
+
+    const mapped: AuthResponse = {
+      accessToken: raw.data.access_token,
+      user: normalizedUser,
+    };
+
+    return {
+      success: raw.success,
+      data: mapped,
+    };
+  }
+
+  async verifyEmailOtp(payload: VerifyEmailOtpRequest): Promise<VerifyEmailOtpResponse> {
+    type VerifyEmailOtpResponseRaw = {
+      success: boolean;
+      message: string;
+      data: {
+        access_token: string;
+      };
+    };
+
+    const raw = await this.post<VerifyEmailOtpResponseRaw>('/auth/otp/verify', payload);
+
+    return {
+      success: raw.success,
+      message: raw.message,
+      data: {
+        accessToken: raw.data.access_token,
+      },
+    };
   }
 
   async register(data: RegisterRequest): Promise<RegisterResponse> {
-    return this.post<RegisterResponse['data']>('/auth/register', data).then(
-      (data) => ({ success: true, data }) as RegisterResponse
-    );
+    type RegisterResponseRaw = {
+      success: boolean;
+      message: string;
+      data: {
+        _id: string;
+        is_email_verified: boolean;
+      };
+    };
+
+    const payload: Record<string, unknown> = {
+      email: data.email,
+      password: data.password,
+      first_name: data.firstName,
+      last_name: data.lastName,
+    };
+
+    if (data.phoneNumber) {
+      payload.phone = {
+        number: data.phoneNumber,
+      };
+    }
+
+    const raw = await this.post<RegisterResponseRaw>('/users', payload);
+
+    return {
+      success: raw.success,
+      data: {
+        userId: raw.data._id,
+        isEmailVerified: raw.data.is_email_verified,
+      },
+    };
   }
 
   async logout(): Promise<void> {

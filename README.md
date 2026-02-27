@@ -119,7 +119,7 @@ pnpm install
 
 3. **Configure environment variables:**
    - Create a `.env` file in the root directory
-   - Set the API endpoint: `API_BASE_URL=https://api.rapidcapsule.com`
+   - Set the API endpoint: `API_BASE_URL=https://api.rapidcapsule.com/api`
    - Add other required environment variables (see `.env.example` if available)
 
 4. **Start the development server:**
@@ -204,7 +204,7 @@ Full TypeScript support with strict mode enabled. Path aliases configured:
 Create a `.env` file with the following variables:
 
 ```
-API_BASE_URL=https://api.rapidcapsule.com
+API_BASE_URL=https://api.rapidcapsule.com/api
 WS_URL=wss://api.rapidcapsule.com
 ```
 

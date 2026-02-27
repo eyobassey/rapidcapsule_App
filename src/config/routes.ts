@@ -10,6 +10,7 @@ export const appRoutes = {
   home: '/' as const,
   login: '/login' as const,
   register: '/register' as const,
+  verifyEmail: '/verify-email' as const,
 } satisfies Record<string, Href>;
 
 export type AppRoute = (typeof appRoutes)[keyof typeof appRoutes];

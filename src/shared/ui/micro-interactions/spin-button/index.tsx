@@ -1,4 +1,7 @@
 /* eslint-disable react-hooks/immutability */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable react-native/no-inline-styles */
 /**
  * Animation inspired by:
  * https://x.com/dev_ya/status/1991193618787254462
@@ -40,17 +43,22 @@ import type {
   TextAnimationProps,
 } from './types';
 
-const mergeDeep = <T extends Record<string, unknown>>(target: T, source: Partial<T>): T => {
-  const output = { ...target };
+const isPlainObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
 
-  for (const key in source) {
-    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-      output[key] = mergeDeep(
-        output[key] as Record<string, unknown>,
-        source[key] as Record<string, unknown>
-      ) as T[Extract<keyof T, string>];
-    } else if (source[key] !== undefined) {
-      output[key] = source[key] as T[Extract<keyof T, string>];
+const mergeDeep = <T extends object>(target: T, source: Partial<T>): T => {
+  const output = { ...(target as object) } as T;
+
+  for (const key of Object.keys(source) as (keyof T)[]) {
+    const sourceValue = source[key];
+    if (sourceValue === undefined) continue;
+
+    const targetValue = (output as T)[key];
+
+    if (isPlainObject(targetValue) && isPlainObject(sourceValue)) {
+      (output as any)[key] = mergeDeep(targetValue, sourceValue as any);
+    } else {
+      (output as any)[key] = sourceValue as any;
     }
   }
 

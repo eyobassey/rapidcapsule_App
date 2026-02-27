@@ -176,7 +176,7 @@ const Accordion = ({
   const childrenArray = React.Children.toArray(children);
   const childrenWithProps = childrenArray.map((child, index) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child as React.ReactElement<unknown>, {
+      return React.cloneElement(child as React.ReactElement<{ isLast?: boolean }>, {
         isLast: index === childrenArray.length - 1,
       });
     }

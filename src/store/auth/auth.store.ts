@@ -83,14 +83,13 @@ export const useAuthStore = create<AuthState>()(
 
           // Check if tokens exist
           const accessToken = await secureStorageService.get(SecureStorageKey.ACCESS_TOKEN);
-          const refreshToken = await secureStorageService.get(SecureStorageKey.REFRESH_TOKEN);
 
-          if (accessToken && refreshToken) {
-            // Tokens exist, mark as authenticated
-            // User data will be fetched by React Query hooks
+          if (accessToken) {
+            // Token exists, mark as authenticated
+            // User data can be fetched lazily by data hooks/screens as needed.
             set({ isAuthenticated: true, isInitialized: true });
           } else {
-            // No tokens, user is not authenticated
+            // No token, user is not authenticated
             set({ isAuthenticated: false, isInitialized: true });
           }
         } catch (error) {

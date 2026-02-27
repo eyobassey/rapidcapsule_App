@@ -17,8 +17,16 @@ import {
   Screen,
 } from '@/components/base';
 import { appRoutes } from '@/config/routes';
+import { ApiError, NetworkError, patientRepository } from '@/services/api';
+import {
+  SecureStorageKey,
+  secureStorageService,
+  StorageKey,
+  storageService,
+} from '@/services/storage';
 import { Button } from '@/shared/ui/atoms/button';
 import { SegmentedControl } from '@/shared/ui/organisms';
+import { useAuthStore, useUIStore } from '@/store';
 
 export default function LoginScreen() {
   const { theme } = useUnistyles();
@@ -27,10 +35,73 @@ export default function LoginScreen() {
 
   const [segmentIndex, setSegmentIndex] = useState(0);
   const [keepSignedIn, setKeepSignedIn] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { setUser, setAuthenticated, setLoading } = useAuthStore();
+  const { setGlobalLoading, showToast } = useUIStore();
 
   const handleForgotPassword = () => {
     // Placeholder – wire to real route or deep link later
     void Linking.openURL('mailto:support@example.com');
+  };
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      showToast(t('login.errors.missingCredentials'), 'error');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setGlobalLoading(true);
+
+      const response = await patientRepository.login({ email, password });
+      const { accessToken, refreshToken, user } = response.data;
+
+      const storageOperations: Promise<unknown>[] = [
+        secureStorageService.set(SecureStorageKey.ACCESS_TOKEN, accessToken),
+        secureStorageService.set(SecureStorageKey.USER_ID, user.id),
+      ];
+
+      if (refreshToken) {
+        storageOperations.push(
+          secureStorageService.set(SecureStorageKey.REFRESH_TOKEN, refreshToken)
+        );
+      }
+
+      await Promise.all(storageOperations);
+
+      storageService.set(StorageKey.USER_DATA, {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profilePicture: user.profilePicture,
+      });
+
+      setUser(user);
+      setAuthenticated(true);
+      showToast(t('login.success'), 'success');
+      router.replace(appRoutes.home);
+    } catch (error) {
+      let message = t('login.errors.generic');
+
+      if (error instanceof NetworkError) {
+        message = t('login.errors.network');
+      } else if (error instanceof ApiError) {
+        if (error.isAuthError()) {
+          message = t('login.errors.invalidCredentials');
+        } else if (error.isClientError()) {
+          message = error.message || message;
+        }
+      }
+
+      showToast(message, 'error');
+    } finally {
+      setLoading(false);
+      setGlobalLoading(false);
+    }
   };
 
   return (
@@ -70,7 +141,13 @@ export default function LoginScreen() {
                 label={t('login.fields.emailLabel')}
                 variant="pill"
                 type="email"
+                keyboardType="email-address"
+                inputMode="email"
+                autoCapitalize="none"
+                clearButtonMode="while-editing"
                 placeholder={t('login.fields.emailPlaceholder')}
+                value={email}
+                onChangeText={setEmail}
               />
 
               <AppInput
@@ -78,7 +155,11 @@ export default function LoginScreen() {
                 label={t('login.fields.passwordLabel')}
                 type="password"
                 variant="pill"
+                keyboardType="visible-password"
+                inputMode="text"
                 placeholder={t('login.fields.passwordPlaceholder')}
+                value={password}
+                onChangeText={setPassword}
                 rightIcon={
                   <AppIcon name="Invisible1" size={20} color={theme.colors.palette.gray[500]} />
                 }
@@ -104,7 +185,14 @@ export default function LoginScreen() {
               </View>
 
               <View style={styles.primaryButtonWrapper}>
-                <Button fullWidth height={52}>
+                <Button
+                  fullWidth
+                  height={52}
+                  disabled={!email || !password}
+                  onPress={handleLogin}
+                  showLoadingIndicator
+                  isLoading={false}
+                >
                   <AppText variant="bodyMedium" align="center" style={styles.primaryButtonText}>
                     {t('login.primaryAction')}
                   </AppText>

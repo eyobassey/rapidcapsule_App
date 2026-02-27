@@ -36,7 +36,11 @@ yarn.lock
 *.pem
 
 # local env files
+.env
 .env*.local
+
+# local API collections / tooling exports
+*.postman_collection.json
 
 # typescript
 *.tsbuildinfo
