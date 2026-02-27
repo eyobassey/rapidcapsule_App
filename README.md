@@ -150,14 +150,14 @@ rapidcapusle/
 │   └── ...                   # Other screens
 ├── src/                      # Source code
 │   ├── components/           # Reusable UI components
-│   │   ├── base/             # Atomic base components (Text, Screen, etc.)
+│   │   ├── base/             # Atomic base components (Text, Screen, AppInput, Checkbox, etc.)
 │   │   └── home/             # Home screen components
 │   ├── config/               # Configuration files
 │   │   ├── themes.ts         # Theme configuration
 │   │   ├── unistyles.ts      # Unistyles setup
 │   │   └── i18n.ts           # i18next initialization
 │   ├── locales/              # Translation JSON files
-│   │   └── en/               # English translations (one file per namespace)
+│   │   └── en/               # English translations (one file per namespace; e.g. home, auth)
 │   ├── services/             # API services and utilities
 │   ├── store/                # State management (Zustand)
 │   └── types/                # TypeScript type definitions

@@ -93,10 +93,11 @@ Use **only** when you are sure no native code or config is impacted.
 ## 4. Project Structure Overview
 
 - `app/` — Expo Router routes (`_layout.tsx`, `index.tsx`, other screens).
+- - Auth flows: `app/login.tsx` and `app/register.tsx` use shared base components and the `auth` i18n namespace.
 - `src/components/base` — locally defined base UI components (atomic/Reactix-aligned).
 - `src/shared/ui` — shared UI primitives (atoms/molecules/micro-interactions).
 - `src/config` — themes, Unistyles config, breakpoints, env, i18n init.
-- `src/locales` — translation JSON files, organized by `{lang}/{namespace}.json` (e.g. `en/home.json`).
+- `src/locales` — translation JSON files, organized by `{lang}/{namespace}.json` (e.g. `en/home.json`, `en/auth.json`).
 - `src/services` — API client, repositories, network and storage services.
 - `src/store` — Zustand stores (`app`, `auth`, `ui`, etc.).
 - `src/utils` — cross-cutting utilities (date, validation, responsive, etc.).
@@ -167,6 +168,14 @@ When responding to a prompt (feature, bugfix, refactor), follow this sequence:
   - The script auto-generates `assets/icons/index.ts` (PascalCase barrel) — never edit this file manually.
   - Use `<AppIcon name="ArrowRight" size={24} />` in components. The `name` prop is type-safe.
   - `AppIcon` defaults color to `theme.colors.text`; override with the `color` prop.
+
+- **Auth UI + Inputs**
+  - Login and register screens live in `app/login.tsx` and `app/register.tsx` and both:
+    - Use `Screen gradient="subtle"` with `edges={['top']}` and wrap scrollable content in a `ScrollView`.
+    - Use `AppInput` with `variant="pill"` for email/password fields and `Checkbox` for agreements.
+    - Use the shared `Button` atom; when no `backgroundColor` is passed it defaults to `theme.colors.primary`.
+  - All auth copy is localized via the `auth` namespace (`src/locales/en/auth.json` with `login.*` and `register.*` keys).  
+    Always add new login/register strings there instead of hardcoding.
 
 - **Skia**
   - If Skia errors mention missing binaries, run the postinstall script (documented in native-dev-client guide).
