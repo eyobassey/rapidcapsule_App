@@ -17,20 +17,32 @@ export const ActionButtons: React.FC = () => {
   const signInHeight = theme.spacing.lg * 2;
   const ctaHeight = theme.spacing.lg * 2 + theme.spacing.xs;
 
+  const handleSignIn = () => {
+    router.push('/login');
+  };
+  const handleGetStarted = () => {
+    router.push('/register');
+  };
+
   return (
     <View style={styles.container}>
       <Button
         fullWidth
         height={signInHeight}
         backgroundColor={colors.backgroundSecondary}
-        onPress={() => router.push('/login')}
+        onPress={handleSignIn}
       >
         <AppText variant="bodyMedium" align="center" bold>
           {t('actions.signIn')}
         </AppText>
       </Button>
 
-      <Button fullWidth height={ctaHeight} backgroundColor={colors.primary}>
+      <Button
+        fullWidth
+        height={ctaHeight}
+        backgroundColor={colors.primary}
+        onPress={handleGetStarted}
+      >
         <AppText variant="bodyMedium" align="center" color={colors.buttonText} bold>
           {t('actions.getStarted')}
         </AppText>
