@@ -5,6 +5,7 @@ import { View } from 'react-native';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { AppText } from '@/components/base';
+import { appRoutes } from '@/config/routes';
 import { Button } from '@/shared/ui/atoms/button';
 import { getExtendedThemeColors } from '@/types/theme.types';
 
@@ -18,10 +19,10 @@ export const ActionButtons: React.FC = () => {
   const ctaHeight = theme.spacing.lg * 2 + theme.spacing.xs;
 
   const handleSignIn = () => {
-    router.push('/login');
+    router.push(appRoutes.login);
   };
   const handleGetStarted = () => {
-    router.push('/register');
+    router.push(appRoutes.register);
   };
 
   return (

@@ -16,6 +16,7 @@ import {
   Checkbox,
   Screen,
 } from '@/components/base';
+import { appRoutes } from '@/config/routes';
 import { Button } from '@/shared/ui/atoms/button';
 
 export default function RegisterScreen() {
@@ -136,7 +137,7 @@ export default function RegisterScreen() {
               <AppText variant="bodySmall" color="#64748B">
                 {t('register.footer.loginPrompt')}
               </AppText>
-              <AppPressable variant="opacity" onPress={() => router.push('/login')}>
+              <AppPressable variant="opacity" onPress={() => router.push(appRoutes.login)}>
                 <AppText variant="bodySmall" color={theme.colors.palette.blue[500]}>
                   {t('register.footer.loginCta')}
                 </AppText>

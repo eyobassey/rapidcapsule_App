@@ -176,6 +176,8 @@ When responding to a prompt (feature, bugfix, refactor), follow this sequence:
     - Use the shared `Button` atom; when no `backgroundColor` is passed it defaults to `theme.colors.primary`.
   - All auth copy is localized via the `auth` namespace (`src/locales/en/auth.json` with `login.*` and `register.*` keys).  
     Always add new login/register strings there instead of hardcoding.
+  - Navigation between auth screens (and from home) should use the central `appRoutes` map in `src/config/routes.ts`
+    instead of hard-coded route strings. This keeps Expo Router navigation type-safe via `Href`.
 
 - **Skia**
   - If Skia errors mention missing binaries, run the postinstall script (documented in native-dev-client guide).

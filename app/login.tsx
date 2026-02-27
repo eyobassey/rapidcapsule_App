@@ -16,6 +16,7 @@ import {
   Checkbox,
   Screen,
 } from '@/components/base';
+import { appRoutes } from '@/config/routes';
 import { Button } from '@/shared/ui/atoms/button';
 import { SegmentedControl } from '@/shared/ui/organisms';
 
@@ -144,7 +145,7 @@ export default function LoginScreen() {
               <AppText variant="bodySmall" color="#64748B">
                 {t('login.footer.prompt')}
               </AppText>
-              <AppPressable variant="opacity" onPress={() => router.push('/register')}>
+              <AppPressable variant="opacity" onPress={() => router.push(appRoutes.register)}>
                 <AppText variant="bodySmall" color={theme.colors.palette.blue[500]}>
                   {t('login.footer.signupCta')}
                 </AppText>
