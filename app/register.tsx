@@ -172,7 +172,6 @@ const styles = StyleSheet.create((theme) => ({
   },
   container: {
     flex: 1,
-    justifyContent: 'space-between',
     paddingBottom: theme.spacing.lg,
     paddingHorizontal: theme.spacing.lg,
     paddingTop: theme.spacing.xl,
@@ -191,7 +190,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   footer: {
     gap: theme.spacing.xs,
-    marginTop: theme.spacing.md,
+    marginTop: theme.spacing.sm,
   },
   footerRow: {
     alignItems: 'center',
