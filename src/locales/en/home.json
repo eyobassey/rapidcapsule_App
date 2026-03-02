@@ -62,6 +62,13 @@
     },
     "newChat": "New chat"
   },
+  "ekaChat": {
+    "title": "Eka",
+    "message1": "How are my vitals looking like?",
+    "message2": "What is my health score?",
+    "message3": "Can you summarize my last five appointments for me?",
+    "inputPlaceholder": "Write your question"
+  },
   "completionBanner": {
     "body": "Patients with complete health profiles receive more accurate diagnoses and personalized treatment plans."
   },

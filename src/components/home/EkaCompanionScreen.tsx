@@ -124,7 +124,7 @@ export const EkaCompanionScreen: React.FC = () => {
 
       <FloatingActionButton
         onPress={() => {
-          // TODO: wire to Eka new chat flow
+          router.push('/(home)/eka-chat');
         }}
         isScrolling={isFabCollapsed}
         iconName="ChatTwoBubblesSquareText1"

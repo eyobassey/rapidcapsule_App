@@ -25,6 +25,7 @@ export default function HomeLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen name="eka-chat" />
       <Stack.Screen
         name="profile"
         options={{

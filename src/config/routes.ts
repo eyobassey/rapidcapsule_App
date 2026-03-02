@@ -13,6 +13,7 @@ export const appRoutes = {
   register: '/register' as const,
   verifyEmail: '/verify-email' as const,
   eka: '/eka' as const,
+  ekaChat: '/eka-chat' as const,
   profile: '/profile' as const,
 } satisfies Record<string, Href>;
 
