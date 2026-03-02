@@ -13,15 +13,15 @@ export default function HomeTabsLayout() {
         <Icon sf="house.fill" />
         <Label>{t('tabs.tab1')}</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="tab2">
+      <NativeTabs.Trigger name="appointments">
         <Icon sf="calendar" />
         <Label>{t('tabs.tab2')}</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="tab3">
+      <NativeTabs.Trigger name="prescriptions">
         <Icon sf="pills.fill" />
         <Label>{t('tabs.tab3')}</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="tab4">
+      <NativeTabs.Trigger name="settings">
         <Icon sf="gearshape.fill" />
         <Label>{t('tabs.tab4')}</Label>
       </NativeTabs.Trigger>

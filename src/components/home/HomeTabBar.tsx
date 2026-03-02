@@ -7,7 +7,7 @@ import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { AppText } from '@/components/base';
 
-type TabId = 'tab1' | 'tab2' | 'tab3' | 'tab4';
+type TabId = 'home' | 'appointments' | 'prescriptions' | 'settings';
 
 interface TabConfig {
   id: TabId;
@@ -16,17 +16,17 @@ interface TabConfig {
 }
 
 const TABS: TabConfig[] = [
-  { id: 'tab1', icon: 'diamond', labelKey: 'tabs.tab1' },
-  { id: 'tab2', icon: 'ellipse', labelKey: 'tabs.tab2' },
-  { id: 'tab3', icon: 'triangle', labelKey: 'tabs.tab3' },
-  { id: 'tab4', icon: 'settings-outline', labelKey: 'tabs.tab4' },
+  { id: 'home', icon: 'home', labelKey: 'tabs.tab1' },
+  { id: 'appointments', icon: 'calendar', labelKey: 'tabs.tab2' },
+  { id: 'prescriptions', icon: 'medkit', labelKey: 'tabs.tab3' },
+  { id: 'settings', icon: 'settings-outline', labelKey: 'tabs.tab4' },
 ];
 
 export const HomeTabBar: React.FC = () => {
   const { t } = useTranslation('home');
   const { theme } = useUnistyles();
   const insets = useSafeAreaInsets();
-  const [activeTab, setActiveTab] = React.useState<TabId>('tab1');
+  const [activeTab, setActiveTab] = React.useState<TabId>('home');
 
   const bottomPadding = Math.max(insets.bottom, theme.spacing.md);
 
