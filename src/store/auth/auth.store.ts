@@ -18,6 +18,12 @@ import {
 } from '@/services/storage';
 import { Patient } from '@/types/api/patient.types';
 
+/** Shape we persist under USER_DATA */
+type PersistedAuthState = {
+  user: Patient | null;
+  isAuthenticated: boolean;
+};
+
 interface AuthState {
   // State
   isAuthenticated: boolean;
@@ -85,9 +91,10 @@ export const useAuthStore = create<AuthState>()(
           const accessToken = await secureStorageService.get(SecureStorageKey.ACCESS_TOKEN);
 
           if (accessToken) {
-            // Token exists, mark as authenticated
-            // User data can be fetched lazily by data hooks/screens as needed.
-            set({ isAuthenticated: true, isInitialized: true });
+            // Restore user from persisted storage (in case rehydration hasn't run or order differs)
+            const persisted = storageService.get<PersistedAuthState>(StorageKey.USER_DATA);
+            const user = persisted?.user ?? null;
+            set({ isAuthenticated: true, user, isInitialized: true });
           } else {
             // No token, user is not authenticated
             set({ isAuthenticated: false, isInitialized: true });
@@ -141,18 +148,34 @@ export const useAuthStore = create<AuthState>()(
       name: 'auth-storage',
       storage: createJSONStorage(() => ({
         getItem: (_name) => {
-          const value = storageService.get<string>(StorageKey.USER_DATA);
-          return value ? JSON.stringify({ state: JSON.parse(value) }) : null;
+          // storageService.get() already returns the parsed object, not a string
+          const raw = storageService.get<PersistedAuthState | null>(StorageKey.USER_DATA);
+          if (raw == null) return null;
+          return JSON.stringify({ state: raw });
         },
         setItem: (_name, value) => {
-          const parsed = JSON.parse(value);
-          storageService.set(StorageKey.USER_DATA, parsed.state);
+          try {
+            const parsed = JSON.parse(value) as {
+              state?: PersistedAuthState;
+              user?: Patient | null;
+              isAuthenticated?: boolean;
+            };
+            // Zustand passes { state, version }; fallback if raw state was stored
+            const toStore =
+              parsed.state ??
+              (parsed.user !== undefined || parsed.isAuthenticated !== undefined ? parsed : null);
+            if (toStore != null) {
+              storageService.set(StorageKey.USER_DATA, toStore);
+            }
+          } catch (e) {
+            console.error('[AuthStore] persist setItem failed:', e);
+          }
         },
         removeItem: (_name) => {
           storageService.remove(StorageKey.USER_DATA);
         },
       })),
-      // Only persist non-sensitive data
+      // Only persist non-sensitive data (include required Patient fields for rehydration)
       partialize: (state) => ({
         user: state.user
           ? {
@@ -161,6 +184,10 @@ export const useAuthStore = create<AuthState>()(
               firstName: state.user.firstName,
               lastName: state.user.lastName,
               profilePicture: state.user.profilePicture,
+              isEmailVerified: state.user.isEmailVerified,
+              isPhoneVerified: state.user.isPhoneVerified,
+              createdAt: state.user.createdAt,
+              updatedAt: state.user.updatedAt,
             }
           : null,
         isAuthenticated: state.isAuthenticated,

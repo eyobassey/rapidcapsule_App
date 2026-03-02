@@ -166,11 +166,11 @@ function SettingsScreen() {
 }
 
 // Toast Notifications
-function SomeComponent() {
-  const { showToast } = useUIStore();
+import { Toast } from '@/shared/ui/molecules/Toast';
 
+function SomeComponent() {
   const handleSuccess = () => {
-    showToast('Operation successful!', 'success');
+    Toast.show('Operation successful!', { type: 'success' });
   };
 }
 ```
@@ -196,7 +196,7 @@ function SomeComponent() {
 - ✅ Authentication state (derived from tokens)
 - ✅ Navigation state
 - ✅ Global loading states
-- ✅ Toast notifications
+- ✅ Toast notifications (use the shared `Toast` molecule)
 - ✅ State that doesn't come from server
 
 ### Use React Hook Form When:

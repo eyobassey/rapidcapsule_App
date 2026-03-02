@@ -199,16 +199,17 @@ const appointments = await patientRepository.getAppointments({ page: 1, limit: 1
 
 ```typescript
 import { patientRepository, ApiError, NetworkError } from '@/services/api';
+import { Toast } from '@/shared/ui/molecules/Toast';
 
 try {
   const appointments = await patientRepository.getAppointments();
 } catch (error) {
   if (error instanceof NetworkError) {
     // Handle network error
-    showToast('No internet connection');
+    Toast.show('No internet connection', { type: 'error' });
   } else if (error instanceof ApiError) {
     // Handle API error
-    showToast(error.message);
+    Toast.show(error.message, { type: 'error' });
   }
 }
 ```

@@ -2,7 +2,7 @@ import emailVerifyHero from '@assets/email-verify.png';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Keyboard, ScrollView, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { AppImage, AppText, Screen } from '@/components/base';
@@ -11,6 +11,7 @@ import { ApiError, NetworkError, patientRepository } from '@/services/api';
 import { SecureStorageKey, secureStorageService } from '@/services/storage';
 import { Button } from '@/shared/ui/atoms/button';
 import { OtpInput } from '@/shared/ui/base/otp-input';
+import { Toast } from '@/shared/ui/molecules/Toast';
 import { useAuthStore, useUIStore } from '@/store';
 
 export default function VerifyEmailScreen() {
@@ -23,8 +24,8 @@ export default function VerifyEmailScreen() {
   const [otp, setOtp] = useState('');
   const [hasError, setHasError] = useState(false);
 
-  const { isLoading, setAuthenticated, setLoading } = useAuthStore();
-  const { setGlobalLoading, showToast } = useUIStore();
+  const { isLoading, setAuthenticated, setLoading, setUser } = useAuthStore();
+  const { setGlobalLoading } = useUIStore();
 
   const email = useMemo(() => {
     const value = params.email;
@@ -35,11 +36,11 @@ export default function VerifyEmailScreen() {
 
   const handleVerify = async () => {
     if (!email) {
-      showToast(t('verifyEmail.errors.missingEmail'), 'error');
+      Toast.show(t('verifyEmail.errors.missingEmail'), { type: 'error' });
       return;
     }
     if (otp.length !== 6) {
-      showToast(t('verifyEmail.errors.missingOtp'), 'error');
+      Toast.show(t('verifyEmail.errors.missingOtp'), { type: 'error' });
       return;
     }
 
@@ -50,13 +51,17 @@ export default function VerifyEmailScreen() {
       setLoading(true);
       setGlobalLoading(true);
 
-      const response = await patientRepository.verifyEmailOtp({ email, otp });
-      const { accessToken } = response.data;
+      const response = await patientRepository.verifyEmailOtp({ email, token: otp });
+      const { accessToken, user } = response.data;
 
       await secureStorageService.set(SecureStorageKey.ACCESS_TOKEN, accessToken);
-      setAuthenticated(true);
+      if (user) {
+        setUser(user);
+      } else {
+        setAuthenticated(true);
+      }
 
-      showToast(t('verifyEmail.success'), 'success');
+      Toast.show(t('verifyEmail.success'), { type: 'success' });
       router.replace(appRoutes.home);
     } catch (error) {
       let message = t('verifyEmail.errors.generic');
@@ -72,7 +77,7 @@ export default function VerifyEmailScreen() {
       }
 
       setHasError(true);
-      showToast(message, 'error');
+      Toast.show(message, { type: 'error' });
     } finally {
       setLoading(false);
       setGlobalLoading(false);
@@ -81,67 +86,78 @@ export default function VerifyEmailScreen() {
 
   return (
     <Screen gradient="subtle" edges={['top']}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        contentInsetAdjustmentBehavior="never"
+      <KeyboardAvoidingView
+        style={styles.keyboardAvoiding}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={0}
       >
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <AppImage source={emailVerifyHero} style={styles.heroImage} />
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          contentInsetAdjustmentBehavior="never"
+        >
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <AppImage source={emailVerifyHero} style={styles.heroImage} />
 
-            <AppText variant="h2" align="center">
-              {t('verifyEmail.title')}
-            </AppText>
-          </View>
+              <AppText variant="h2" align="center">
+                {t('verifyEmail.title')}
+              </AppText>
+            </View>
 
-          <View style={styles.otpSection}>
-            <AppText variant="bodySmall" color={theme.colors.textSecondary} style={styles.otpLabel}>
-              {t('verifyEmail.subtitle')}
-            </AppText>
-            <OtpInput
-              otpCount={6}
-              enableAutoFocus
-              onInputChange={(value) => {
-                setOtp(value);
-                if (hasError) setHasError(false);
-              }}
-              error={hasError}
-              errorMessage={t('verifyEmail.errors.invalidOtp')}
-              inputWidth={48}
-              inputHeight={52}
-              inputBorderRadius={theme.borderRadius.lg}
-              focusedBackgroundColor={theme.colors.background}
-              unfocusedBackgroundColor={theme.colors.background}
-              focusedBorderColor={theme.colors.primary}
-              unfocusedBorderColor={theme.colors.border}
-              errorBorderColor={theme.colors.error}
-              errorBackgroundColor={theme.colors.background}
-              textStyle={{
-                color: theme.colors.text,
-                fontSize: theme.typography.fontSize.md,
-                fontWeight: theme.typography.fontWeight.semibold,
-              }}
-            />
-
-            <View style={styles.primaryButtonWrapper}>
-              <Button
-                fullWidth
-                height={52}
-                disabled={isVerifyDisabled}
-                onPress={handleVerify}
-                showLoadingIndicator
-                isLoading={isLoading}
+            <View style={styles.otpSection}>
+              <AppText
+                variant="bodySmall"
+                color={theme.colors.textSecondary}
+                style={styles.otpLabel}
               >
-                <AppText variant="bodyMedium" align="center" style={styles.primaryButtonText}>
-                  {t('verifyEmail.primaryAction')}
-                </AppText>
-              </Button>
+                {t('verifyEmail.subtitle')}
+              </AppText>
+              <OtpInput
+                otpCount={6}
+                enableAutoFocus
+                enablePaste
+                onInputChange={(value) => {
+                  setOtp(value);
+                  if (hasError) setHasError(false);
+                }}
+                error={hasError}
+                errorMessage={t('verifyEmail.errors.invalidOtp')}
+                inputWidth={48}
+                inputHeight={52}
+                inputBorderRadius={theme.borderRadius.lg}
+                focusedBackgroundColor={theme.colors.background}
+                unfocusedBackgroundColor={theme.colors.background}
+                focusedBorderColor={theme.colors.primary}
+                unfocusedBorderColor={theme.colors.border}
+                errorBorderColor={theme.colors.error}
+                errorBackgroundColor={theme.colors.background}
+                textStyle={{
+                  color: theme.colors.text,
+                  fontSize: theme.typography.fontSize.md,
+                  fontWeight: theme.typography.fontWeight.semibold,
+                }}
+              />
             </View>
           </View>
+        </ScrollView>
+
+        <View style={styles.footer}>
+          <Button
+            fullWidth
+            height={52}
+            disabled={isVerifyDisabled}
+            onPress={handleVerify}
+            showLoadingIndicator
+            isLoading={isLoading}
+          >
+            <AppText variant="bodyMedium" align="center" style={styles.primaryButtonText}>
+              {t('verifyEmail.primaryAction')}
+            </AppText>
+          </Button>
         </View>
-      </ScrollView>
+      </KeyboardAvoidingView>
     </Screen>
   );
 }
@@ -152,6 +168,10 @@ const styles = StyleSheet.create((theme) => ({
     paddingHorizontal: theme.spacing.lg,
     paddingTop: theme.spacing.xxl,
   },
+  footer: {
+    paddingBottom: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.lg,
+  },
   header: {
     alignItems: 'center',
     gap: theme.spacing.sm,
@@ -161,20 +181,20 @@ const styles = StyleSheet.create((theme) => ({
     height: 96,
     width: 96,
   },
+  keyboardAvoiding: {
+    flex: 1,
+  },
   otpLabel: {
     alignSelf: 'flex-start',
     marginBottom: theme.spacing.md,
   },
   otpSection: {
     alignItems: 'center',
+    marginTop: theme.spacing.sm,
     width: '100%',
   },
   primaryButtonText: {
     color: theme.colors.buttonText,
-  },
-  primaryButtonWrapper: {
-    marginTop: theme.spacing.lg,
-    width: '100%',
   },
   scrollContent: {
     flexGrow: 1,

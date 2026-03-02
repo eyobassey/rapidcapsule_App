@@ -30,11 +30,29 @@ export interface Patient {
 export interface LoginRequest {
   email: string;
   password: string;
+  rememberMe: boolean;
+  user_type: 'Patient' | 'Specialist' | string;
+}
+
+export interface LoginDefaults {
+  twoFA_auth: boolean;
+  marketing: boolean;
+  receive_email_notifications: boolean;
+  twoFA_medium: string;
+  allow_specialist_wallet_charge: boolean;
+}
+
+export interface LoginInitResult {
+  id: string;
+  userId: string;
+  defaults: LoginDefaults;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface VerifyEmailOtpRequest {
   email: string;
-  otp: string;
+  token: string;
 }
 
 export interface RegisterRequest {
@@ -55,9 +73,14 @@ export interface AuthResponse {
   refreshToken?: string;
 }
 
-export type LoginResponse = ApiResponse<AuthResponse>;
+export type LoginResponse = ApiResponse<LoginInitResult>;
 
-export type VerifyEmailOtpResponse = ApiResponse<{ accessToken: string }>;
+export interface VerifyEmailOtpResult {
+  accessToken: string;
+  user?: Patient;
+}
+
+export type VerifyEmailOtpResponse = ApiResponse<VerifyEmailOtpResult>;
 
 export interface RegisterResult {
   userId: string;

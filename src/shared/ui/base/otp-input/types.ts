@@ -16,6 +16,7 @@ interface IOtpInput {
   readonly inputHeight?: number;
   readonly inputBorderRadius?: number;
   readonly enableAutoFocus?: boolean;
+  readonly enablePaste?: boolean;
   readonly editable?: boolean;
   readonly onInputFinished?: (code: string) => void;
   readonly onInputChange?: (codes: string) => void;

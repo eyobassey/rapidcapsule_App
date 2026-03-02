@@ -55,6 +55,7 @@ const OtpItem: FC<IOtpItem> & FunctionComponent<IOtpItem> = ({
     setOtpValue,
     focus,
     enableAutoFocus,
+    enablePaste,
     containerStyle,
     otpInputStyle,
     textStyle,
@@ -180,7 +181,12 @@ const OtpItem: FC<IOtpItem> & FunctionComponent<IOtpItem> = ({
         autoFocus={enableAutoFocus && index === 0}
         {...rest}
       />
-      <Pressable disabled={!editable} onPress={onPress} style={styles.overlay}>
+      <Pressable
+        disabled={!editable}
+        onPress={onPress}
+        style={styles.overlay}
+        pointerEvents={enablePaste ? 'none' : 'auto'}
+      >
         <Animated.View
           layout={LinearTransition.springify()}
           style={[
@@ -233,6 +239,7 @@ export const OtpInput: FC<IOtpInput> & FunctionComponent<IOtpInput> = memo<IOtpI
     unfocusedBorderColor = 'rgba(248, 250, 252, 0.3)',
     errorBackgroundColor = '#1c0a0a',
     errorBorderColor = '#ef4444',
+    enablePaste = false,
     ...rest
   }: IOtpInput): (React.ReactNode & React.JSX.Element & React.ReactElement) | null => {
     const inputRef = useRef<any[]>([]);
@@ -334,6 +341,7 @@ export const OtpInput: FC<IOtpInput> & FunctionComponent<IOtpInput> = memo<IOtpI
       unfocusedBorderColor,
       errorBackgroundColor,
       errorBorderColor,
+      enablePaste,
       ...rest,
     };
 

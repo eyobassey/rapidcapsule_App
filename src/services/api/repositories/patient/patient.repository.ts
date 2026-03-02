@@ -12,7 +12,6 @@ import {
   Appointment,
   AppointmentResponse,
   AppointmentsResponse,
-  AuthResponse,
   CreateAppointmentRequest,
   CreateHealthCheckupRequest,
   CreatePaymentRequest,
@@ -96,78 +95,105 @@ export class PatientRepository extends BaseRepository implements IPatientReposit
   // ==================== Authentication ====================
 
   async login(credentials: LoginRequest): Promise<LoginResponse> {
-    type LoginUserRaw = {
-      _id: string;
-      email?: string;
-      profile?: {
-        first_name?: string;
-        last_name?: string;
-      };
-      user_type?: string;
-      phone?: {
-        country_code?: string;
-        number?: string;
-      };
-      profile_picture?: string;
-      is_email_verified?: boolean;
-      is_phone_verified?: boolean;
-      created_at?: string;
-      updated_at?: string;
-    };
-
     type LoginResponseRaw = {
-      success: boolean;
+      statusCode: number;
       message: string;
       data: {
-        access_token: string;
-        user: LoginUserRaw;
+        defaults: {
+          twoFA_auth: boolean;
+          marketing: boolean;
+          receive_email_notifications: boolean;
+          twoFA_medium: string;
+          allow_specialist_wallet_charge: boolean;
+        };
+        _id: string;
+        userId: string;
+        created_at: string;
+        updated_at: string;
+        __v?: number;
       };
     };
 
     const raw = await this.post<LoginResponseRaw>('/auth/login', credentials);
-
-    const rawUser = raw.data.user;
-
-    const normalizedUser: Patient = {
-      id: rawUser._id,
-      email: rawUser.email ?? '',
-      firstName: rawUser.profile?.first_name ?? '',
-      lastName: rawUser.profile?.last_name ?? '',
-      phoneNumber: rawUser.phone?.number,
-      profilePicture: rawUser.profile_picture,
-      isEmailVerified: rawUser.is_email_verified ?? false,
-      isPhoneVerified: rawUser.is_phone_verified ?? false,
-      createdAt: rawUser.created_at ?? '',
-      updatedAt: rawUser.updated_at ?? '',
-    };
-
-    const mapped: AuthResponse = {
-      accessToken: raw.data.access_token,
-      user: normalizedUser,
-    };
+    const d = raw.data;
 
     return {
-      success: raw.success,
-      data: mapped,
+      success: raw.statusCode >= 200 && raw.statusCode < 300,
+      message: raw.message,
+      data: {
+        id: d._id,
+        userId: d.userId,
+        defaults: {
+          twoFA_auth: d.defaults.twoFA_auth,
+          marketing: d.defaults.marketing,
+          receive_email_notifications: d.defaults.receive_email_notifications,
+          twoFA_medium: d.defaults.twoFA_medium,
+          allow_specialist_wallet_charge: d.defaults.allow_specialist_wallet_charge,
+        },
+        createdAt: d.created_at,
+        updatedAt: d.updated_at,
+      },
     };
   }
 
   async verifyEmailOtp(payload: VerifyEmailOtpRequest): Promise<VerifyEmailOtpResponse> {
+    type VerifyEmailOtpUserRaw = {
+      _id: string;
+      email: string;
+      user_type: string;
+      profile: {
+        contact?: {
+          phone?: { country_code?: string; number?: string };
+          email?: string;
+        };
+        first_name?: string;
+        last_name?: string;
+        date_of_birth?: string;
+      };
+      is_email_verified?: boolean;
+      is_phone_verified?: boolean;
+    };
+
     type VerifyEmailOtpResponseRaw = {
-      success: boolean;
+      statusCode: number;
       message: string;
       data: {
-        access_token: string;
+        token: string;
+        user?: VerifyEmailOtpUserRaw;
       };
     };
 
     const raw = await this.post<VerifyEmailOtpResponseRaw>('/auth/otp/verify', payload);
 
+    const normalizedUser: Patient | undefined = raw.data.user
+      ? (() => {
+          const u = raw.data.user!;
+          const phone = u.profile?.contact?.phone;
+          const phoneNumber =
+            phone?.country_code && phone?.number
+              ? `${phone.country_code}${phone.number}`.trim()
+              : undefined;
+          return {
+            id: u._id,
+            email: u.email,
+            firstName: u.profile?.first_name ?? '',
+            lastName: u.profile?.last_name ?? '',
+            phoneNumber,
+            dateOfBirth: u.profile?.date_of_birth,
+            isEmailVerified: u.is_email_verified ?? false,
+            isPhoneVerified: u.is_phone_verified ?? false,
+            createdAt: '',
+            updatedAt: '',
+          };
+        })()
+      : undefined;
+
     return {
-      success: raw.success,
+      success: raw.statusCode >= 200 && raw.statusCode < 300,
       message: raw.message,
       data: {
-        accessToken: raw.data.access_token,
+        accessToken: raw.data.token,
+        user: normalizedUser,
       },
     };
   }

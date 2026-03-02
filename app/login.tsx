@@ -18,13 +18,8 @@ import {
 } from '@/components/base';
 import { appRoutes } from '@/config/routes';
 import { ApiError, NetworkError, patientRepository } from '@/services/api';
-import {
-  SecureStorageKey,
-  secureStorageService,
-  StorageKey,
-  storageService,
-} from '@/services/storage';
 import { Button } from '@/shared/ui/atoms/button';
+import { Toast } from '@/shared/ui/molecules/Toast';
 import { SegmentedControl } from '@/shared/ui/organisms';
 import { useAuthStore, useUIStore } from '@/store';
 
@@ -38,8 +33,8 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { setUser, setAuthenticated, setLoading } = useAuthStore();
-  const { setGlobalLoading, showToast } = useUIStore();
+  const { isLoading, setLoading } = useAuthStore();
+  const { setGlobalLoading } = useUIStore();
 
   const handleForgotPassword = () => {
     // Placeholder – wire to real route or deep link later
@@ -48,7 +43,7 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      showToast(t('login.errors.missingCredentials'), 'error');
+      Toast.show(t('login.errors.missingCredentials'), { type: 'error' });
       return;
     }
 
@@ -56,34 +51,22 @@ export default function LoginScreen() {
       setLoading(true);
       setGlobalLoading(true);
 
-      const response = await patientRepository.login({ email, password });
-      const { accessToken, refreshToken, user } = response.data;
-
-      const storageOperations: Promise<unknown>[] = [
-        secureStorageService.set(SecureStorageKey.ACCESS_TOKEN, accessToken),
-        secureStorageService.set(SecureStorageKey.USER_ID, user.id),
-      ];
-
-      if (refreshToken) {
-        storageOperations.push(
-          secureStorageService.set(SecureStorageKey.REFRESH_TOKEN, refreshToken)
-        );
-      }
-
-      await Promise.all(storageOperations);
-
-      storageService.set(StorageKey.USER_DATA, {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        profilePicture: user.profilePicture,
+      const response = await patientRepository.login({
+        email,
+        password,
+        rememberMe: keepSignedIn,
+        user_type: 'Patient',
       });
 
-      setUser(user);
-      setAuthenticated(true);
-      showToast(t('login.success'), 'success');
-      router.replace(appRoutes.home);
+      if (response.data.defaults.twoFA_auth) {
+        Toast.show(response.message ?? t('login.success'), { type: 'success' });
+        router.push({
+          pathname: appRoutes.verifyEmail,
+          params: { email },
+        });
+      } else {
+        Toast.show(response.message ?? t('login.success'), { type: 'success' });
+      }
     } catch (error) {
       let message = t('login.errors.generic');
 
@@ -97,7 +80,7 @@ export default function LoginScreen() {
         }
       }
 
-      showToast(message, 'error');
+      Toast.show(message, { type: 'error' });
     } finally {
       setLoading(false);
       setGlobalLoading(false);
@@ -188,10 +171,10 @@ export default function LoginScreen() {
                 <Button
                   fullWidth
                   height={52}
-                  disabled={!email || !password}
+                  disabled={!email || !password || isLoading}
                   onPress={handleLogin}
                   showLoadingIndicator
-                  isLoading={false}
+                  isLoading={isLoading}
                 >
                   <AppText variant="bodyMedium" align="center" style={styles.primaryButtonText}>
                     {t('login.primaryAction')}
