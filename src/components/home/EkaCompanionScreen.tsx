@@ -7,6 +7,7 @@ import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { AppIcon, AppText, EkaAvatar } from '@/components/base';
 import FloatingActionButton from '@/components/home/FloatingActionButton';
+import { appRoutes } from '@/config/routes';
 
 interface HistoryItem {
   key: string;
@@ -124,7 +125,7 @@ export const EkaCompanionScreen: React.FC = () => {
 
       <FloatingActionButton
         onPress={() => {
-          router.push('/(home)/eka-chat');
+          router.push(appRoutes.ekaChat);
         }}
         isScrolling={isFabCollapsed}
         iconName="ChatTwoBubblesSquareText1"
