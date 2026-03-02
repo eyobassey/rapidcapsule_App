@@ -12,6 +12,7 @@ export const appRoutes = {
   login: '/login' as const,
   register: '/register' as const,
   verifyEmail: '/verify-email' as const,
+  eka: '/eka' as const,
   profile: '/profile' as const,
 } satisfies Record<string, Href>;
 

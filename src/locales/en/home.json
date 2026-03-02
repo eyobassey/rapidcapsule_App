@@ -35,6 +35,33 @@
   "fab": {
     "assistant": "Eka AI assistant"
   },
+  "eka": {
+    "creditsLabel": "{{count}} credits left",
+    "titleLine1": "Hi I'm Eka,",
+    "titleLine2": "your health companion",
+    "startHeading": "Start a chat",
+    "historyHeading": "History",
+    "seeAll": "See all",
+    "chips": {
+      "healthCheck": "Start a health check",
+      "drugInteraction": "Check drug interaction",
+      "refill": "Refill prescriptions",
+      "findSpecialist": "Find a specialist",
+      "analyzePrescription": "Analyze a prescription",
+      "askQuestion": "Ask a question"
+    },
+    "history": {
+      "item1": {
+        "title": "I need help with the following medical prescriptions.",
+        "date": "Jan 18"
+      },
+      "item2": {
+        "title": "Please find doctors appointments for my current health condition.",
+        "date": "Jan 18"
+      }
+    },
+    "newChat": "New chat"
+  },
   "completionBanner": {
     "body": "Patients with complete health profiles receive more accurate diagnoses and personalized treatment plans."
   },

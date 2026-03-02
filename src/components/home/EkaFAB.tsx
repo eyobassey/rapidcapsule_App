@@ -1,10 +1,12 @@
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform, Pressable, View } from 'react-native';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { EkaAvatar } from '@/components/base';
+import { appRoutes } from '@/config/routes';
 
 /** Theme shape used by this component (avoids augmented theme inference issues) */
 interface FabTheme {
@@ -33,16 +35,18 @@ const FAB_BOTTOM_OFFSET = 88;
 const FAB_BOX_SHADOW_WEB =
   '0px 8px 16px 0px #00000005, 0px 4px 8px 0px #00000008, -3px -5px 11px 0px #00A6F440 inset, 0px 4px 32px -2px #0000000D, 0px 0px 0px 1px #4413060A, 0px 1px 1px 0px #024A700A, 0px 3px 3px 0px #024A7008, 0px 6px 4px 0px #024A7005, 0px 11px 4px 0px #024A7003';
 
-export const HomeFAB: React.FC = () => {
+export const EkaFAB: React.FC = () => {
   const { t } = useTranslation('home');
   const { theme } = useUnistyles();
   const { colors } = theme as unknown as FabTheme;
+  const router = useRouter();
 
   return (
     <Pressable
       style={({ pressed }) => [styles.fab, pressed && styles.fabPressed]}
       accessibilityLabel={t('fab.assistant')}
       accessibilityRole="button"
+      onPress={() => router.push(appRoutes.eka)}
     >
       <LinearGradient
         colors={[colors.background, colors.backgroundSecondary ?? colors.background]}

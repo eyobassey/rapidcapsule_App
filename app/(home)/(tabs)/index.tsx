@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
 import { Screen } from '@/components/base';
-import { HomeFAB } from '@/components/home/HomeFAB';
+import { EkaFAB } from '@/components/home/EkaFAB';
 import { HomeHeader } from '@/components/home/HomeHeader';
 import { ProfileCompletionBanner } from '@/components/home/ProfileCompletionBanner';
 
@@ -21,7 +21,7 @@ export default function HomeTabScreen() {
         </View>
         <View style={styles.contentPlaceholder} />
 
-        <HomeFAB />
+        <EkaFAB />
       </View>
     </Screen>
   );
