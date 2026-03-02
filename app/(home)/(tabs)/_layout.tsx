@@ -25,10 +25,6 @@ export default function HomeTabsLayout() {
         <Icon sf="cross.case.fill" />
         <Label>{t('tabs.tab4')}</Label>
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="settings">
-        <Icon sf="gearshape.fill" />
-        <Label>{t('tabs.tab5')}</Label>
-      </NativeTabs.Trigger>
     </NativeTabs>
   );
 }

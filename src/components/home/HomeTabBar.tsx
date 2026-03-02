@@ -7,7 +7,7 @@ import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { AppText } from '@/components/base';
 
-type TabId = 'home' | 'appointments' | 'prescriptions' | 'pharmacy' | 'settings';
+type TabId = 'home' | 'appointments' | 'prescriptions' | 'pharmacy';
 
 interface TabConfig {
   id: TabId;
@@ -20,7 +20,6 @@ const TABS: TabConfig[] = [
   { id: 'appointments', icon: 'calendar', labelKey: 'tabs.tab2' },
   { id: 'prescriptions', icon: 'medkit', labelKey: 'tabs.tab3' },
   { id: 'pharmacy', icon: 'bag-handle-outline', labelKey: 'tabs.tab4' },
-  { id: 'settings', icon: 'settings-outline', labelKey: 'tabs.tab5' },
 ];
 
 export const HomeTabBar: React.FC = () => {
