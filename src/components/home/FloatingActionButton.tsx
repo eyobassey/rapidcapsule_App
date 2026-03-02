@@ -137,6 +137,7 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
     width: interpolate(progress.value, [0, 1], [expandedWidthValue, collapsedWidthValue]),
     height: buttonHeightValue,
     borderRadius: buttonBorderRadius,
+    columnGap: interpolate(progress.value, [0, 1], [theme.spacing.sm, 0]),
   }));
 
   const iconAnimatedStyle = useAnimatedStyle(() => ({
@@ -171,7 +172,7 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
     [horizontalMargin, theme.spacing.lg]
   );
 
-  const containerPositionStyle = useMemo(() => {
+  const containerPositionStyle = useMemo<StyleProp<ViewStyle>>(() => {
     const base: ViewStyle = {
       bottom: resolvedBottomOffset,
       zIndex: 1000,
@@ -181,7 +182,7 @@ export const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({
       case 'bottom-left':
         return { ...base, left: resolvedHorizontalMargin };
       case 'bottom-center':
-        return { ...base, alignSelf: 'center' };
+        return { ...base, alignSelf: 'center' as const };
       case 'bottom-right':
       default:
         return { ...base, right: resolvedHorizontalMargin };
