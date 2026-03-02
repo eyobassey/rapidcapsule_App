@@ -1,6 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import Animated, {
+  Extrapolation,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { AppIcon, AppText, EkaAvatar } from '@/components/base';
@@ -14,14 +22,29 @@ const HISTORY_ITEMS: HistoryItem[] = [{ key: 'eka.history.item1' }, { key: 'eka.
 export const EkaCompanionScreen: React.FC = () => {
   const { theme } = useUnistyles();
   const { t } = useTranslation('home');
+  const insets = useSafeAreaInsets();
+
+  const scrollY = useSharedValue(0);
+
+  const onScroll = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentOffset.y;
+  });
+
+  const newChatAnimatedStyle = useAnimatedStyle(() => {
+    const translateX = interpolate(scrollY.value, [0, 80], [0, 56], Extrapolation.CLAMP);
+    return {
+      transform: [{ translateX }],
+    };
+  });
 
   return (
     <View style={styles.container}>
-      <View style={styles.gradientTop} />
-      <ScrollView
+      <Animated.ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
       >
         <View style={styles.headerRow}>
           <View style={styles.creditsPill}>
@@ -31,7 +54,7 @@ export const EkaCompanionScreen: React.FC = () => {
             </AppText>
           </View>
           <Pressable style={styles.closeButton}>
-            <AppIcon name="NavigationArrowNorth" size={16} color={theme.colors.text} />
+            <AppIcon name="Delete1" size={16} color={theme.colors.text} />
           </Pressable>
         </View>
 
@@ -106,16 +129,21 @@ export const EkaCompanionScreen: React.FC = () => {
             </View>
           ))}
         </View>
-
-        <View style={styles.newChatWrapper}>
-          <Pressable style={styles.newChatButton}>
-            <AppIcon name="ChatTwoBubblesSquareText1" size={18} color="#fff" />
-            <AppText variant="bodyMedium" style={styles.newChatText}>
-              {t('eka.newChat')}
-            </AppText>
-          </Pressable>
-        </View>
-      </ScrollView>
+      </Animated.ScrollView>
+      <Animated.View
+        style={[
+          styles.newChatWrapper,
+          { paddingBottom: insets.bottom + theme.spacing.lg },
+          newChatAnimatedStyle,
+        ]}
+      >
+        <Pressable style={styles.newChatButton}>
+          <AppIcon name="ChatTwoBubblesSquareText1" size={18} color="#fff" />
+          <AppText variant="bodyMedium" style={styles.newChatText}>
+            {t('eka.newChat')}
+          </AppText>
+        </Pressable>
+      </Animated.View>
     </View>
   );
 };
@@ -190,7 +218,6 @@ const styles = StyleSheet.create((theme) => ({
     width: 32,
   },
   container: {
-    backgroundColor: theme.colors.background,
     flex: 1,
   },
   creditsPill: {
@@ -255,21 +282,25 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: 'row',
     gap: theme.spacing.sm,
     justifyContent: 'center',
-    paddingHorizontal: theme.spacing.xl,
-    paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.lg,
+    paddingVertical: theme.spacing.md,
   },
   newChatText: {
     color: '#fff',
   },
   newChatWrapper: {
     alignItems: 'center',
-    marginBottom: theme.spacing.xl,
-    marginTop: theme.spacing.lg,
+    bottom: 0,
+    left: 0,
+    paddingHorizontal: theme.spacing.lg,
+    position: 'absolute',
+    right: 0,
   },
   scroll: {
     flex: 1,
   },
   scrollContent: {
+    paddingBottom: theme.spacing.xl,
     paddingHorizontal: theme.spacing.lg,
     paddingTop: theme.spacing.xl,
   },

@@ -18,7 +18,13 @@ export default function HomeLayout() {
       }}
     >
       <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="eka" />
+      <Stack.Screen
+        name="eka"
+        options={{
+          presentation: 'formSheet',
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="profile"
         options={{
