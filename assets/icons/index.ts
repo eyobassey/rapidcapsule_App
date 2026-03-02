@@ -2,19 +2,51 @@
 // Add SVG files to assets/icons/ and run: pnpm icons
 
 import AiFileSpark from './Ai-File-Spark.svg';
+import AllergensLupin from './Allergens-Lupin.svg';
+import BellNotification from './Bell-Notification.svg';
 import CalendarEvent from './Calendar-Event.svg';
+import ChatTwoBubblesSquareText1 from './Chat-Two-Bubbles-Square-Text-1.svg';
+import CoinDiagonal from './Coin-Diagonal.svg';
+import DoorOpenHouseExitLogout from './Door-Open-House-Exit-Logout.svg';
+import EditImagePhoto from './Edit-Image-Photo.svg';
 import EntEarNoseThroat from './Ent-Ear-Nose-Throat.svg';
+import HeartRatePulseGraph from './Heart-Rate-Pulse-Graph.svg';
 import Invisible1 from './Invisible-1.svg';
+import LocationHome from './Location-Home.svg';
+import MedicalFilesReportHistory from './Medical-Files-Report-History.svg';
 import Medicines from './Medicines.svg';
+import NoPoverty from './No-Poverty.svg';
+import RecycleBin2 from './Recycle-Bin-2.svg';
 import Stethoscope from './Stethoscope.svg';
+import TaillessLineArrowLeft1 from './Tailless-Line-Arrow-Left-1.svg';
+import TaillessLineArrowRight1 from './Tailless-Line-Arrow-Right-1.svg';
+import UserEditPencil from './User-Edit-Pencil.svg';
 import Visible from './Visible.svg';
+import Wallet from './Wallet.svg';
+import WatchCircleHeartbeatMonitor2 from './Watch-Circle-Heartbeat-Monitor-2.svg';
 
 export const Icons = {
   AiFileSpark,
+  AllergensLupin,
+  BellNotification,
   CalendarEvent,
+  ChatTwoBubblesSquareText1,
+  CoinDiagonal,
+  DoorOpenHouseExitLogout,
+  EditImagePhoto,
   EntEarNoseThroat,
+  HeartRatePulseGraph,
   Invisible1,
+  LocationHome,
+  MedicalFilesReportHistory,
   Medicines,
+  NoPoverty,
+  RecycleBin2,
   Stethoscope,
+  TaillessLineArrowLeft1,
+  TaillessLineArrowRight1,
+  UserEditPencil,
   Visible,
+  Wallet,
+  WatchCircleHeartbeatMonitor2,
 } as const;
