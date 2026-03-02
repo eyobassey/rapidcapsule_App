@@ -10,15 +10,15 @@ export default function HomeTabsLayout() {
   return (
     <NativeTabs>
       <NativeTabs.Trigger name="index">
-        <Icon sf="diamond.fill" />
+        <Icon sf="house.fill" />
         <Label>{t('tabs.tab1')}</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="tab2">
-        <Icon sf="circle.fill" />
+        <Icon sf="calendar" />
         <Label>{t('tabs.tab2')}</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="tab3">
-        <Icon sf="triangle.fill" />
+        <Icon sf="pills.fill" />
         <Label>{t('tabs.tab3')}</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="tab4">
