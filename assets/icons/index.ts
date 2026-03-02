@@ -3,12 +3,14 @@
 
 import AiFileSpark from './Ai-File-Spark.svg';
 import AllergensLupin from './Allergens-Lupin.svg';
+import AttachFileAdd from './Attach-File-Add.svg';
 import BellNotification from './Bell-Notification.svg';
 import CalendarEvent from './Calendar-Event.svg';
 import ChatBubbleSquareAdd from './Chat-Bubble-Square-Add.svg';
 import ChatTwoBubblesSquareText1 from './Chat-Two-Bubbles-Square-Text-1.svg';
 import Cog2 from './Cog-2.svg';
 import CoinDiagonal from './Coin-Diagonal.svg';
+import Delete1 from './Delete-1.svg';
 import DoorOpenHouseExitLogout from './Door-Open-House-Exit-Logout.svg';
 import EditImagePhoto from './Edit-Image-Photo.svg';
 import EntEarNoseThroat from './Ent-Ear-Nose-Throat.svg';
@@ -34,12 +36,14 @@ import WatchCircleHeartbeatMonitor2 from './Watch-Circle-Heartbeat-Monitor-2.svg
 export const Icons = {
   AiFileSpark,
   AllergensLupin,
+  AttachFileAdd,
   BellNotification,
   CalendarEvent,
   ChatBubbleSquareAdd,
   ChatTwoBubblesSquareText1,
   Cog2,
   CoinDiagonal,
+  Delete1,
   DoorOpenHouseExitLogout,
   EditImagePhoto,
   EntEarNoseThroat,
