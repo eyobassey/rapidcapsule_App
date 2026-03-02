@@ -1,17 +1,12 @@
-import React from 'react';
+import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, View } from 'react-native';
-import Animated, {
-  Extrapolation,
-  interpolate,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated';
+import { Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { AppIcon, AppText, EkaAvatar } from '@/components/base';
+import FloatingActionButton from '@/components/home/FloatingActionButton';
 
 interface HistoryItem {
   key: string;
@@ -24,27 +19,18 @@ export const EkaCompanionScreen: React.FC = () => {
   const { t } = useTranslation('home');
   const insets = useSafeAreaInsets();
 
-  const scrollY = useSharedValue(0);
-
-  const onScroll = useAnimatedScrollHandler((event) => {
-    scrollY.value = event.contentOffset.y;
-  });
-
-  const newChatAnimatedStyle = useAnimatedStyle(() => {
-    const translateX = interpolate(scrollY.value, [0, 80], [0, 56], Extrapolation.CLAMP);
-    return {
-      transform: [{ translateX }],
-    };
-  });
+  const [isFabCollapsed, setFabCollapsed] = useState(false);
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <Animated.ScrollView
+      <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-        onScroll={onScroll}
-        scrollEventThrottle={16}
+        onScrollBeginDrag={() => setFabCollapsed(true)}
+        onMomentumScrollEnd={() => setFabCollapsed(false)}
+        onScrollEndDrag={() => setFabCollapsed(false)}
       >
         <View style={styles.headerRow}>
           <View style={styles.creditsPill}>
@@ -53,7 +39,12 @@ export const EkaCompanionScreen: React.FC = () => {
               {t('eka.creditsLabel', { count: 12 })}
             </AppText>
           </View>
-          <Pressable style={styles.closeButton}>
+          <Pressable
+            style={styles.closeButton}
+            accessibilityRole="button"
+            accessibilityLabel={t('common.close', { defaultValue: 'Close' })}
+            onPress={() => router.back()}
+          >
             <AppIcon name="Delete1" size={16} color={theme.colors.text} />
           </Pressable>
         </View>
@@ -129,21 +120,17 @@ export const EkaCompanionScreen: React.FC = () => {
             </View>
           ))}
         </View>
-      </Animated.ScrollView>
-      <Animated.View
-        style={[
-          styles.newChatWrapper,
-          { paddingBottom: insets.bottom + theme.spacing.lg },
-          newChatAnimatedStyle,
-        ]}
-      >
-        <Pressable style={styles.newChatButton}>
-          <AppIcon name="ChatTwoBubblesSquareText1" size={18} color="#fff" />
-          <AppText variant="bodyMedium" style={styles.newChatText}>
-            {t('eka.newChat')}
-          </AppText>
-        </Pressable>
-      </Animated.View>
+      </ScrollView>
+
+      <FloatingActionButton
+        onPress={() => {
+          // TODO: wire to Eka new chat flow
+        }}
+        isScrolling={isFabCollapsed}
+        iconName="ChatTwoBubblesSquareText1"
+        label={t('eka.newChat')}
+        bottomOffset={insets.bottom + theme.spacing.lg}
+      />
     </View>
   );
 };
@@ -274,27 +261,6 @@ const styles = StyleSheet.create((theme) => ({
   },
   historyTitle: {
     color: theme.colors.text,
-  },
-  newChatButton: {
-    alignItems: 'center',
-    backgroundColor: theme.colors.primary,
-    borderRadius: 999,
-    flexDirection: 'row',
-    gap: theme.spacing.sm,
-    justifyContent: 'center',
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.md,
-  },
-  newChatText: {
-    color: '#fff',
-  },
-  newChatWrapper: {
-    alignItems: 'center',
-    bottom: 0,
-    left: 0,
-    paddingHorizontal: theme.spacing.lg,
-    position: 'absolute',
-    right: 0,
   },
   scroll: {
     flex: 1,
