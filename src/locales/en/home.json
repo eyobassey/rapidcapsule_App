@@ -35,6 +35,9 @@
   "fab": {
     "assistant": "Eka AI assistant"
   },
+  "completionBanner": {
+    "body": "Patients with complete health profiles receive more accurate diagnoses and personalized treatment plans."
+  },
   "landing": {
     "tabHome": "Home"
   }
