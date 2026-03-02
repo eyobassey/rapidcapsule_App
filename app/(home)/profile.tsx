@@ -1,6 +1,7 @@
 import { Icons } from '@assets/icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
@@ -65,9 +66,10 @@ function ProfileRow({
 
 export default function ProfileScreen() {
   const { theme } = useUnistyles();
+  const { t } = useTranslation('profile');
   const user = useAuthStore((s) => s.user);
 
-  const displayName = user ? `${user.firstName} ${user.lastName}`.trim() : 'Guest';
+  const displayName = user ? `${user.firstName} ${user.lastName}`.trim() : t('header.guest');
   const displayEmail = user?.email ?? '';
   const progress = useSharedValue(29);
 
@@ -94,7 +96,7 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.userInfo}>
               <AppText variant="h3" numberOfLines={1}>
-                {displayName || 'My Profile'}
+                {displayName || t('header.titleFallback')}
               </AppText>
               <AppText variant="bodySmall" color={theme.colors.textSecondary} numberOfLines={1}>
                 {displayEmail}
@@ -114,11 +116,11 @@ export default function ProfileScreen() {
                 gap={10}
               />
               <AppText variant="caption" style={styles.completionText} numberOfLines={1}>
-                29% complete
+                {t('progress.percentageLabel', { value: 29 })}
               </AppText>
               <View style={styles.stepsPill}>
                 <AppText variant="caption" style={styles.stepsPillText} numberOfLines={1}>
-                  7 steps remaining
+                  {t('progress.stepsRemaining', { count: 7 })}
                 </AppText>
               </View>
             </View>
@@ -132,7 +134,7 @@ export default function ProfileScreen() {
                 style={styles.finishButtonGradient}
               >
                 <AppText variant="bodySmall" style={styles.finishButtonText}>
-                  Finish Setup
+                  {t('progress.finishSetup')}
                 </AppText>
               </LinearGradient>
             </Pressable>
@@ -153,10 +155,10 @@ export default function ProfileScreen() {
               </View>
               <View>
                 <AppText variant="caption" style={styles.walletLabel}>
-                  Wallet Balance
+                  {t('wallet.title')}
                 </AppText>
                 <AppText variant="bodyMedium" style={styles.walletAmount}>
-                  ₦ 18400
+                  {t('wallet.amount')}
                 </AppText>
               </View>
             </View>
@@ -164,7 +166,7 @@ export default function ProfileScreen() {
               <View style={styles.creditsPill}>
                 <AppIcon name="CoinDiagonal" size={18} color="#fff" />
                 <AppText variant="caption" style={styles.creditsText}>
-                  12 AI credits
+                  {t('wallet.creditsLabel', { count: 12 })}
                 </AppText>
               </View>
               <AppIcon name="TaillessLineArrowRight1" size={18} color={ARROW_COLOR} />
@@ -172,92 +174,89 @@ export default function ProfileScreen() {
           </LinearGradient>
         </View>
 
-        {/* ACCOUNT */}
         <AppText variant="bodySmall" style={styles.sectionHeader}>
-          ACCOUNT
+          {t('sections.account')}
         </AppText>
         <View style={styles.card}>
           <ProfileRow
             icon="UserEditPencil"
             iconColor="#fff"
             iconBgColor={theme.colors.palette.blue[500]}
-            label="Personal Details"
+            label={t('rows.personalDetails')}
           />
           <View style={styles.rowDivider} />
           <ProfileRow
             icon="LocationHome"
             iconColor="#fff"
             iconBgColor={theme.colors.palette.orange[500]}
-            label="Address & Emergency Contacts"
+            label={t('rows.addressEmergency')}
           />
           <View style={styles.rowDivider} />
           <ProfileRow
             icon="MedicalFilesReportHistory"
             iconColor="#fff"
             iconBgColor={theme.colors.palette.indigo[500]}
-            label="Medical History"
+            label={t('rows.medicalHistory')}
           />
           <View style={styles.rowDivider} />
           <ProfileRow
             icon="NoPoverty"
             iconColor="#fff"
             iconBgColor={theme.colors.palette.violet[500]}
-            label="Dependents & Family"
+            label={t('rows.dependentsFamily')}
           />
           <View style={styles.rowDivider} />
           <ProfileRow
             iconElement={<Icons.HeartRatePulseGraph width={22} height={22} color="#fff" />}
             iconBgColor={theme.colors.palette.green[500]}
-            label="Vitals & Health Metrics"
+            label={t('rows.vitalsMetrics')}
           />
           <View style={styles.rowDivider} />
           <ProfileRow
             iconElement={<Icons.AllergensLupin width={22} height={22} color="#fff" />}
             iconBgColor={foundationColors.amber[500]}
-            label="Allergies & Drug Reactions"
+            label={t('rows.allergiesDrugs')}
           />
           <View style={styles.rowDivider} />
           <ProfileRow
             iconElement={<Icons.WatchCircleHeartbeatMonitor2 width={22} height={22} color="#fff" />}
             iconBgColor={theme.colors.palette.gray[950]}
-            label="Devices & Health Apps"
+            label={t('rows.devicesApps')}
           />
         </View>
 
-        {/* PREFERENCES */}
         <AppText variant="bodySmall" style={styles.sectionHeader}>
-          PREFERENCES
+          {t('sections.preferences')}
         </AppText>
         <View style={styles.card}>
           <ProfileRow
             iconElement={<Icons.BellNotification width={22} height={22} color="#fff" />}
             iconBgColor={theme.colors.palette.orange[500]}
-            label="Notification Settings"
+            label={t('rows.notificationSettings')}
           />
           <View style={styles.rowDivider} />
           <ProfileRow
             icon="ChatTwoBubblesSquareText1"
             iconColor="#fff"
             iconBgColor={theme.colors.palette.blue[500]}
-            label="Need Help?"
+            label={t('rows.needHelp')}
           />
         </View>
 
-        {/* OTHERS */}
         <AppText variant="bodySmall" style={styles.sectionHeader}>
-          OTHERS
+          {t('sections.others')}
         </AppText>
         <View style={styles.card}>
           <ProfileRow
             iconElement={<Icons.DoorOpenHouseExitLogout width={22} height={22} color="#fff" />}
             iconBgColor={theme.colors.palette.gray[950]}
-            label="Sign Out"
+            label={t('rows.signOut')}
           />
           <View style={styles.rowDivider} />
           <ProfileRow
             iconElement={<Icons.RecycleBin2 width={22} height={22} color="#fff" />}
             iconBgColor={theme.colors.palette.red[500]}
-            label="Delete Account"
+            label={t('rows.deleteAccount')}
             labelColor={theme.colors.palette.red[500]}
           />
         </View>

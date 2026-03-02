@@ -1,0 +1,34 @@
+{
+  "header": {
+    "titleFallback": "My Profile",
+    "guest": "Guest"
+  },
+  "progress": {
+    "percentageLabel": "{{value}}% complete",
+    "stepsRemaining": "{{count}} steps remaining",
+    "finishSetup": "Finish Setup"
+  },
+  "wallet": {
+    "title": "Wallet Balance",
+    "amount": "\u20a6 18400",
+    "creditsLabel": "{{count}} AI credits"
+  },
+  "sections": {
+    "account": "ACCOUNT",
+    "preferences": "PREFERENCES",
+    "others": "OTHERS"
+  },
+  "rows": {
+    "personalDetails": "Personal Details",
+    "addressEmergency": "Address & Emergency Contacts",
+    "medicalHistory": "Medical History",
+    "dependentsFamily": "Dependents & Family",
+    "vitalsMetrics": "Vitals & Health Metrics",
+    "allergiesDrugs": "Allergies & Drug Reactions",
+    "devicesApps": "Devices & Health Apps",
+    "notificationSettings": "Notification Settings",
+    "needHelp": "Need Help?",
+    "signOut": "Sign Out",
+    "deleteAccount": "Delete Account"
+  }
+}

@@ -1,4 +1,5 @@
 import { Stack } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useUnistyles } from 'react-native-unistyles';
 
 import { getFontFamily } from '@/config/fonts';
@@ -9,6 +10,7 @@ import { getFontFamily } from '@/config/fonts';
  */
 export default function HomeLayout() {
   const { theme } = useUnistyles();
+  const { t } = useTranslation('home');
   return (
     <Stack
       screenOptions={{
@@ -20,7 +22,7 @@ export default function HomeLayout() {
         name="profile"
         options={{
           headerShown: true,
-          title: 'My Profile',
+          title: t('header.profile'),
           headerBackTitle: '',
           headerBackButtonDisplayMode: 'generic',
           headerShadowVisible: false,

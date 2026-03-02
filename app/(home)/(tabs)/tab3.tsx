@@ -1,13 +1,15 @@
+import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
 import { AppText, Screen } from '@/components/base';
 
 export default function Tab3Screen() {
+  const { t } = useTranslation('home');
   return (
     <Screen edges={['top']}>
       <View style={styles.placeholder}>
-        <AppText variant="bodyMedium">Tab 3</AppText>
+        <AppText variant="bodyMedium">{t('tabs.tab3')}</AppText>
       </View>
     </Screen>
   );
