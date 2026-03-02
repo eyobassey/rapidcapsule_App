@@ -18,7 +18,7 @@ export const ProfileCompletionBanner: React.FC = () => {
     <View style={styles.card}>
       <View style={styles.topRow}>
         <View style={styles.iconCircle}>
-          <AppIcon name="AiFileSpark" size={20} color={theme.colors.primary} />
+          <AppIcon name="LightbulbOn" size={20} color={theme.colors.primary} />
         </View>
         <AppText variant="bodySmall" style={styles.message} numberOfLines={3}>
           {t('completionBanner.body')}

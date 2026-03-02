@@ -8,7 +8,7 @@ export default function HomeTabsLayout() {
   const { t } = useTranslation('home');
 
   return (
-    <NativeTabs>
+    <NativeTabs minimizeBehavior="onScrollDown">
       <NativeTabs.Trigger name="index">
         <Icon sf="house.fill" />
         <Label>{t('tabs.tab1')}</Label>

@@ -5,16 +5,21 @@ import AiFileSpark from './Ai-File-Spark.svg';
 import AllergensLupin from './Allergens-Lupin.svg';
 import BellNotification from './Bell-Notification.svg';
 import CalendarEvent from './Calendar-Event.svg';
+import ChatBubbleSquareAdd from './Chat-Bubble-Square-Add.svg';
 import ChatTwoBubblesSquareText1 from './Chat-Two-Bubbles-Square-Text-1.svg';
+import Cog2 from './Cog-2.svg';
 import CoinDiagonal from './Coin-Diagonal.svg';
 import DoorOpenHouseExitLogout from './Door-Open-House-Exit-Logout.svg';
 import EditImagePhoto from './Edit-Image-Photo.svg';
 import EntEarNoseThroat from './Ent-Ear-Nose-Throat.svg';
 import HeartRatePulseGraph from './Heart-Rate-Pulse-Graph.svg';
+import Home3 from './Home-3.svg';
 import Invisible1 from './Invisible-1.svg';
+import LightbulbOn from './Lightbulb-On.svg';
 import LocationHome from './Location-Home.svg';
 import MedicalFilesReportHistory from './Medical-Files-Report-History.svg';
 import Medicines from './Medicines.svg';
+import NavigationArrowNorth from './Navigation-Arrow-North.svg';
 import NoPoverty from './No-Poverty.svg';
 import RecycleBin2 from './Recycle-Bin-2.svg';
 import Stethoscope from './Stethoscope.svg';
@@ -22,6 +27,7 @@ import TaillessLineArrowLeft1 from './Tailless-Line-Arrow-Left-1.svg';
 import TaillessLineArrowRight1 from './Tailless-Line-Arrow-Right-1.svg';
 import UserEditPencil from './User-Edit-Pencil.svg';
 import Visible from './Visible.svg';
+import WaitingAppointmentsCalendar from './Waiting-Appointments-Calendar.svg';
 import Wallet from './Wallet.svg';
 import WatchCircleHeartbeatMonitor2 from './Watch-Circle-Heartbeat-Monitor-2.svg';
 
@@ -30,16 +36,21 @@ export const Icons = {
   AllergensLupin,
   BellNotification,
   CalendarEvent,
+  ChatBubbleSquareAdd,
   ChatTwoBubblesSquareText1,
+  Cog2,
   CoinDiagonal,
   DoorOpenHouseExitLogout,
   EditImagePhoto,
   EntEarNoseThroat,
   HeartRatePulseGraph,
+  Home3,
   Invisible1,
+  LightbulbOn,
   LocationHome,
   MedicalFilesReportHistory,
   Medicines,
+  NavigationArrowNorth,
   NoPoverty,
   RecycleBin2,
   Stethoscope,
@@ -47,6 +58,7 @@ export const Icons = {
   TaillessLineArrowRight1,
   UserEditPencil,
   Visible,
+  WaitingAppointmentsCalendar,
   Wallet,
   WatchCircleHeartbeatMonitor2,
 } as const;
