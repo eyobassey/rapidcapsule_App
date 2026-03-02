@@ -17,7 +17,10 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { useUnistyles } from 'react-native-unistyles';
 import { scheduleOnRN } from 'react-native-worklets';
+
+import { type ExtendedThemeColors, getExtendedThemeColors } from '@/types/theme.types';
 
 import { useToast } from './context/ToastContext';
 import type { Toast as ToastType, ToastType as ToastVariant } from './Toast.types';
@@ -34,18 +37,19 @@ interface ToastProps {
   onHeightChange?: (id: string, height: number) => void;
 }
 
-const getBackgroundColor = (type: ToastVariant) => {
+const getBackgroundColor = (type: ToastVariant, colors: ExtendedThemeColors): string => {
   switch (type) {
     case 'success':
-      return '#10B981';
+      return colors.success;
     case 'error':
-      return '#EF4444';
+      return colors.error;
     case 'warning':
-      return '#F59E0B';
+      return colors.warning;
     case 'info':
-      return '#3B82F6';
+      return colors.info;
     default:
-      return '#262626';
+      // Neutral surface for default toasts
+      return colors.cardBackground ?? colors.background;
   }
 };
 
@@ -69,6 +73,8 @@ export const Toast: React.FC<ToastProps> = ({ toast, index }) => {
   const prevIndexRef = useRef<number>(-1);
 
   const { dismiss, expandedToasts, expandToast, collapseToast } = useToast();
+  const { theme } = useUnistyles();
+  const themeColors = getExtendedThemeColors(theme.colors);
   const opacity = useSharedValue<number>(1);
   const translateY = useSharedValue<number>(toast.options.position === 'top' ? -100 : 100);
   const scale = useSharedValue<number>(0.9);
@@ -80,18 +86,18 @@ export const Toast: React.FC<ToastProps> = ({ toast, index }) => {
   const isExpanded = expandedToasts.has(toast.id);
   const hasExpandedContent = !!toast.options.expandedContent;
 
-  const getStackOffset = () => {
+  const getStackOffset = useCallback(() => {
     const baseOffset = 4;
     const maxOffset = 12;
     const offset = Math.min(index * baseOffset, maxOffset);
     return toast.options.position === 'top' ? offset : -offset;
-  };
+  }, [index]);
 
-  const getStackScale = () => {
+  const getStackScale = useCallback(() => {
     const scaleReduction = 0.02;
     const minScale = 0.92;
     return Math.max(1 - index * scaleReduction, minScale);
-  };
+  }, [index]);
 
   useEffect(() => {
     if (prevIndexRef.current !== index && opacity.value > 0) {
@@ -125,12 +131,12 @@ export const Toast: React.FC<ToastProps> = ({ toast, index }) => {
     }
 
     prevIndexRef.current = index;
-  }, [index, toast.options.position, translateY, scale, opacity]);
+  }, [getStackOffset, getStackScale, index, opacity, scale, toast.options.position, translateY]);
 
-  const handleDismiss = () => {
+  const handleDismiss = useCallback(() => {
     dismiss(toast.id);
     toast.options.onClose?.();
-  };
+  }, [dismiss, toast.id, toast.options]);
 
   const animatedDismiss = () => {
     opacity.value = withTiming(0, {
@@ -219,7 +225,17 @@ export const Toast: React.FC<ToastProps> = ({ toast, index }) => {
 
       setTimeout(exitAnimations, exitDelay);
     }
-  }, [toast, opacity, translateY, scale, rotateZ, index]);
+  }, [
+    getStackOffset,
+    getStackScale,
+    handleDismiss,
+    index,
+    opacity,
+    rotateZ,
+    scale,
+    toast,
+    translateY,
+  ]);
 
   // Animate expansion
   useEffect(() => {
@@ -267,7 +283,10 @@ export const Toast: React.FC<ToastProps> = ({ toast, index }) => {
     }
   };
 
-  const backgroundColor = toast.options.backgroundColor ?? getBackgroundColor(toast.options.type);
+  const backgroundColor =
+    toast.options.backgroundColor && toast.options.backgroundColor.trim().length > 0
+      ? toast.options.backgroundColor
+      : getBackgroundColor(toast.options.type, themeColors);
 
   const _styles = toast.options?.style || {};
 
@@ -318,7 +337,7 @@ export const Toast: React.FC<ToastProps> = ({ toast, index }) => {
             <TouchableOpacity
               style={styles.actionButton}
               onPress={() => {
-                toast?.options?.action?.onPress!();
+                toast?.options?.action?.onPress?.();
                 animatedDismiss();
               }}
             >

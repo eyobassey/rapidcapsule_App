@@ -37,15 +37,6 @@ interface UIState {
   // Loading states
   globalLoading: boolean;
   setGlobalLoading: (loading: boolean) => void;
-
-  // Toast/Notifications
-  toast: {
-    message: string;
-    type: 'success' | 'error' | 'info' | 'warning';
-    visible: boolean;
-  } | null;
-  showToast: (message: string, type?: 'success' | 'error' | 'info' | 'warning') => void;
-  hideToast: () => void;
 }
 
 /**
@@ -56,7 +47,6 @@ interface UIState {
  * - Language preferences
  * - UI component states (modals, bottom sheets)
  * - Global loading states
- * - Toast notifications
  */
 export const useUIStore = create<UIState>()(
   persist(
@@ -99,29 +89,6 @@ export const useUIStore = create<UIState>()(
       globalLoading: false,
       setGlobalLoading: (loading) => {
         set({ globalLoading: loading });
-      },
-
-      // Toast
-      toast: null,
-      showToast: (message, type = 'info') => {
-        set({
-          toast: {
-            message,
-            type,
-            visible: true,
-          },
-        });
-        // Auto-hide after 3 seconds
-        setTimeout(() => {
-          set((state) => ({
-            toast: state.toast ? { ...state.toast, visible: false } : null,
-          }));
-        }, 3000);
-      },
-      hideToast: () => {
-        set((state) => ({
-          toast: state.toast ? { ...state.toast, visible: false } : null,
-        }));
       },
     }),
     {

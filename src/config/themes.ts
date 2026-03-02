@@ -61,6 +61,7 @@ export const lightTheme = {
   },
   typography: {
     fontSize: {
+      caption: 10,
       xs: 12,
       sm: 14,
       md: 16,
@@ -134,6 +135,7 @@ export const darkTheme = {
   },
   typography: {
     fontSize: {
+      caption: 10,
       xs: 12,
       sm: 14,
       md: 16,

@@ -11,7 +11,8 @@ const DEFAULT_TOAST_OPTIONS: Required<ToastOptions> = {
   duration: 3000,
   type: 'default',
   position: 'bottom',
-  backgroundColor: '#262626',
+  // Use theme-driven background colors by default; this can be overridden per-toast.
+  backgroundColor: '',
   onClose: () => {},
   action: null,
   expandedContent: null,

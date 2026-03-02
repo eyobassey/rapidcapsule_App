@@ -17,5 +17,24 @@
   "actions": {
     "signIn": "Sign In",
     "getStarted": "Get Started →"
+  },
+  "header": {
+    "welcome": "Welcome {{name}}",
+    "guest": "guest",
+    "notifications": "Notifications",
+    "profile": "My profile"
+  },
+  "tabs": {
+    "tab1": "Tab 1",
+    "tab2": "Tab 2",
+    "tab3": "Tab 3",
+    "tab4": "Label",
+    "search": "Search"
+  },
+  "fab": {
+    "assistant": "Eka AI assistant"
+  },
+  "landing": {
+    "tabHome": "Home"
   }
 }

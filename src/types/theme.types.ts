@@ -34,8 +34,8 @@ export interface ExtendedThemeColors {
   cardBackground?: string;
   shadow?: string;
   overlay?: string;
-  info?: string;
-  warning?: string;
+  info: string;
+  warning: string;
 }
 
 /**

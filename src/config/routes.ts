@@ -8,9 +8,11 @@ import type { Href } from 'expo-router';
  */
 export const appRoutes = {
   home: '/' as const,
+  landing: '/landing' as const,
   login: '/login' as const,
   register: '/register' as const,
   verifyEmail: '/verify-email' as const,
+  profile: '/profile' as const,
 } satisfies Record<string, Href>;
 
 export type AppRoute = (typeof appRoutes)[keyof typeof appRoutes];
