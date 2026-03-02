@@ -28,7 +28,8 @@
     "tab1": "Home",
     "tab2": "Appointments",
     "tab3": "Prescriptions",
-    "tab4": "Settings",
+    "tab4": "Pharmacy",
+    "tab5": "Settings",
     "search": "Search"
   },
   "fab": {

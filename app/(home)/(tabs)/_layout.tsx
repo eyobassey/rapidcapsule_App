@@ -14,16 +14,20 @@ export default function HomeTabsLayout() {
         <Label>{t('tabs.tab1')}</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="appointments">
-        <Icon sf="calendar" />
+        <Icon sf="stethoscope" />
         <Label>{t('tabs.tab2')}</Label>
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="prescriptions">
         <Icon sf="pills.fill" />
         <Label>{t('tabs.tab3')}</Label>
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="pharmacy">
+        <Icon sf="cross.case.fill" />
+        <Label>{t('tabs.tab4')}</Label>
+      </NativeTabs.Trigger>
       <NativeTabs.Trigger name="settings">
         <Icon sf="gearshape.fill" />
-        <Label>{t('tabs.tab4')}</Label>
+        <Label>{t('tabs.tab5')}</Label>
       </NativeTabs.Trigger>
     </NativeTabs>
   );
