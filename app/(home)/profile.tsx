@@ -1,14 +1,16 @@
 import { Icons } from '@assets/icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Alert, Pressable, ScrollView, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 import { AppAvatar, AppIcon, AppText } from '@/components/base';
 import type { AppIconName } from '@/components/base/AppIcon/AppIcon';
 import { foundationColors } from '@/config/foundation-colors';
+import { appRoutes } from '@/config/routes';
 import { CircularProgress } from '@/shared/ui/organisms';
 import { useAuthStore } from '@/store';
 
@@ -67,11 +69,46 @@ function ProfileRow({
 export default function ProfileScreen() {
   const { theme } = useUnistyles();
   const { t } = useTranslation('profile');
+  const router = useRouter();
   const user = useAuthStore((s) => s.user);
+  const logout = useAuthStore((s) => s.logout);
+  const isAuthLoading = useAuthStore((s) => s.isLoading);
 
   const displayName = user ? `${user.firstName} ${user.lastName}`.trim() : t('header.guest');
   const displayEmail = user?.email ?? '';
   const progress = useSharedValue(29);
+
+  const handleLogout = React.useCallback(async () => {
+    if (isAuthLoading) {
+      return;
+    }
+
+    await logout();
+    router.replace(appRoutes.landing);
+  }, [isAuthLoading, logout, router]);
+
+  const handleLogoutPress = React.useCallback(() => {
+    Alert.alert(
+      t('confirmSignOut.title'),
+      t('confirmSignOut.message'),
+      [
+        {
+          text: t('confirmSignOut.cancel'),
+          style: 'cancel',
+        },
+        {
+          text: t('confirmSignOut.confirm'),
+          style: 'destructive',
+          onPress: () => {
+            void handleLogout();
+          },
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  }, [handleLogout, t]);
 
   return (
     <View style={styles.screen}>
@@ -249,8 +286,9 @@ export default function ProfileScreen() {
         <View style={styles.card}>
           <ProfileRow
             iconElement={<Icons.DoorOpenHouseExitLogout width={22} height={22} color="#fff" />}
-            iconBgColor={theme.colors.palette.gray[950]}
+            iconBgColor={theme.colors.palette.gray[500]}
             label={t('rows.signOut')}
+            onPress={handleLogoutPress}
           />
           <View style={styles.rowDivider} />
           <ProfileRow

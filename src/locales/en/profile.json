@@ -30,5 +30,11 @@
     "needHelp": "Need Help?",
     "signOut": "Sign Out",
     "deleteAccount": "Delete Account"
+  },
+  "confirmSignOut": {
+    "title": "Sign out?",
+    "message": "You will need to sign in again to access your health data and Eka assistant.",
+    "confirm": "Sign Out",
+    "cancel": "Cancel"
   }
 }
