@@ -4,6 +4,24 @@ All notable changes to the documentation will be documented in this file.
 
 ---
 
+## [1.1.0] - March 3, 2026
+
+### Added
+
+- **Components Guide** (`docs/guides/components.md`)
+  - Documented home/Eka-related UI building blocks (`ProfileCompletionBanner`, `EkaFAB`, `EkaCompanionScreen`, `EkaChatScreen`).
+  - Added guidance on using the shared `FloatingActionButton` and `CircularProgress` instead of one-off implementations.
+
+### Changed
+
+- **Root README** (`README.md`)
+  - Updated project structure and routing sections to reflect the new auth + `(home)` stack, native tabs, and typed `appRoutes` map.
+
+- **Agent Guide** (`AGENT.md`)
+  - Clarified that all navigation (including Eka and profile flows) must use the central `appRoutes` map and avoid magic route strings.
+
+---
+
 ## [1.0.0] - February 13, 2026
 
 ### Added

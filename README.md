@@ -144,10 +144,12 @@ pnpm start
 
 ```
 rapidcapusle/
-├── app/                      # Expo Router file-based routes
-│   ├── _layout.tsx           # Root layout component
-│   ├── index.tsx             # Home screen (/)
-│   └── ...                   # Other screens
+├── app/                            # Expo Router file-based routes
+│   ├── _layout.tsx                 # Root layout (auth + (home) stack)
+│   ├── landing.tsx                 # Unauthenticated landing shell
+│   ├── login.tsx / register.tsx    # Auth flows
+│   ├── verify-email.tsx            # Email verification screen
+│   └── (home)/                     # Authenticated stack (tabs, profile, Eka, etc.)
 ├── src/                      # Source code
 │   ├── components/           # Reusable UI components
 │   │   ├── base/             # Atomic base components (Text, Screen, AppInput, Checkbox, etc.)
@@ -174,10 +176,13 @@ rapidcapusle/
 
 ## 🗺️ Routing
 
-This app uses **Expo Router** for file-based routing:
+This app uses **Expo Router** for file-based routing and a small, typed route map:
 
-- `app/index.tsx` → `/` (Home screen)
-- `app/_layout.tsx` → Root layout (wraps all screens)
+- `app/_layout.tsx` → Root layout, wires unauth screens (`landing`, `login`, `register`, `verify-email`) and the authenticated `(home)` stack.
+- `app/(home)/_layout.tsx` → Authenticated stack with tabs and additional screens (e.g. `eka`, `eka-chat`, `profile`).
+- `app/(home)/(tabs)/_layout.tsx` → Native tab bar (`Home`, `Appointments`, `Prescriptions`, `Pharmacy`, `Search`).
+
+All navigation should use the central `appRoutes` map in `src/config/routes.ts` (typed via `Href`) instead of hard-coded strings.
 
 Create new routes by adding files to the `app/` directory. See [Expo Router documentation](https://docs.expo.dev/router/introduction/) for more details.
 

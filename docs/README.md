@@ -1,6 +1,6 @@
 # Rapid Capsule Mobile App - Documentation
 
-**Last Updated**: February 27, 2026  
+**Last Updated**: March 3, 2026  
 **Author**: Aarav Mishra  
 **Version**: 1.0.0
 

@@ -1,7 +1,7 @@
 # Base Components Guide
 
 **Created**: February 13, 2026  
-**Last Updated**: February 18, 2026  
+**Last Updated**: March 3, 2026  
 **Author**: Aarav Mishra  
 **Version**: 1.0.0
 
@@ -32,7 +32,8 @@ This project uses components from two sources:
    - See [Reactix Integration Guide](./reactix-integration.md) for details
    - See [Component Strategy](../architecture/component-strategy.md) for when to use which
 
-**Component Selection**: 
+**Component Selection**:
+
 - **Custom base components** (`src/components/base/`) - Use for core UI elements that are deeply integrated with our design system
 - **Reactix components** (`src/shared/ui/`) - Use for complex animated components and components we don't have custom versions of
 
@@ -49,8 +50,9 @@ This project uses components from two sources:
 7. [AppAvatar](#avatar)
 8. [AppSeparator](#separator)
 9. [AppPressable](#pressable)
-10. [Accessibility Guidelines](#accessibility-guidelines)
-11. [Best Practices](#best-practices)
+10. [Home & Assistant Components](#home--assistant-components)
+11. [Accessibility Guidelines](#accessibility-guidelines)
+12. [Best Practices](#best-practices)
 
 ---
 
@@ -515,6 +517,23 @@ import { AppPressable } from '@/components/base';
 - ✅ Minimum touch target enforcement
 - ✅ Proper state announcements
 - ✅ Keyboard navigation
+
+---
+
+## Home & Assistant Components
+
+These higher-level components live primarily under `src/components/home` and build on the base and Reactix primitives:
+
+- `ProfileCompletionBanner` — compact banner summarizing profile completion, reused on the home tab.
+- `EkaFAB` — floating entry point to the Eka companion sheet; uses `EkaAvatar` and navigates via `appRoutes.eka`.
+- `EkaCompanionScreen` — the main Eka assistant sheet presented as a `formSheet` from the home stack.
+- `EkaChatScreen` — dedicated chat surface for conversations with Eka.
+
+For reusable animated CTAs, prefer the shared `FloatingActionButton` in `src/components/home/FloatingActionButton.tsx`
+and configure it via props (icon, label, position, scroll behaviour) rather than creating ad-hoc FABs.
+
+The circular profile completion indicator is implemented as `CircularProgress` in `src/shared/ui/organisms`; use it
+via the barrel export (`import { CircularProgress } from '@/shared/ui/organisms';`) instead of duplicating SVG logic.
 
 ---
 
