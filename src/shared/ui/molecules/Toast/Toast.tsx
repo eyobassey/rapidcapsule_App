@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-color-literals, react-hooks/immutability */
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
   LayoutAnimation,
   Platform,
