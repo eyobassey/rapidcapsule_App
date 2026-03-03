@@ -14,7 +14,9 @@ import Delete1 from './Delete-1.svg';
 import DoorOpenHouseExitLogout from './Door-Open-House-Exit-Logout.svg';
 import EditImagePhoto from './Edit-Image-Photo.svg';
 import EntEarNoseThroat from './Ent-Ear-Nose-Throat.svg';
+import HealthCheckStatsTroubleshoot from './Health-Check-Stats-Troubleshoot.svg';
 import HeartRatePulseGraph from './Heart-Rate-Pulse-Graph.svg';
+import HelpIntermediateQuestionBoxPlaceholder from './Help-Intermediate-Question-Box-Placeholder.svg';
 import Home3 from './Home-3.svg';
 import Invisible1 from './Invisible-1.svg';
 import LightbulbOn from './Lightbulb-On.svg';
@@ -23,6 +25,7 @@ import MedicalFilesReportHistory from './Medical-Files-Report-History.svg';
 import Medicines from './Medicines.svg';
 import NavigationArrowNorth from './Navigation-Arrow-North.svg';
 import NoPoverty from './No-Poverty.svg';
+import NurseHat from './Nurse-Hat.svg';
 import RecycleBin2 from './Recycle-Bin-2.svg';
 import Stethoscope from './Stethoscope.svg';
 import TaillessLineArrowLeft1 from './Tailless-Line-Arrow-Left-1.svg';
@@ -47,7 +50,9 @@ export const Icons = {
   DoorOpenHouseExitLogout,
   EditImagePhoto,
   EntEarNoseThroat,
+  HealthCheckStatsTroubleshoot,
   HeartRatePulseGraph,
+  HelpIntermediateQuestionBoxPlaceholder,
   Home3,
   Invisible1,
   LightbulbOn,
@@ -56,6 +61,7 @@ export const Icons = {
   Medicines,
   NavigationArrowNorth,
   NoPoverty,
+  NurseHat,
   RecycleBin2,
   Stethoscope,
   TaillessLineArrowLeft1,

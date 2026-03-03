@@ -28,6 +28,20 @@ export const GRADIENT_PRESETS = {
     start: { x: 0.5, y: 0 },
     end: { x: 0.5, y: 1 },
   },
+
+  /**
+   * Eka chat gradient — stronger hero band with mid-screen fade.
+   *
+   * Derived from layered CSS:
+   *   linear-gradient(180deg, #BEDBFF 0%, #2B7FFF 18%, #BEDBFF 40%, #F2F2F2 50%),
+   *   linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2))
+   */
+  eka: {
+    colors: ['#BEDBFF', '#2B7FFF', '#BEDBFF', '#F2F2F2'] as const,
+    locations: [0, 0.18, 0.4, 0.5] as const,
+    start: { x: 0.5, y: 0 },
+    end: { x: 0.5, y: 1 },
+  },
 } as const;
 
 export type GradientVariant = keyof typeof GRADIENT_PRESETS;

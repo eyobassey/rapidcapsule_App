@@ -7,6 +7,9 @@
     "name": "Rapid Capsule",
     "tagline": "Your trusted AI health companion for"
   },
+  "common": {
+    "close": "Close"
+  },
   "features": {
     "appointments": "appointments",
     "healthChecks": "health checks",
@@ -45,7 +48,7 @@
     "chips": {
       "healthCheck": "Start a health check",
       "drugInteraction": "Check drug interaction",
-      "refill": "Refill prescriptions",
+      "reviewVitals": "Review vitals",
       "findSpecialist": "Find a specialist",
       "analyzePrescription": "Analyze a prescription",
       "askQuestion": "Ask a question"

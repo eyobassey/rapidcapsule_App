@@ -77,7 +77,7 @@ export const EkaCompanionScreen: React.FC = () => {
             />
             <StartChip
               icon="AiFileSpark"
-              label={t('eka.chips.refill')}
+              label={t('eka.chips.analyzePrescription')}
               themeColor={theme.colors.palette.violet[500]}
             />
             <StartChip
@@ -86,14 +86,14 @@ export const EkaCompanionScreen: React.FC = () => {
               themeColor={theme.colors.palette.emerald[500]}
             />
             <StartChip
-              icon="ChatBubbleSquareAdd"
-              label={t('eka.chips.analyzePrescription')}
-              themeColor={theme.colors.palette.indigo[500]}
+              icon="Cog2"
+              label={t('eka.chips.reviewVitals')}
+              themeColor={theme.colors.palette.gray[800]}
             />
             <StartChip
-              icon="Cog2"
+              icon="ChatBubbleSquareAdd"
               label={t('eka.chips.askQuestion')}
-              themeColor={theme.colors.palette.gray[800]}
+              themeColor={theme.colors.palette.indigo[500]}
             />
           </View>
         </View>
@@ -220,15 +220,6 @@ const styles = StyleSheet.create((theme) => ({
   },
   creditsText: {
     color: theme.colors.textSecondary,
-  },
-  gradientTop: {
-    backgroundColor: theme.colors.primary,
-    height: 260,
-    left: 0,
-    opacity: 0.18,
-    position: 'absolute',
-    right: 0,
-    top: 0,
   },
   headerRow: {
     alignItems: 'center',

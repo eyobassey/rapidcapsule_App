@@ -1,6 +1,7 @@
+import { router } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
@@ -24,6 +25,14 @@ export const EkaChatScreen: React.FC = () => {
             {t('ekaChat.title')}
           </AppText>
         </View>
+        <Pressable
+          style={styles.closeButton}
+          accessibilityRole="button"
+          accessibilityLabel={t('common.close', { defaultValue: 'Close' })}
+          onPress={() => router.back()}
+        >
+          <AppIcon name="Delete1" size={16} color={theme.colors.text} />
+        </Pressable>
       </View>
 
       <ScrollView
@@ -48,9 +57,36 @@ export const EkaChatScreen: React.FC = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.chipRow}
         >
-          <BottomChip label={t('eka.chips.healthCheck')} icon="WaitingAppointmentsCalendar" />
-          <BottomChip label={t('eka.chips.drugInteraction')} icon="Medicines" />
-          <BottomChip label={t('eka.chips.analyzePrescription')} icon="AiFileSpark" />
+          <BottomChip
+            label={t('eka.chips.healthCheck')}
+            icon="Stethoscope"
+            iconColor={theme.colors.palette.red[500]}
+          />
+          <BottomChip
+            label={t('eka.chips.drugInteraction')}
+            icon="Medicines"
+            iconColor={theme.colors.palette.blue[500]}
+          />
+          <BottomChip
+            label={t('eka.chips.analyzePrescription')}
+            icon="AiFileSpark"
+            iconColor={theme.colors.palette.violet[500]}
+          />
+          <BottomChip
+            label={t('eka.chips.findSpecialist')}
+            icon="NurseHat"
+            iconColor={theme.colors.palette.cyan[500]}
+          />
+          <BottomChip
+            label={t('eka.chips.reviewVitals')}
+            icon="HealthCheckStatsTroubleshoot"
+            iconColor={theme.colors.palette.green[500]}
+          />
+          <BottomChip
+            label={t('eka.chips.askQuestion')}
+            icon="HelpIntermediateQuestionBoxPlaceholder"
+            iconColor={theme.colors.palette.indigo[500]}
+          />
         </ScrollView>
 
         <View style={styles.inputRow}>
@@ -74,14 +110,14 @@ export const EkaChatScreen: React.FC = () => {
 interface BottomChipProps {
   label: string;
   icon: React.ComponentProps<typeof AppIcon>['name'];
+  iconColor: string;
 }
 
-const BottomChip: React.FC<BottomChipProps> = ({ label, icon }) => {
-  const { theme } = useUnistyles();
+const BottomChip: React.FC<BottomChipProps> = ({ label, icon, iconColor }) => {
   return (
     <View style={styles.chip}>
-      <View style={[styles.chipIconCircle, { backgroundColor: theme.colors.background }]}>
-        <AppIcon name={icon} size={16} color={theme.colors.text} />
+      <View style={styles.chipIconCircle}>
+        <AppIcon name={icon} size={16} color={iconColor} />
       </View>
       <AppText variant="bodySmall" style={styles.chipLabel} numberOfLines={2}>
         {label}
@@ -92,18 +128,17 @@ const BottomChip: React.FC<BottomChipProps> = ({ label, icon }) => {
 
 const styles = StyleSheet.create((theme) => ({
   bottomArea: {
-    backgroundColor: theme.colors.background,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    paddingHorizontal: theme.spacing.lg,
     paddingTop: theme.spacing.md,
   },
   chip: {
     alignItems: 'center',
-    backgroundColor: theme.colors.backgroundSecondary,
-    borderRadius: 999,
+    backgroundColor: theme.colors.palette.gray[200],
+    borderRadius: theme.borderRadius.xxl,
     flexDirection: 'row',
-    marginRight: theme.spacing.sm,
+    gap: theme.spacing.sm,
+    justifyContent: 'center',
     paddingHorizontal: theme.spacing.md,
     paddingVertical: theme.spacing.sm,
   },
@@ -112,32 +147,44 @@ const styles = StyleSheet.create((theme) => ({
     borderRadius: 999,
     height: 24,
     justifyContent: 'center',
-    marginRight: theme.spacing.xs,
     width: 24,
   },
   chipLabel: {
-    maxWidth: 140,
+    fontWeight: '500',
+    width: 100,
   },
   chipRow: {
+    gap: theme.spacing.sm,
     paddingBottom: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.lg,
+  },
+  closeButton: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 999,
+    height: 32,
+    justifyContent: 'center',
+    width: 32,
   },
   container: {
-    backgroundColor: theme.colors.background,
+    backgroundColor: theme.colors.palette.gray[100],
     flex: 1,
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingBottom: theme.spacing.sm,
     paddingHorizontal: theme.spacing.lg,
     paddingTop: theme.spacing.lg,
   },
   headerAvatar: {
     borderRadius: 999,
-    marginRight: theme.spacing.sm,
     overflow: 'hidden',
   },
   headerLeft: {
     alignItems: 'center',
     flexDirection: 'row',
+    gap: theme.spacing.sm,
   },
   headerTitle: {
     fontWeight: '600',
@@ -149,16 +196,18 @@ const styles = StyleSheet.create((theme) => ({
   },
   inputContainer: {
     alignItems: 'center',
-    backgroundColor: theme.colors.backgroundSecondary,
+    backgroundColor: theme.colors.background,
     borderRadius: 999,
     flex: 1,
     flexDirection: 'row',
-    paddingHorizontal: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.sm,
   },
   inputRow: {
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.lg,
   },
   messageBubble: {
     backgroundColor: theme.colors.palette.blue[100],

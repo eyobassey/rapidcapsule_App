@@ -15,7 +15,7 @@ export const lightTheme = {
 
     // Background colors
     background: base.white,
-    backgroundSecondary: slate[50],
+    backgroundSecondary: _gray[100],
     backgroundTertiary: slate[100],
 
     // Text colors
@@ -57,6 +57,7 @@ export const lightTheme = {
     md: 8,
     lg: 12,
     xl: 16,
+    xxl: 20,
     full: 9999,
   },
   typography: {
@@ -131,6 +132,7 @@ export const darkTheme = {
     md: 8,
     lg: 12,
     xl: 16,
+    xxl: 20,
     full: 9999,
   },
   typography: {

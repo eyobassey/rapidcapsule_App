@@ -1,4 +1,3 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -31,14 +30,10 @@ const FAB_AVATAR_SIZE = 50;
  */
 const FAB_BOTTOM_OFFSET = 88;
 
-/** Exact multi-layer + inset shadow from design (web); single-shadow fallback on native */
-const FAB_BOX_SHADOW_WEB =
-  '0px 8px 16px 0px #00000005, 0px 4px 8px 0px #00000008, -3px -5px 11px 0px #00A6F440 inset, 0px 4px 32px -2px #0000000D, 0px 0px 0px 1px #4413060A, 0px 1px 1px 0px #024A700A, 0px 3px 3px 0px #024A7008, 0px 6px 4px 0px #024A7005, 0px 11px 4px 0px #024A7003';
-
 export const EkaFAB: React.FC = () => {
   const { t } = useTranslation('home');
   const { theme } = useUnistyles();
-  const { colors } = theme as unknown as FabTheme;
+  const _theme = theme as unknown as FabTheme;
   const router = useRouter();
 
   return (
@@ -48,16 +43,9 @@ export const EkaFAB: React.FC = () => {
       accessibilityRole="button"
       onPress={() => router.push(appRoutes.eka)}
     >
-      <LinearGradient
-        colors={[colors.background, colors.backgroundSecondary ?? colors.background]}
-        start={{ x: 0.3, y: 0.3 }}
-        end={{ x: 0.9, y: 0.9 }}
-        style={styles.gradientCircle}
-      >
-        <View style={styles.iconWrap}>
-          <EkaAvatar size={FAB_AVATAR_SIZE} disableShadow />
-        </View>
-      </LinearGradient>
+      <View style={styles.iconWrap}>
+        <EkaAvatar size={FAB_AVATAR_SIZE} disableShadow />
+      </View>
     </Pressable>
   );
 };
@@ -74,9 +62,6 @@ const styles = StyleSheet.create((theme) => {
       right: t.spacing.lg,
       width: FAB_SIZE,
       ...Platform.select({
-        web: {
-          boxShadow: FAB_BOX_SHADOW_WEB,
-        },
         ios: {
           shadowColor: '#024A70',
           shadowOffset: { width: 0, height: 6 },
@@ -91,17 +76,14 @@ const styles = StyleSheet.create((theme) => {
     fabPressed: {
       opacity: 0.92,
     },
-    gradientCircle: {
+    iconWrap: {
       alignItems: 'center',
+      backgroundColor: theme.colors.backgroundSecondary,
       borderRadius: FAB_SIZE / 2,
       borderWidth: 0,
       height: '100%',
       justifyContent: 'center',
       width: '100%',
-    },
-    iconWrap: {
-      alignItems: 'center',
-      justifyContent: 'center',
     },
   };
 });

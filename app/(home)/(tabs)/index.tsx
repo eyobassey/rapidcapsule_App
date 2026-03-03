@@ -12,7 +12,7 @@ import { ProfileCompletionBanner } from '@/components/home/ProfileCompletionBann
  */
 export default function HomeTabScreen() {
   return (
-    <Screen edges={['top']}>
+    <Screen edges={['top']} style={styles.container}>
       <HomeHeader />
 
       <View style={styles.mainContent}>
@@ -31,6 +31,9 @@ const styles = StyleSheet.create((theme) => ({
   bannerWrapper: {
     paddingBottom: theme.spacing.lg,
     paddingHorizontal: theme.spacing.lg,
+  },
+  container: {
+    backgroundColor: theme.colors.backgroundSecondary,
   },
   contentPlaceholder: {
     flex: 1,

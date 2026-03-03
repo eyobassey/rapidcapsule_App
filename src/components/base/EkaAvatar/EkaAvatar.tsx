@@ -10,6 +10,19 @@ const PRESET_SIZES = {
   xl: 96,
 } as const;
 
+// Special multi-layer shadow used for Eka avatar in hero layouts.
+const EKA_AVATAR_BOX_SHADOW = [
+  '0px 8px 16px 0px #00000005',
+  '0px 4px 8px 0px #00000008',
+  '-3px -5px 11px 0px #00A6F440 inset',
+  '0px 4px 32px -2px #0000000D',
+  '0px 0px 0px 1px #4413060A',
+  '0px 1px 1px 0px #024A700A',
+  '0px 3px 3px 0px #024A7008',
+  '0px 6px 4px 0px #024A7005',
+  '0px 11px 4px 0px #024A7003',
+].join(', ');
+
 export type EkaAvatarSize = keyof typeof PRESET_SIZES;
 
 export interface EkaAvatarProps {
@@ -28,16 +41,7 @@ export const EkaAvatar: React.FC<EkaAvatarProps> = ({ size = 'md', style, disabl
     height: dimension,
     borderRadius,
     ...(!disableShadow && {
-      boxShadow: [
-        '0px 8px 16px 0px #0F172A05',
-        '0px 4px 8px 0px #0F172A08',
-        '-1px -3px 5px 0px #024A7040 inset',
-        '0px 4px 32px -2px #0000000D',
-        '0px 0px 0px 1px #024A700A',
-        '0px 1px 1px 0px #024A700A',
-        '0px 3px 3px 0px #024A7008',
-        '0px 6px 4px 0px #024A7005',
-      ].join(', '),
+      boxShadow: EKA_AVATAR_BOX_SHADOW,
     }),
   };
 

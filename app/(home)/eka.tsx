@@ -5,7 +5,7 @@ import { EkaCompanionScreen } from '@/components/home';
 
 export default function EkaScreen() {
   return (
-    <Screen edges={['top']} gradient="heroBlue">
+    <Screen edges={['top']} gradient="eka">
       <EkaCompanionScreen />
     </Screen>
   );
