@@ -23,7 +23,6 @@
         "monochromeImage": "./assets/logomark.png"
       },
       "package": "com.rapidcapusle.app",
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
