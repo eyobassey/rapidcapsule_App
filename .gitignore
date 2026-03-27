@@ -48,3 +48,7 @@ yarn.lock
 # generated native folders
 /ios
 /android
+
+# AI files
+.cursor/
+.claude/
