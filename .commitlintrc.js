@@ -13,12 +13,8 @@ module.exports = {
     // Header max length for visual clarity in git logs
     'header-max-length': [2, 'always', 100],
 
-    // Subject case - allow both lower-case and sentence-case for flexibility
-    'subject-case': [
-      2,
-      'always',
-      ['lower-case', 'sentence-case'], // 'lower-case' is preferred, but sentence-case is acceptable
-    ],
+    // Subject case - allow only upper-case for consistency
+    'subject-case': [2, 'never', ['upper-case']],
     // Subject should not end with a period
     'subject-full-stop': [2, 'never', '.'],
 
