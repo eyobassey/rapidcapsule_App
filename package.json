@@ -14,7 +14,13 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml,css,scss}\"",
     "type-check": "tsc --noEmit",
     "icons": "node scripts/generate-icons.js",
-    "prepare": "husky"
+    "prepare": "husky",
+    "commit": "git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -72,6 +78,8 @@
     "@typescript-eslint/eslint-plugin": "^8.56.0",
     "@typescript-eslint/parser": "^8.56.0",
     "babel-plugin-module-resolver": "^5.0.2",
+    "commitizen": "^4.3.1",
+    "cz-git": "^1.12.0",
     "eslint": "^8.57.1",
     "eslint-config-expo": "^55.0.0",
     "eslint-config-prettier": "^10.1.8",
