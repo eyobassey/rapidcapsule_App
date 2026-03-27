@@ -28,6 +28,14 @@ Run prebuild when:
 - `app.json` native config changes (icons, name, bundle IDs, adaptive icons, plugins)
 - You update `expo` to a new SDK version
 
+When upgrading the SDK, always use `--clean` to fully regenerate native projects:
+
+```bash
+npx expo prebuild --clean
+```
+
+> **Skia note:** After `pnpm install`, run `node node_modules/@shopify/react-native-skia/scripts/install-skia.mjs` to download prebuilt Skia binaries before running `pod install`. Without this, CocoaPods will fail.
+
 ---
 
 ## Custom Dev Client Workflow
@@ -72,10 +80,9 @@ We use a custom Babel config to support:
 The config lives in `babel.config.js` and includes:
 
 - `babel-preset-expo`
-- `expo-router/babel`
 - `module-resolver` with the `@` aliases
 - `react-native-unistyles/plugin`
-- `react-native-reanimated/plugin` (must be last)
+- `react-native-worklets/plugin` (must be last — required by Reanimated 4+)
 
 If you add new aliases to `tsconfig.json`, mirror them in `babel.config.js`.
 

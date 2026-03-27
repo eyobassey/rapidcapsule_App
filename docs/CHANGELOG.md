@@ -4,6 +4,31 @@ All notable changes to the documentation will be documented in this file.
 
 ---
 
+## [1.2.0] - March 27, 2026
+
+### Added
+
+- **Interactive Commits** (`docs/guides/linting-and-commits.md`)
+  - Added `commitizen` + `cz-git` for guided commit message authoring via `pnpm commit`.
+  - Created `commitlint.config.js` (replaces missing `.commitlintrc.js`) — serves as both commitlint and cz-git adapter config.
+
+### Changed
+
+- **Expo SDK upgrade** — upgraded from SDK 54 to SDK 55 (React Native 0.81 → 0.83, React 19.1 → 19.2).
+  - All Expo packages updated to their SDK 55 equivalents.
+  - `newArchEnabled` removed from `app.json` (New Architecture is now the default).
+  - `edgeToEdgeEnabled` removed from `app.json` (mandatory on Android 16+, no longer a config option).
+  - Added `expo-system-ui` for `userInterfaceStyle` support on Android.
+- **Native Dev Client Guide** (`docs/guides/native-dev-client.md`)
+  - Corrected Babel plugin name: `react-native-reanimated/plugin` → `react-native-worklets/plugin`.
+  - Added `--clean` guidance for SDK upgrade prebuilds.
+  - Added Skia postinstall step required after fresh installs.
+- **Root README** (`README.md`)
+  - Added `pnpm commit` to Available Scripts.
+  - Updated New Architecture note to reflect it is now enabled by default.
+
+---
+
 ## [1.1.0] - March 3, 2026
 
 ### Added

@@ -61,7 +61,7 @@ pnpm format:check
 
 ### Configuration
 
-Commitlint is configured in `.commitlintrc.js` to enforce Conventional Commits format.
+Commitlint is configured in `commitlint.config.js` to enforce Conventional Commits format. The config also doubles as the [cz-git](https://cz-git.qbb.sh/) adapter configuration (see [Interactive Commits](#interactive-commits-cz-git) below).
 
 ### Commit Message Format
 
@@ -116,6 +116,24 @@ git commit -m "feat!(api): change API response structure
 BREAKING CHANGE: API responses now wrap data in 'result' field"
 ```
 
+## Interactive Commits (cz-git)
+
+[cz-git](https://cz-git.qbb.sh/) is a commitizen adapter that guides you through writing a valid Conventional Commit message interactively.
+
+### Usage
+
+```bash
+pnpm commit
+```
+
+This launches a prompt that asks for the type, optional scope, subject, body, and footer — then writes the commit for you. The resulting message is still validated by the `commit-msg` Husky hook, so manually written commits are enforced too.
+
+### When to use it
+
+Use `pnpm commit` instead of `git commit -m "..."` whenever you want the prompt to guide the format, especially for less frequent commit types (e.g. `build`, `ci`, `revert`).
+
+---
+
 ## lint-staged
 
 ### Configuration
@@ -154,7 +172,9 @@ Validates commit messages against Conventional Commits format using commitlint.
 
 1. **Make changes** to code
 2. **Stage files** with `git add`
-3. **Commit** with `git commit -m "type(scope): message"`
+3. **Commit** — either:
+   - `pnpm commit` for the interactive cz-git prompt (recommended)
+   - `git commit -m "type(scope): message"` for manual commits
 4. **Pre-commit hook** runs automatically:
    - ESLint checks and fixes code
    - Prettier formats code

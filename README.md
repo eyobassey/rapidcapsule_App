@@ -137,6 +137,7 @@ pnpm start
 - `pnpm android` - Build & run native Android app (custom dev client)
 - `pnpm ios` - Build & run native iOS app (custom dev client)
 - `pnpm web` - Run on web browser
+- `pnpm commit` - Interactive commit prompt (cz-git) enforcing Conventional Commits format
 
 ---
 
@@ -241,7 +242,7 @@ This is a production-grade health tech application. The setup includes:
 
 - ✅ Strict dependency management (PNPM)
 - ✅ Type safety (TypeScript strict mode)
-- ✅ Modern React Native architecture (New Architecture enabled)
+- ✅ Modern React Native architecture (New Architecture — enabled by default in RN 0.83+)
 - ✅ Secure configuration practices
 - ✅ Production-ready package manager
 - ✅ Secure storage for sensitive health data
