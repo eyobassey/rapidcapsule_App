@@ -36,5 +36,12 @@
     "message": "You will need to sign in again to access your health data and Eka assistant.",
     "confirm": "Sign Out",
     "cancel": "Cancel"
+  },
+  "avatar": {
+    "change": "Change profile picture",
+    "permissionTitle": "Permission needed",
+    "permissionMessage": "Please allow access to your photos so you can update your profile picture.",
+    "errorTitle": "Image error",
+    "errorMessage": "Something went wrong while picking your image. Please try again."
   }
 }

@@ -1,4 +1,5 @@
 import { Icons } from '@assets/icons';
+import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -73,10 +74,43 @@ export default function ProfileScreen() {
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
   const isAuthLoading = useAuthStore((s) => s.isLoading);
+  const updateUser = useAuthStore((s) => s.updateUser);
 
   const displayName = user ? `${user.firstName} ${user.lastName}`.trim() : t('header.guest');
   const displayEmail = user?.email ?? '';
   const progress = useSharedValue(29);
+
+  const handleChangeAvatar = React.useCallback(async () => {
+    try {
+      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+      if (permissionResult.status !== 'granted') {
+        Alert.alert(t('avatar.permissionTitle'), t('avatar.permissionMessage'));
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images'],
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.9,
+      });
+
+      if (result.canceled || !result.assets?.length) {
+        return;
+      }
+
+      const [asset] = result.assets;
+      if (!asset?.uri) {
+        return;
+      }
+
+      updateUser({ profilePicture: asset.uri });
+      // Backend upload can be wired here once the API contract is available.
+    } catch {
+      Alert.alert(t('avatar.errorTitle'), t('avatar.errorMessage'));
+    }
+  }, [t, updateUser]);
 
   const handleLogout = React.useCallback(async () => {
     if (isAuthLoading) {
@@ -127,9 +161,15 @@ export default function ProfileScreen() {
                 size="large"
                 style={styles.avatar}
               />
-              <View style={styles.cameraBadge}>
+              <Pressable
+                style={styles.cameraBadge}
+                onPress={handleChangeAvatar}
+                accessibilityRole="button"
+                accessibilityLabel={t('avatar.change')}
+                hitSlop={8}
+              >
                 <AppIcon name="EditImagePhoto" size={14} color={theme.colors.primary} />
-              </View>
+              </Pressable>
             </View>
             <View style={styles.userInfo}>
               <AppText variant="h3" numberOfLines={1}>
